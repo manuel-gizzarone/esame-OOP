@@ -2,7 +2,6 @@ package com.OOPDekGiz.progettoDekGiz.model;
 
 import org.json.simple.JSONObject;
 
-
 import com.OOPDekGiz.progettoDekGiz.exception.*;
 
 
@@ -17,7 +16,7 @@ import com.OOPDekGiz.progettoDekGiz.exception.*;
  * @author emanuele
  *
  */
-public class MeteoCitta {
+public class MeteoCitta implements InterfaceToJsonObject{
 	
 	/**
 	 *  nuvolosità in percentuale %
@@ -85,14 +84,19 @@ public class MeteoCitta {
 
 	
 	
-	
-	/*
 	public JSONObject castToJsonObject () {
+		
+		JSONObject meteoCittaJsonObj = new JSONObject();
+
+		meteoCittaJsonObj.put("citta",nomeCitta);
+		meteoCittaJsonObj.put("nuvolosita",nuvolosita);
+		meteoCittaJsonObj.put("unixData",unixData);
+		
+		return meteoCittaJsonObj;
 		
 	}
 	
 	
-	*/
 	
 	
 	
