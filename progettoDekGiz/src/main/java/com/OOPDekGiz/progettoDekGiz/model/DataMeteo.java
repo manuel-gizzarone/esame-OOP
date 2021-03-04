@@ -144,6 +144,9 @@ public class DataMeteo {
 			return false;
 	}
 
+	public String toString () {
+		return data.toString();
+	}
 	
 	//metodi set e get di tutti campi della classe
 	

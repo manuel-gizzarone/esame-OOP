@@ -91,6 +91,7 @@ public class MeteoCitta implements InterfaceToJsonObject{
 		meteoCittaJsonObj.put("citta",nomeCitta);
 		meteoCittaJsonObj.put("nuvolosita",nuvolosita);
 		meteoCittaJsonObj.put("unixData",unixData);
+		meteoCittaJsonObj.put("Data",dataMeteo.toString());
 		
 		return meteoCittaJsonObj;
 		

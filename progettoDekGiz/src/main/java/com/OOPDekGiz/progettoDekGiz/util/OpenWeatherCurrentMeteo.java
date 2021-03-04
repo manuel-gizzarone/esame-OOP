@@ -62,21 +62,36 @@ public class OpenWeatherCurrentMeteo extends OpenWeatherApiUrlGen {
 	 */
 	public MeteoCitta estraiDatiMeteo () throws ParseException,MalformedURLException, IOException, DataMeteoException{
 		
+		/**
+		 * oggetto utilizzato per il parsing String - JSONObject 
+		 */
 		JSONParser parser = new JSONParser();
-		
-		//Vector<MeteoCitta> vettoreMeteoCitta = new Vector<MeteoCitta>();
 
+		/**
+		 * è la stringa in cui verrà inserita la risposta dell'api
+		 */
 		String StringRisultatoApi = leggiApiC.readLine();
 		
+		/**
+		 * è il JSONObject in cui verrà inserita la risposta dell'api
+		 */
 		JSONObject JsonObjectRisultatoApi = (JSONObject)parser.parse(StringRisultatoApi);
 		
-		String nomeCitta = (String) JsonObjectRisultatoApi.get("name");
+		/**
+		 * è il JSONObject i cui campi specificano i dettagli sulla città a cui la chiamata è riferita
+		 */
+		JSONObject JsonObjectCity = (JSONObject)JsonObjectRisultatoApi.get("city");
+		/**
+		 * è la stringa in cui è inserito il nome della città a cui la chiamata è riferita
+		 */
+		String nomeCitta = (String) JsonObjectCity.get("name");
+		
 		long UnixTime = (long) JsonObjectRisultatoApi.get("dt");
+		
 		JSONObject JsonObjectClouds =(JSONObject) JsonObjectRisultatoApi.get("clouds");
 		
 		//per nuvolosita si intende il numero %
-		int nuvolosita = (int) JsonObjectClouds.get("all");  
-		//int nuvolosita = Integer.parseInt(JsonObjectClouds.get("all").toString());
+		int nuvolosita = Integer.parseInt(JsonObjectClouds.get("all").toString());
 		
 		MeteoCitta meteoCitta = new MeteoCitta(nuvolosita,nomeCitta,UnixTime);
 		

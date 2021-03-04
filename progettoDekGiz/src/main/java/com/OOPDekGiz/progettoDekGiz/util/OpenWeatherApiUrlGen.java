@@ -17,7 +17,7 @@ public class OpenWeatherApiUrlGen {
 		 */
 		protected String apiKey;
 		protected String nomeCitta;
-		protected String UrlBase="api.openweathermap.org/data/2.5/";
+		protected String UrlBase="http://api.openweathermap.org/data/2.5/";
 		
 	
 		public OpenWeatherApiUrlGen(String apiKey, String nomeCitta) {
