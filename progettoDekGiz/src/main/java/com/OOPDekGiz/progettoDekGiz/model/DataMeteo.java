@@ -144,6 +144,13 @@ public class DataMeteo {
 			return false;
 	}
 
+	public boolean confrontaData(DataMeteo data2) {
+		boolean flag=false;
+		if(data2.getAnno()==this.getAnno()&& data2.getMese()==this.getMese()&&data2.getGiorno()==this.getGiorno())
+			flag=true;
+		return flag;
+	}
+	
 	public String toString () {
 		return data.toString();
 	}

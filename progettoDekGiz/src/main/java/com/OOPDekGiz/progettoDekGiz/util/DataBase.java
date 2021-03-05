@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 
 public class DataBase{
 
-    private String nomeDatabase;
+    private String nomeDatabase ="DATABASE";
 
     private final File file;
 
@@ -42,7 +42,7 @@ public class DataBase{
      *
      */
 
-    public DataBase(String nomeDatabase) throws IOException {
+    public DataBase() throws IOException {
         this.nomeDatabase = nomeDatabase + ".json";
         file = new File(System.getProperty("user.dir") + "/" + this.nomeDatabase);
         if(!file.exists()) {

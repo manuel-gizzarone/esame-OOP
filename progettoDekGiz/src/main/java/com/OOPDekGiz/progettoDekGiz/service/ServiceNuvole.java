@@ -42,7 +42,7 @@ public class ServiceNuvole {
 		 */
 
 		JSONArray risultato = new JSONArray();
-		DataBase dataBase = new DataBase("DATABASE");
+		DataBase dataBase = new DataBase();
 
 		/**
 		 *

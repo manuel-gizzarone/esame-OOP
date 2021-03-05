@@ -81,9 +81,17 @@ public class MeteoCitta implements InterfaceToJsonObject{
 	public void setUnixData(long unixData) {
 		this.unixData = unixData;
 	}
+	
+	public DataMeteo getDataMeteo() {
+		return dataMeteo;
+	}
 
-	
-	
+
+	public void setDataMeteo(DataMeteo dataMeteo) {
+		this.dataMeteo = dataMeteo;
+	}
+
+
 	public JSONObject castToJsonObject () {
 		
 		JSONObject meteoCittaJsonObj = new JSONObject();
