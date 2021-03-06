@@ -1,7 +1,12 @@
 package com.OOPDekGiz.progettoDekGiz.util;
 
 import java.util.Vector;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;  
+import java.util.Date;
+
 import com.OOPDekGiz.progettoDekGiz.exception.GestisciStringaException;
+
 
 //questa classe permette di usare dei metodi personalizzati per lavorare su una stringa passata al costruttore
 public class GestisciStringhe {
@@ -39,6 +44,21 @@ public class GestisciStringhe {
 		
 	}
 	
+	/**
+	 * il metodo estrae da una stringa del tipo dd/MM/yyyy la data come oggetto Date
+	 * @param dataDaEstrarre
+	 * @return la data estratta come oggetto Date
+	 * @throws ParseException
+	 */
+	static public Date StringToData (String dataDaEstrarre) throws ParseException {
+ 
+	    Date dataEstratta=new SimpleDateFormat("dd/MM/yyyy").parse(dataDaEstrarre); 
+	    return dataEstratta;
+	  
+	}
+	
+	
+	//metodi set e get
 	public String getDaLavorare() {
 		return daLavorare;
 	}

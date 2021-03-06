@@ -2,6 +2,7 @@ package com.OOPDekGiz.progettoDekGiz.controller;
 
 import java.io.IOException;
 
+
 import java.net.MalformedURLException;
 
 import org.json.simple.JSONObject;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.json.simple.parser.ParseException;
@@ -18,13 +20,14 @@ import com.OOPDekGiz.progettoDekGiz.exception.*;
 import com.OOPDekGiz.progettoDekGiz.service.*;
 
 
+
 @RestController
 public class Controller {
 
 	@Autowired
 	private ServiceNuvole serviceNuvole;
 
-	//INIZIO PRIMA ROTTA
+	//INIZIO ROTTA
 	/**
 	 *
 	 * la rotta permette di ottenere le previsioni sulla nuvolosità di una o più città 
@@ -48,9 +51,33 @@ public class Controller {
 	
 	}
 	
-	//FINE PRIMA ROTTA
+	//FINE ROTTA
 	
+	//INIZIO ROTTA
+	@RequestMapping(value = "/statsGiornaliere", method = RequestMethod.GET)
+	public JSONObject statsGiornaliere (@RequestParam String data) throws IOException, ParseException, DataMeteoException, java.text.ParseException {
+		return serviceNuvole.statsGiornaliere(data);
+	}
 	
+	//Fine ROTTA
+	
+	//INIZIO ROTTA
+	@RequestMapping(value = "/statsSettimanali", method = RequestMethod.GET)
+	public JSONObject statsSettimanali (@RequestParam String data) throws IOException, ParseException, DataMeteoException, java.text.ParseException {
+		return serviceNuvole.statsSettimanali(data);
+	}
+		
+    //Fine ROTTA
+		
+	//INIZIO ROTTA
+	@RequestMapping(value = "/statsMensili", method = RequestMethod.GET)
+	public JSONObject statsMensili(@RequestParam String data) throws IOException, ParseException, DataMeteoException, java.text.ParseException {
+			return serviceNuvole.statsMensili(data);
+	}
+		
+	//Fine ROTTA
+		
+		
 	
 
 }

@@ -26,9 +26,9 @@ public class DataBase{
 
     private String nomeDatabase;
 
-    private final File file;
+    private File file;
 
-    private static JSONArray jsonArray; //static e necessario altrimenti lancia un eccezione NullPointerException
+    //private static JSONArray jsonArray; //static e necessario altrimenti lancia un eccezione NullPointerException
 
     FileWriter fileWriter;
 

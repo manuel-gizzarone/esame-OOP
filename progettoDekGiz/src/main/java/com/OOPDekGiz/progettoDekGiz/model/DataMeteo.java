@@ -129,7 +129,7 @@ public class DataMeteo {
 	}
 	
 	/**
-	 * 
+	 * Confronta la data di quest'oggetto con la UnixDate data2 data come parametro
 	 * @param data2 è la data da confrontare secondo lo standard Unix Date
 	 * @return se è vero o falso che le due date coincidono
 	 */
@@ -144,12 +144,31 @@ public class DataMeteo {
 			return false;
 	}
 
+	/**
+	 * Confronta la data di quest'oggetto con la DataMeteo data2 data come parametro
+	 * @param data2 è la data da confrontare
+	 * @return se è vero o falso che le due date coincidono
+	 */
 	public boolean confrontaData(DataMeteo data2) {
 		boolean flag=false;
 		if(data2.getAnno()==this.getAnno()&& data2.getMese()==this.getMese()&&data2.getGiorno()==this.getGiorno())
 			flag=true;
 		return flag;
 	}
+	
+	
+	/**
+	 * METODO PER CASTARE UN'OGGETO DATA A OGGETTO DI TIPO DATAMETEO
+	 * @param daConvertire
+	 * @return
+	 * @throws DataMeteoException
+	 */
+	public DataMeteo DatetoDataMeteo (Date daConvertire) throws DataMeteoException {
+		long UnixData =(long)(daConvertire.getTime()*1000);
+		DataMeteo risultato = new DataMeteo (UnixData);
+		return risultato;
+	}
+	
 	
 	public String toString () {
 		return data.toString();
