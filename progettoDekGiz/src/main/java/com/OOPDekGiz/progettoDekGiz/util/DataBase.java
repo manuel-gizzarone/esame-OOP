@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 
 public class DataBase{
 
-    private String nomeDatabase ="DATABASE";
+    private String nomeDatabase;
 
     private final File file;
 
@@ -37,13 +37,12 @@ public class DataBase{
      * Costruttore della classe DataBase che crea un file json ed istanzia un JSONArray in cui verranno inseriti tutti
      * i dati.
      *
-     * @param nomeDatabase nome che verra assegnato al file che contiene il Database
      * @throws IOException
      *
      */
 
     public DataBase() throws IOException {
-        this.nomeDatabase = nomeDatabase + ".json";
+        this.nomeDatabase = "DATABASE.json";
         file = new File(System.getProperty("user.dir") + "/" + this.nomeDatabase);
         if(!file.exists()) {
             file.createNewFile();
@@ -107,7 +106,7 @@ public class DataBase{
      *
      */
 
-    public void salvaSulDatabaseOgniOra(MeteoCitta meteoCitta){
+    public void salvaSulDatabaseOgniOra(MeteoCitta meteoCitta) {
         ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
         //uso una lambda expression
         scheduler.scheduleAtFixedRate(() -> {
