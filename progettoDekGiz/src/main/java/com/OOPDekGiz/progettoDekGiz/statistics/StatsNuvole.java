@@ -20,7 +20,7 @@ public class StatsNuvole {
 	
 	
 	@SuppressWarnings("unchecked")
-	JSONObject statisticheGiornaliere (DataMeteo filtraData) throws IOException, ParseException, DataMeteoException {
+	public JSONObject statisticheGiornaliere (DataMeteo filtraData) throws IOException, ParseException, DataMeteoException {
 		
 		//statistiche disponibili sulla nuvolosità
 		long min=0;
@@ -28,11 +28,13 @@ public class StatsNuvole {
 		double media=0;
 		double varianza=0;
 		
+		/*
 		long giorno = filtraData.getGiorno();
 		int settimana=filtraData.getSettimana();
 		long mese = filtraData.getMese();
+		*/
 		
-		DataBase mioDataBase = new DataBase();
+		DataBase mioDataBase = new DataBase("Database_Raccolta.json");
 		
 		
 		JSONArray jsonArrayDatiMeteoLettura = mioDataBase.getDatabase();
@@ -91,7 +93,7 @@ public class StatsNuvole {
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	@SuppressWarnings("unchecked")
-	JSONObject statisticheMensili (DataMeteo filtraData) throws IOException, ParseException, DataMeteoException {
+	public JSONObject statisticheMensili (DataMeteo filtraData) throws IOException, ParseException, DataMeteoException {
 		
 		//statistiche disponibili sulla nuvolosità
 		long min=0;
@@ -99,12 +101,13 @@ public class StatsNuvole {
 		double media=0;
 		double varianza=0;
 		
+		/*
 		long giorno = filtraData.getGiorno();
 		int settimana=filtraData.getSettimana();
 		long mese = filtraData.getMese();
+		*/
 		
-		DataBase mioDataBase = new DataBase ();
-		
+		DataBase mioDataBase = new DataBase("Database_Raccolta.json");
 		
 		JSONArray jsonArrayDatiMeteoLettura = mioDataBase.getDatabase();
 		Vector <MeteoCitta> ArrayDatiMeteoRisultato = new Vector <MeteoCitta> ();
@@ -160,7 +163,7 @@ public class StatsNuvole {
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	@SuppressWarnings("unchecked")
-	JSONObject statisticheSettimanali (DataMeteo filtraData) throws IOException, ParseException, DataMeteoException {
+	public JSONObject statisticheSettimanali (DataMeteo filtraData) throws IOException, ParseException, DataMeteoException {
 		
 		//statistiche disponibili sulla nuvolosità
 		long min=0;
@@ -168,11 +171,13 @@ public class StatsNuvole {
 		double media=0;
 		double varianza=0;
 		
+		/*
 		long giorno = filtraData.getGiorno();
 		int settimana=filtraData.getSettimana();
 		long mese = filtraData.getMese();
+		*/
 		
-		DataBase mioDataBase = new DataBase ();
+		DataBase mioDataBase = new DataBase("Database_Raccolta.json");
 		
 		
 		JSONArray jsonArrayDatiMeteoLettura = mioDataBase.getDatabase();

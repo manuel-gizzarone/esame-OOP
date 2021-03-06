@@ -1,6 +1,7 @@
 package com.OOPDekGiz.progettoDekGiz.service;
 
 import java.util.Vector;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.json.simple.JSONArray;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.OOPDekGiz.progettoDekGiz.exception.*;
 import com.OOPDekGiz.progettoDekGiz.model.*;
 import com.OOPDekGiz.progettoDekGiz.util.*;
+import com.OOPDekGiz.progettoDekGiz.statistics.*;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -42,7 +44,7 @@ public class ServiceNuvole {
 		 */
 
 		JSONArray risultato = new JSONArray();
-		DataBase dataBase = new DataBase();
+		//DataBase dataBase = new DataBase();
 
 		/**
 		 *
@@ -79,7 +81,7 @@ public class ServiceNuvole {
 				OpenWeather5giorni api5 = new OpenWeather5giorni(apiKey, nomiCitta.get(i));
 				Vector<MeteoCitta> temp = new Vector<MeteoCitta>();
 				temp.addAll(api5.estraiDatiMeteo());
-				dataBase.salvaSulDatabase(temp);
+				//dataBase.salvaSulDatabase(temp);
 
 				for (int j = 0; j < temp.size(); j++) {
 					risultato.add(temp.get(j).castToJsonObject());
@@ -94,7 +96,49 @@ public class ServiceNuvole {
 			risultato.add(o);
 			return risultato;
 		}
-		//fine primo metodo relativo alla prima rotta
+		//fine metodo relativo alla rotta api5 giorni
 	}
+	
+	
+	
+	//metodi per le statistiche media varianza max e min di nuvolosità giornaliere settimanali e mensili 
+	
+	public JSONObject statsGiornaliere (String data) throws IOException, ParseException, DataMeteoException, java.text.ParseException {
+		
+		StatsNuvole stats = new StatsNuvole ();
+		//salvo la data ottenuta come stringa come oggetto di tipo DataMeteo
+		DataMeteo dataMeteo = new DataMeteo ((long)((GestisciStringhe.StringToData(data).getTime())*1000));
+		
+		JSONObject risultato = new JSONObject();
+		risultato=stats.statisticheGiornaliere(dataMeteo);
+		return risultato;
+		
+	}
+	
+    public JSONObject statsSettimanali (String data) throws IOException, ParseException, DataMeteoException, java.text.ParseException {
+		
+		StatsNuvole stats = new StatsNuvole ();
+		//salvo la data ottenuta come stringa come oggetto di tipo DataMeteo
+		DataMeteo dataMeteo = new DataMeteo ((long)((GestisciStringhe.StringToData(data).getTime())*1000));
+		
+		JSONObject risultato = new JSONObject();
+		risultato=stats.statisticheSettimanali(dataMeteo);
+		return risultato;
+		
+	}
+
+    public JSONObject statsMensili (String data) throws IOException, ParseException, DataMeteoException, java.text.ParseException {
+	
+	    StatsNuvole stats = new StatsNuvole ();
+	    //salvo la data ottenuta come stringa come oggetto di tipo DataMeteo
+	    DataMeteo dataMeteo = new DataMeteo ((long)((GestisciStringhe.StringToData(data).getTime())*1000));
+	
+	    JSONObject risultato = new JSONObject();
+	    risultato=stats.statisticheMensili(dataMeteo);
+	    return risultato;
+	
+    }
+	
+    //fine metodi statistiche
 }
 
