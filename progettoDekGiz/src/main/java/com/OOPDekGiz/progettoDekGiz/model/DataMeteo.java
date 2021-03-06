@@ -130,7 +130,7 @@ public class DataMeteo {
 	
 	/**
 	 * 
-	 * @param data2 è la data da confrontare secondo lo standard Unix Date
+	 * @param unixData2 è la data da confrontare secondo lo standard Unix Date
 	 * @return se è vero o falso che le due date coincidono
 	 */
 	public boolean confrontaData (long unixData2) {

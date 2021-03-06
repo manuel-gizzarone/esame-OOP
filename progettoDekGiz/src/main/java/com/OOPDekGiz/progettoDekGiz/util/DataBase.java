@@ -1,6 +1,8 @@
 package com.OOPDekGiz.progettoDekGiz.util;
 
+import com.OOPDekGiz.progettoDekGiz.exception.DataMeteoException;
 import com.OOPDekGiz.progettoDekGiz.model.MeteoCitta;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -26,11 +28,13 @@ public class DataBase{
 
     private String nomeDatabase;
 
+    private JSONArray jsonArray;
+
     private final File file;
 
-    private static JSONArray jsonArray; //static e necessario altrimenti lancia un eccezione NullPointerException
-
     FileWriter fileWriter;
+
+    String apiKey = "2300b41a61721439ff98965f79ff40db";
 
     /**
      *
@@ -41,12 +45,18 @@ public class DataBase{
      *
      */
 
-    public DataBase() throws IOException {
-        this.nomeDatabase = "DATABASE.json";
+    //Nomi dei database
+    //Database previsioni 5 giorni: "Database_Previsioni"
+    //Database dati ogni ora: "Database_Raccolta"
+
+    public DataBase(String nomeDatabase) throws IOException, ParseException {
+        this.nomeDatabase = nomeDatabase;
         file = new File(System.getProperty("user.dir") + "/" + this.nomeDatabase);
         if(!file.exists()) {
             file.createNewFile();
             jsonArray = new JSONArray();
+        } else {
+            jsonArray = this.getDatabase();
         }
     }
 
@@ -66,8 +76,9 @@ public class DataBase{
     public void salvaSulDatabase(MeteoCitta meteoCitta) throws IOException, UnsupportedOperationException, ClassCastException, NullPointerException, IllegalArgumentException {
         JSONObject nuovoDatoMeteo = meteoCitta.castToJsonObject();
         jsonArray.add(nuovoDatoMeteo);
+
         fileWriter = new FileWriter(file);
-        fileWriter.write(nuovoDatoMeteo.toJSONString());
+        fileWriter.write(jsonArray.toJSONString()); //controllare
         fileWriter.flush();
         fileWriter.close();
     }
@@ -93,26 +104,26 @@ public class DataBase{
         }
 
         fileWriter.write(jsonArray.toJSONString());
-        fileWriter.flush(); //pulisce lo stream di input
+        fileWriter.flush();
         fileWriter.close();
     }
 
     /**
      *
-     * Metodo che salva ogni ora i dati meteo istantanei di un oggetto MeteoCitta, ottenuti dalle chiamate alle
-     * ApiCurrent.
+     * Metodo che salva ogni ora i dati meteo istantanei (nuvolosita) di una citta.
      *
-     * @param meteoCitta oggetto di tipo meteo citta contenente i dati meteo istantanei relativi ad una citta
+     * @param nomeCitta Nome della citta di cui si vogliono raccogliere i dati meteo
      *
      */
 
-    public void salvaSulDatabaseOgniOra(MeteoCitta meteoCitta) {
+    public void salvaSulDatabaseOgniOra(String nomeCitta) {
         ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
-        //uso una lambda expression
         scheduler.scheduleAtFixedRate(() -> {
             try {
+                OpenWeatherCurrentMeteo openWeatherCurrentMeteo = new OpenWeatherCurrentMeteo(apiKey, nomeCitta);
+                MeteoCitta meteoCitta = openWeatherCurrentMeteo.estraiDatiMeteo();
                 salvaSulDatabase(meteoCitta);
-            } catch (IOException e) {
+            } catch (IOException | ParseException | DataMeteoException e) {
                 e.printStackTrace();
             }
         }, 0, 1, TimeUnit.HOURS);
@@ -120,7 +131,7 @@ public class DataBase{
 
     /**
      *
-     * Metodo per visualizzare il contenuto del database.
+     * Metodo per visualizzare il contenuto del database formattato in JSONArray.
      *
      * @return JSONArray contenente tutti i dati meteo raccolti
      * @throws FileNotFoundException
@@ -130,7 +141,7 @@ public class DataBase{
      */
 
     public JSONArray getDatabase() throws FileNotFoundException, ParseException {
-        Scanner in = new Scanner(new BufferedReader(new FileReader(this.nomeDatabase + ".json")));
+        Scanner in = new Scanner(new BufferedReader(new FileReader(this.nomeDatabase)));
         JSONParser parser = new JSONParser();
         JSONArray output = (JSONArray) parser.parse(in.nextLine());
         return output;
@@ -141,6 +152,8 @@ public class DataBase{
      * Metodo per eliminare il database
      *
      */
+
+    //da rivedere il metodo per eliminare il database
 
     public void eliminaDatabase(){
         this.file.delete();

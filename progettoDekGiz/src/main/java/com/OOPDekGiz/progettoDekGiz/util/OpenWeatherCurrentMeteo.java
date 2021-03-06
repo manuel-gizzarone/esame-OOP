@@ -16,12 +16,12 @@ import com.OOPDekGiz.progettoDekGiz.model.MeteoCitta;
 
 public class OpenWeatherCurrentMeteo extends OpenWeatherApiUrlGen {
 	
-	/**
-	 * contiene l'url completo per la chiamata all'api current meteo
-	 */
-	protected String UrlCurrent=UrlBase+"weather?";
+	//contiene l'url completo per la chiamata all'api current meteo
+
+	protected String UrlCurrent = UrlBase+"weather?";
 	
 	protected URLConnection ApiOpenWeatherC;
+
 	protected BufferedReader leggiApiC;
 	
 	/**
@@ -29,21 +29,20 @@ public class OpenWeatherCurrentMeteo extends OpenWeatherApiUrlGen {
 	 * costruisce l'url completo per la chiamata all'api current meteo una volta ottenuti il nome della città e l'apikey
 	 * apre un flusso di input BufferedReader per leggere la risposta delle api
 	 */
-	OpenWeatherCurrentMeteo (String apiKey, String nomeCitta) throws MalformedURLException, IOException{	
-	super(apiKey,nomeCitta);
-	
-    ApiOpenWeatherC = new URL(this.costruisciUrlCurrent(apiKey,nomeCitta)).openConnection();
-	leggiApiC = new BufferedReader(new InputStreamReader(ApiOpenWeatherC.getInputStream()));
-	
+
+	public OpenWeatherCurrentMeteo (String apiKey, String nomeCitta) throws IOException{
+		super(apiKey,nomeCitta);
+		ApiOpenWeatherC = new URL(this.costruisciUrlCurrent(apiKey,nomeCitta)).openConnection();
+		leggiApiC = new BufferedReader(new InputStreamReader(ApiOpenWeatherC.getInputStream()));
 	}
-	
-	
+
 	/**
 	 * costruisce l'url corrispondente alla chiamata api current meteo
 	 * @param apiKey
 	 * @param nomeCitta
 	 * @return l'url completo
 	 */
+
 	public String costruisciUrlCurrent(String apiKey,String nomeCitta) {
 		UrlCurrent+="q="+nomeCitta;
 		UrlCurrent+="&";
@@ -60,53 +59,41 @@ public class OpenWeatherCurrentMeteo extends OpenWeatherApiUrlGen {
 	 * @throws IOException
 	 * @throws DataMeteoException
 	 */
-	public MeteoCitta estraiDatiMeteo () throws ParseException,MalformedURLException, IOException, DataMeteoException{
+
+	public MeteoCitta estraiDatiMeteo () throws ParseException,MalformedURLException, IOException, DataMeteoException {
 		
-		/**
-		 * oggetto utilizzato per il parsing String - JSONObject 
-		 */
+		//oggetto utilizzato per il parsing String - JSONObject
+
 		JSONParser parser = new JSONParser();
 
-		/**
-		 * è la stringa in cui verrà inserita la risposta dell'api
-		 */
+		//è la stringa in cui verrà inserita la risposta dell'api
+
 		String StringRisultatoApi = leggiApiC.readLine();
 		
-		/**
-		 * è il JSONObject in cui verrà inserita la risposta dell'api
-		 */
+		//è il JSONObject in cui verrà inserita la risposta dell'api
+
 		JSONObject JsonObjectRisultatoApi = (JSONObject)parser.parse(StringRisultatoApi);
 		
-		/**
-		 * è il JSONObject i cui campi specificano i dettagli sulla città a cui la chiamata è riferita
-		 */
+		//è il JSONObject i cui campi specificano i dettagli sulla città a cui la chiamata è riferita
+
 		JSONObject JsonObjectCity = (JSONObject)JsonObjectRisultatoApi.get("city");
-		/**
-		 * è la stringa in cui è inserito il nome della città a cui la chiamata è riferita
-		 */
+
+		//è la stringa in cui è inserito il nome della città a cui la chiamata è riferita
+
 		String nomeCitta = (String) JsonObjectCity.get("name");
 		
 		long UnixTime = (long) JsonObjectRisultatoApi.get("dt");
 		
 		JSONObject JsonObjectClouds =(JSONObject) JsonObjectRisultatoApi.get("clouds");
-		
-		//per nuvolosita si intende il numero %
+
 		int nuvolosita = Integer.parseInt(JsonObjectClouds.get("all").toString());
-		
-		MeteoCitta meteoCitta = new MeteoCitta(nuvolosita,nomeCitta,UnixTime);
-		
-		return meteoCitta;
+
+		return new MeteoCitta(nuvolosita,nomeCitta,UnixTime);
     }
 
+	//metodo get per visualizzare l'url current
 
-	//metodi get e set
 	public String getUrlCurrent() {
 		return UrlCurrent;
 	}
-
-    
-	
-	
-	
-
 }
