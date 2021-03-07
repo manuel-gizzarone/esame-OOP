@@ -76,11 +76,8 @@ public class OpenWeatherCurrentMeteo extends OpenWeatherApiUrlGen {
 		
 		//è il JSONObject i cui campi specificano i dettagli sulla città a cui la chiamata è riferita
 
-		JSONObject JsonObjectCity = (JSONObject)JsonObjectRisultatoApi.get("city");
-
 		//è la stringa in cui è inserito il nome della città a cui la chiamata è riferita
-
-		String nomeCitta = (String) JsonObjectCity.get("name");
+		String nomeCitta = (String) JsonObjectRisultatoApi.get("name");
 		
 		long UnixTime = (long) JsonObjectRisultatoApi.get("dt");
 		
