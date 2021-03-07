@@ -7,6 +7,7 @@ import org.json.simple.parser.ParseException;
 import org.json.simple.JSONArray;
 import org.springframework.stereotype.Service;
 import com.OOPDekGiz.progettoDekGiz.exception.*;
+import com.OOPDekGiz.progettoDekGiz.filters.FiltersNuvole;
 import com.OOPDekGiz.progettoDekGiz.model.*;
 import com.OOPDekGiz.progettoDekGiz.util.*;
 import com.OOPDekGiz.progettoDekGiz.statistics.*;
@@ -105,40 +106,277 @@ public class ServiceNuvole {
 	
 	public JSONObject statsGiornaliere (String data) throws IOException, ParseException, DataMeteoException, java.text.ParseException {
 		
+		try {
 		StatsNuvole stats = new StatsNuvole ();
+		//ATTENZIONE!!! la data deve essere scritta nel formato gg/mm/aaaa
 		//salvo la data ottenuta come stringa come oggetto di tipo DataMeteo
 		DataMeteo dataMeteo = new DataMeteo ((long)((GestisciStringhe.StringToData(data).getTime())*1000));
 		
 		JSONObject risultato = new JSONObject();
 		risultato=stats.statisticheGiornaliere(dataMeteo);
 		return risultato;
-		
+		}catch (Exception e) {
+			e.printStackTrace();
+			JSONObject o = new JSONObject();
+			o.put("c'è", "un'eccezione");
+			return o;
+		}
 	}
 	
     public JSONObject statsSettimanali (String data) throws IOException, ParseException, DataMeteoException, java.text.ParseException {
 		
+    	try {
 		StatsNuvole stats = new StatsNuvole ();
+		//ATTENZIONE!!! la data deve essere scritta nel formato gg/mm/aaaa
 		//salvo la data ottenuta come stringa come oggetto di tipo DataMeteo
 		DataMeteo dataMeteo = new DataMeteo ((long)((GestisciStringhe.StringToData(data).getTime())*1000));
 		
 		JSONObject risultato = new JSONObject();
 		risultato=stats.statisticheSettimanali(dataMeteo);
 		return risultato;
-		
+    	}catch (Exception e) {
+			e.printStackTrace();
+			JSONObject o = new JSONObject();
+			o.put("c'è", "un'eccezione");
+			return o;
+		}
 	}
 
     public JSONObject statsMensili (String data) throws IOException, ParseException, DataMeteoException, java.text.ParseException {
 	
+    	try {
 	    StatsNuvole stats = new StatsNuvole ();
+		//ATTENZIONE!!! la data deve essere scritta nel formato gg/mm/aaaa
 	    //salvo la data ottenuta come stringa come oggetto di tipo DataMeteo
 	    DataMeteo dataMeteo = new DataMeteo ((long)((GestisciStringhe.StringToData(data).getTime())*1000));
 	
 	    JSONObject risultato = new JSONObject();
 	    risultato=stats.statisticheMensili(dataMeteo);
 	    return risultato;
+    	}catch (Exception e) {
+			e.printStackTrace();
+			JSONObject o = new JSONObject();
+			o.put("c'è", "un'eccezione");
+			return o;
+		}
+	
+    }
+    
+
+    public JSONObject statsTotali () throws IOException, ParseException, DataMeteoException, java.text.ParseException {
+	
+    	try {
+	    StatsNuvole stats = new StatsNuvole ();
+	    JSONObject risultato = new JSONObject();
+	    risultato=stats.statisticheTotali();
+	    return risultato;
+    	}catch (Exception e) {
+			e.printStackTrace();
+			JSONObject o = new JSONObject();
+			o.put("c'è", "un'eccezione");
+			return o;
+		}
 	
     }
 	
     //fine metodi statistiche
+    
+  //metodi per filtrare le statistiche media varianza max e min di nuvolosità giornaliere settimanali e mensili su una o più nomi di città
+	
+  	public JSONArray filtraStatsGiornaliere (JSONObject bodyNomiCittaData) throws IOException, ParseException, DataMeteoException, java.text.ParseException {
+  		
+  		try {
+  		FiltersNuvole filterStats = new FiltersNuvole ();
+  		
+  		//estraggo la data come stringa e la converto come oggetto di tipo DataMeteo
+  	    //ATTENZIONE!!! la key associata alla stringa deve essere "data" e la data deve essere scritta nel formato gg/mm/aaaa
+  		DataMeteo dataMeteo = new DataMeteo ((long)((GestisciStringhe.StringToData((String)bodyNomiCittaData.get("data")).getTime())*1000));
+  		
+  		/**
+  		 * è il vettore che conterrà i nomi delle città inserite
+  		 */
+  		Vector<String> nomiCitta = new Vector<String>();
+
+  		//ATTENZIONE!!! la key associata alla stringa contenente i nomi delle città separate dalla virgola deve essere "nomiCitta"
+		/**
+		 *è la stringa contenente i nomi delle città da separare per cui si vogliono le statistiche
+	     *(ognuno è separato dall'altro dalla virgola)
+		 */
+		String nomiCittaDaEstrarre = (String) bodyNomiCittaData.get("nomiCitta");
+		
+		GestisciStringhe gestisciStringa = new GestisciStringhe(nomiCittaDaEstrarre);
+
+		//inserisce i nomi delle citta estratti dal bodyNomiCitta nel vettore di stringhe nomiCitta
+
+		for (int i = 0; i < gestisciStringa.estraiConVirgola().size(); i++) {
+				String temp = gestisciStringa.estraiConVirgola().get(i);
+				nomiCitta.add(temp);
+		} //il for si potrebbe eliminare usando poi il metodo addAll
+			
+  		JSONArray risultato = new JSONArray();
+  		JSONObject elemento = new JSONObject();
+  		
+  		for (String nome : nomiCitta) {
+  		elemento=filterStats.filtraStatisticheGiornaliere(dataMeteo,nome);
+  		risultato.add(elemento);
+  		}
+  		return risultato;
+  		
+  		}catch (Exception e) {
+  			e.printStackTrace();
+  			JSONArray a= new JSONArray();
+  			JSONObject o = new JSONObject();
+  			o.put("c'è", "un'eccezione");
+  			a.add(o);
+  			return a;
+  		}
+  	}
+  	
+      public JSONArray filtraStatsSettimanali (JSONObject bodyNomiCittaData) throws IOException, ParseException, DataMeteoException, java.text.ParseException {
+  		
+    	  try {
+    	  		FiltersNuvole filterStats = new FiltersNuvole ();
+    	  		
+    	  		//estraggo la data come stringa e la converto come oggetto di tipo DataMeteo
+    	  	    //ATTENZIONE!!! la key associata alla stringa deve essere "data" e la data deve essere scritta nel formato gg/mm/aaaa
+    	  		DataMeteo dataMeteo = new DataMeteo ((long)((GestisciStringhe.StringToData((String)bodyNomiCittaData.get("data")).getTime())*1000));
+    	  		
+    	  		/**
+    	  		 * è il vettore che conterrà i nomi delle città inserite
+    	  		 */
+    	  		Vector<String> nomiCitta = new Vector<String>();
+
+    	  		//ATTENZIONE!!! la key associata alla stringa contenente i nomi delle città separate dalla virgola deve essere "nomiCitta"
+    			/**
+    			 *è la stringa contenente i nomi delle città da separare per cui si vogliono le statistiche
+    		     *(ognuno è separato dall'altro dalla virgola)
+    			 */
+    			String nomiCittaDaEstrarre = (String) bodyNomiCittaData.get("nomiCitta");
+    			
+    			GestisciStringhe gestisciStringa = new GestisciStringhe(nomiCittaDaEstrarre);
+
+    			//inserisce i nomi delle citta estratti dal bodyNomiCitta nel vettore di stringhe nomiCitta
+
+    			for (int i = 0; i < gestisciStringa.estraiConVirgola().size(); i++) {
+    					String temp = gestisciStringa.estraiConVirgola().get(i);
+    					nomiCitta.add(temp);
+    			} //il for si potrebbe eliminare usando poi il metodo addAll
+    				
+    	  		JSONArray risultato = new JSONArray();
+    	  		JSONObject elemento = new JSONObject();
+    	  		
+    	  		for (String nome : nomiCitta) {
+    	  		elemento=filterStats.filtraStatisticheSettimanali(dataMeteo,nome);
+    	  		risultato.add(elemento);
+    	  		}
+    	  		return risultato;
+    	  		
+    	  		}catch (Exception e) {
+    	  			e.printStackTrace();
+    	  			JSONArray a= new JSONArray();
+    	  			JSONObject o = new JSONObject();
+    	  			o.put("c'è", "un'eccezione");
+    	  			a.add(o);
+    	  			return a;
+    	  		}
+  	}
+
+      public JSONArray filtraStatsMensili (JSONObject bodyNomiCittaData) throws IOException, ParseException, DataMeteoException, java.text.ParseException {
+  	
+    	  try {
+  	  		FiltersNuvole filterStats = new FiltersNuvole ();
+  	  		
+  	  		//estraggo la data come stringa e la converto come oggetto di tipo DataMeteo
+  	  	    //ATTENZIONE!!! la key associata alla stringa deve essere "data" e la data deve essere scritta nel formato gg/mm/aaaa
+  	  		DataMeteo dataMeteo = new DataMeteo ((long)((GestisciStringhe.StringToData((String)bodyNomiCittaData.get("data")).getTime())*1000));
+  	  		
+  	  		/**
+  	  		 * è il vettore che conterrà i nomi delle città inserite
+  	  		 */
+  	  		Vector<String> nomiCitta = new Vector<String>();
+
+  	  		//ATTENZIONE!!! la key associata alla stringa contenente i nomi delle città separate dalla virgola deve essere "nomiCitta"
+  			/**
+  			 *è la stringa contenente i nomi delle città da separare per cui si vogliono le statistiche
+  		     *(ognuno è separato dall'altro dalla virgola)
+  			 */
+  			String nomiCittaDaEstrarre = (String) bodyNomiCittaData.get("nomiCitta");
+  			
+  			GestisciStringhe gestisciStringa = new GestisciStringhe(nomiCittaDaEstrarre);
+
+  			//inserisce i nomi delle citta estratti dal bodyNomiCitta nel vettore di stringhe nomiCitta
+
+  			for (int i = 0; i < gestisciStringa.estraiConVirgola().size(); i++) {
+  					String temp = gestisciStringa.estraiConVirgola().get(i);
+  					nomiCitta.add(temp);
+  			} //il for si potrebbe eliminare usando poi il metodo addAll
+  				
+  	  		JSONArray risultato = new JSONArray();
+  	  		JSONObject elemento = new JSONObject();
+  	  		
+  	  		for (String nome : nomiCitta) {
+  	  		elemento=filterStats.filtraStatisticheMensili(dataMeteo,nome);
+  	  		risultato.add(elemento);
+  	  		}
+  	  		return risultato;
+  	  		
+  	  		}catch (Exception e) {
+  	  			e.printStackTrace();
+  	  			JSONArray a= new JSONArray();
+  	  			JSONObject o = new JSONObject();
+  	  			o.put("c'è", "un'eccezione");
+  	  			a.add(o);
+  	  			return a;
+  	  		}
+  	
+      }
+      
+
+      public JSONArray filtraStatsTotali (JSONObject bodyNomiCitta) throws IOException, ParseException, DataMeteoException, java.text.ParseException {
+  	
+    	  try {
+    	  		FiltersNuvole filterStats = new FiltersNuvole ();
+    	  		
+    	  		/**
+    	  		 * è il vettore che conterrà i nomi delle città inserite
+    	  		 */
+    	  		Vector<String> nomiCitta = new Vector<String>();
+
+    	  		//ATTENZIONE!!! la key associata alla stringa contenente i nomi delle città separate dalla virgola deve essere "nomiCitta"
+    			/**
+    			 *è la stringa contenente i nomi delle città da separare per cui si vogliono le statistiche
+    		     *(ognuno è separato dall'altro dalla virgola)
+    			 */
+    			String nomiCittaDaEstrarre = (String) bodyNomiCitta.get("nomiCitta");
+    			
+    			GestisciStringhe gestisciStringa = new GestisciStringhe(nomiCittaDaEstrarre);
+
+    			//inserisce i nomi delle citta estratti dal bodyNomiCitta nel vettore di stringhe nomiCitta
+
+    			for (int i = 0; i < gestisciStringa.estraiConVirgola().size(); i++) {
+    					String temp = gestisciStringa.estraiConVirgola().get(i);
+    					nomiCitta.add(temp);
+    			} //il for si potrebbe eliminare usando poi il metodo addAll
+    				
+    	  		JSONArray risultato = new JSONArray();
+    	  		JSONObject elemento = new JSONObject();
+    	  		
+    	  		for (String nome : nomiCitta) {
+    	  		elemento=filterStats.filtraStatisticheTotali((String)bodyNomiCitta.get("nomiCitta"));
+    	  		risultato.add(elemento);
+    	  		}
+    	  		return risultato;
+    	  		
+    	  		}catch (Exception e) {
+    	  			e.printStackTrace();
+    	  			JSONArray a= new JSONArray();
+    	  			JSONObject o = new JSONObject();
+    	  			o.put("c'è", "un'eccezione");
+    	  			a.add(o);
+    	  			return a;
+    	  		}
+      }
+  	
+      //fine metodi filtri
 }
 

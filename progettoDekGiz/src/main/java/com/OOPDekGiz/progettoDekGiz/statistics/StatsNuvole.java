@@ -1,6 +1,7 @@
 package com.OOPDekGiz.progettoDekGiz.statistics;
 
 import java.io.*;
+
 import java.util.Vector;
 import java.lang.Math;
 
@@ -18,6 +19,8 @@ import org.json.simple.parser.ParseException;
 
 public class StatsNuvole {
 	
+	//NOTA:i metodi delle statistiche presentano parti di codice analogo ma ognuno esegue alcune operazioni caratteristiche solo a se stesso
+	//perciò abbiamo preferito di lasciare il completo codice per ognuno senza frammentarlo con chiamate a piccoli metodi comuni al fine di migliorarne la leggibilità
 	
 	@SuppressWarnings("unchecked")
 	public JSONObject statisticheGiornaliere (DataMeteo filtraData) throws IOException, ParseException, DataMeteoException {
@@ -40,7 +43,7 @@ public class StatsNuvole {
 		JSONArray jsonArrayDatiMeteoLettura = mioDataBase.getDatabase();
 		Vector <MeteoCitta> ArrayDatiMeteoRisultato = new Vector <MeteoCitta> ();
 		
-		//costruisci il Vector <MeteoCitta> i cui elementi fanno tutti riferimento alla stessa identico giorno della data di misurazione del meteo
+		//costruisci il Vector <MeteoCitta> i cui elementi fanno tutti riferimento allo stesso identico giorno della data di misurazione del meteo
 		for(int i=0;i<jsonArrayDatiMeteoLettura.size();i++) {
 			JSONObject jsondatoMeteoCittaletto = (JSONObject)jsonArrayDatiMeteoLettura.get(i);
 			
@@ -69,7 +72,7 @@ public class StatsNuvole {
 			if(analizza.getNuvolosita()<=min)
 				min=analizza.getNuvolosita();
 			somma+=analizza.getNuvolosita();
-			conta++;
+			conta++;         //per lo scopo di conta sarebbe stato equivalente usare ArrayDatiMeteoRisultato.size() però così mi sembrava più pulito
 		}
 		media=((double)somma)/conta;
 		for(MeteoCitta analizza : ArrayDatiMeteoRisultato ) {
@@ -112,7 +115,7 @@ public class StatsNuvole {
 		JSONArray jsonArrayDatiMeteoLettura = mioDataBase.getDatabase();
 		Vector <MeteoCitta> ArrayDatiMeteoRisultato = new Vector <MeteoCitta> ();
 		
-		//costruisci il Vector <MeteoCitta> i cui elementi fanno tutti riferimento allo stesso identico identico mese (dello stesso anno) di misurazione del meteo
+		//costruisci il Vector <MeteoCitta> i cui elementi fanno tutti riferimento allo stesso identico mese (dello stesso anno) di misurazione del meteo
 		for(int i=0;i<jsonArrayDatiMeteoLettura.size();i++) {
 			JSONObject jsondatoMeteoCittaletto = (JSONObject)jsonArrayDatiMeteoLettura.get(i);
 			
@@ -229,6 +232,71 @@ public class StatsNuvole {
 		jsonStatsSettimanali.put("varianza_nuvolosita",varianza);
 		
 		return jsonStatsSettimanali;
+		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public JSONObject statisticheTotali () throws IOException, ParseException, DataMeteoException {
+		
+		//statistiche disponibili sulla nuvolosità
+		long min=0;
+		long max=0;
+		double media=0;
+		double varianza=0;
+		
+		/*
+		long giorno = filtraData.getGiorno();
+		int settimana=filtraData.getSettimana();
+		long mese = filtraData.getMese();
+		*/
+		
+		DataBase mioDataBase = new DataBase("Database_Raccolta.json");
+		
+		JSONArray jsonArrayDatiMeteoLettura = mioDataBase.getDatabase();
+		Vector <MeteoCitta> ArrayDatiMeteoRisultato = new Vector <MeteoCitta> ();
+		
+		//costruisci il Vector <MeteoCitta> dei dati sul database
+		for(int i=0;i<jsonArrayDatiMeteoLettura.size();i++) {
+			JSONObject jsondatoMeteoCittaletto = (JSONObject)jsonArrayDatiMeteoLettura.get(i);
+			
+			int nuvolosita = Integer.parseInt(jsondatoMeteoCittaletto.get("nuvolosita").toString());
+			String nomeCitta = jsondatoMeteoCittaletto.get("nuvolosita").toString();
+			long unixData = Long.parseLong(jsondatoMeteoCittaletto.get("unixData").toString());
+			
+			MeteoCitta datoMeteoCittaletto = new MeteoCitta(nuvolosita,nomeCitta,unixData);
+			
+		    ArrayDatiMeteoRisultato.add(datoMeteoCittaletto);
+		
+		}
+		
+		//calcola somma e valori max e min dei dati di nuvolosità su quelli di tutto il database
+		int somma=0;
+		double sommaScartiQuadrati=0;
+		
+		int conta=0;
+		for(MeteoCitta analizza : ArrayDatiMeteoRisultato ) {
+			if(analizza.getNuvolosita()>=max)
+				max=analizza.getNuvolosita();
+			if(analizza.getNuvolosita()<=min)
+				min=analizza.getNuvolosita();
+			somma+=analizza.getNuvolosita();
+			conta++;
+		}
+		media=((double)somma)/conta;
+		for(MeteoCitta analizza : ArrayDatiMeteoRisultato ) {
+		sommaScartiQuadrati+=Math.pow((analizza.getNuvolosita()-media),2);
+		}
+		
+		varianza = ((double)sommaScartiQuadrati)/(conta-1);
+		
+		//costruisco il jsonObject i cui campi sono media varianza max min di nuvolosità tra i dati su database 
+		JSONObject jsonStatsTotali = new JSONObject();
+		jsonStatsTotali.put("max_nuvolosita",max);
+		jsonStatsTotali.put("min_nuvolosita",min);
+		jsonStatsTotali.put("media_nuvolosita",media);
+		jsonStatsTotali.put("varianza_nuvolosita",varianza);
+		
+		return jsonStatsTotali;
 		
 	}
 

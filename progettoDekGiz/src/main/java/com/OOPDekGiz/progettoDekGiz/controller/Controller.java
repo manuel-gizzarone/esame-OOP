@@ -54,6 +54,15 @@ public class Controller {
 	//FINE ROTTA
 	
 	//INIZIO ROTTA
+	/**
+	 * la rotta permette di ricevere le statistiche di media varianza e valori max e min sulla nuvolosità tra i dati sul database al giorno della data inserita
+	 * @param data
+	 * @return
+	 * @throws IOException
+	 * @throws ParseException
+	 * @throws DataMeteoException
+	 * @throws java.text.ParseException
+	 */
 	@RequestMapping(value = "/statsGiornaliere", method = RequestMethod.GET)
 	public JSONObject statsGiornaliere (@RequestParam String data) throws IOException, ParseException, DataMeteoException, java.text.ParseException {
 		return serviceNuvole.statsGiornaliere(data);
@@ -62,6 +71,15 @@ public class Controller {
 	//Fine ROTTA
 	
 	//INIZIO ROTTA
+	/**
+	 * la rotta permette di ricevere le statistiche di media varianza e valori max e min sulla nuvolosità tra i dati sul database nella settimana della data inserita
+	 * @param data
+	 * @return
+	 * @throws IOException
+	 * @throws ParseException
+	 * @throws DataMeteoException
+	 * @throws java.text.ParseException
+	 */
 	@RequestMapping(value = "/statsSettimanali", method = RequestMethod.GET)
 	public JSONObject statsSettimanali (@RequestParam String data) throws IOException, ParseException, DataMeteoException, java.text.ParseException {
 		return serviceNuvole.statsSettimanali(data);
@@ -70,6 +88,15 @@ public class Controller {
     //Fine ROTTA
 		
 	//INIZIO ROTTA
+	/**
+	 * la rotta permette di ricevere le statistiche di media varianza e valori max e min sulla nuvolosità tra i dati sul database al mese della data inserita
+	 * @param data
+	 * @return
+	 * @throws IOException
+	 * @throws ParseException
+	 * @throws DataMeteoException
+	 * @throws java.text.ParseException
+	 */
 	@RequestMapping(value = "/statsMensili", method = RequestMethod.GET)
 	public JSONObject statsMensili(@RequestParam String data) throws IOException, ParseException, DataMeteoException, java.text.ParseException {
 			return serviceNuvole.statsMensili(data);
@@ -77,6 +104,22 @@ public class Controller {
 		
 	//Fine ROTTA
 		
+	//INIZIO ROTTA
+	/**
+	 * la rotta permette di ricevere le statistiche di media varianza e valori max e min sulla nuvolosità tra i dati sul database alla data inserita
+	 * @param data
+	 * @return
+	 * @throws IOException
+	 * @throws ParseException
+	 * @throws DataMeteoException
+	 * @throws java.text.ParseException
+	 */
+	@RequestMapping(value = "/statsTotali", method = RequestMethod.GET)
+	public JSONObject statsTotali() throws IOException, ParseException, DataMeteoException, java.text.ParseException {
+			return serviceNuvole.statsTotali();
+	}
+			
+	//Fine ROTTA
 		
 	
 
