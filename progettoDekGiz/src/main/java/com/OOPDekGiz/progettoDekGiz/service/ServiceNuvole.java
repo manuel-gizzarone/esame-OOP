@@ -44,7 +44,7 @@ public class ServiceNuvole {
 		 */
 
 		JSONArray risultato = new JSONArray();
-		//DataBase dataBase = new DataBase();
+		DataBase dataBase = new DataBase("Database_Previsioni.json");
 
 		/**
 		 *
@@ -81,7 +81,7 @@ public class ServiceNuvole {
 				OpenWeather5giorni api5 = new OpenWeather5giorni(apiKey, nomiCitta.get(i));
 				Vector<MeteoCitta> temp = new Vector<MeteoCitta>();
 				temp.addAll(api5.estraiDatiMeteo());
-				//dataBase.salvaSulDatabase(temp);
+				dataBase.salvaSulDatabase(temp);
 
 				for (int j = 0; j < temp.size(); j++) {
 					risultato.add(temp.get(j).castToJsonObject());
