@@ -51,7 +51,7 @@ public class DataBase{
 
     public DataBase(String nomeDatabase) throws IOException, ParseException {
         this.nomeDatabase = nomeDatabase;
-        file = new File(System.getProperty("user.dir") + "/" + this.nomeDatabase);
+        file = new File(System.getProperty("user.dir") + "\\" + this.nomeDatabase);
         if(!file.exists()) {
             file.createNewFile();
             jsonArray = new JSONArray();
@@ -111,7 +111,6 @@ public class DataBase{
     /**
      *
      * Metodo che salva ogni ora i dati meteo istantanei (nuvolosita) di una citta.
-     *
      * @param nomeCitta Nome della citta di cui si vogliono raccogliere i dati meteo
      *
      */
@@ -149,14 +148,17 @@ public class DataBase{
 
     /**
      *
-     * Metodo per eliminare il database
+     * Metodo per formattare il database.
      *
      */
 
-    //da rivedere il metodo per eliminare il database
+    public void svuotaDatabase() throws IOException {
+        this.jsonArray.clear();
+        FileWriter fileWriter = new FileWriter(file);
+        fileWriter.write(jsonArray.toJSONString());
+        fileWriter.flush();
+        fileWriter.close();
 
-    public void eliminaDatabase(){
-        this.file.delete();
     }
 
     //metodi setter e getter relativi al nome del file che contiene il database
