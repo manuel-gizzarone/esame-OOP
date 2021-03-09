@@ -6,7 +6,7 @@ package com.OOPDekGiz.progettoDekGiz.exception;
  *
  */
 
-public class InserimentoExeption extends Exception {
+public class InserimentoException extends Exception {
 
     /**
      *
@@ -15,7 +15,8 @@ public class InserimentoExeption extends Exception {
      *
      */
 
-    public InserimentoExeption(String campo){
+    public InserimentoException(String campo){
+
         super("ERRORE! Il campo '" + campo + "' è vuoto. Riprovare!");
     }
 }

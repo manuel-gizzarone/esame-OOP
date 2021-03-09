@@ -28,7 +28,7 @@ public class DataBase{
 
     private String nomeDatabase;
 
-    private JSONArray jsonArray;
+    private JSONArray jsonArray; //potrebbe essere final
 
     private final File file;
 
@@ -55,6 +55,10 @@ public class DataBase{
         if(!file.exists()) {
             file.createNewFile();
             jsonArray = new JSONArray();
+            FileWriter fileWriter = new FileWriter(file);
+            fileWriter.write(jsonArray.toJSONString());
+            fileWriter.flush();
+            fileWriter.close();
         } else {
             jsonArray = this.getDatabase();
         }
@@ -123,8 +127,8 @@ public class DataBase{
                 OpenWeatherCurrentMeteo openWeatherCurrentMeteo = new OpenWeatherCurrentMeteo(apiKey, nomeCitta);
                 MeteoCitta meteoCitta = openWeatherCurrentMeteo.estraiDatiMeteo();
                 salvaSulDatabase(meteoCitta);
-            } catch (IOException | ParseException | DataMeteoException e) {
-                e.printStackTrace();
+            } catch (ParseException | DataMeteoException | IOException e) {
+                System.out.println("Errore rilevato nell'inserimento della città! Riprovare.");
             }
         }, 0, 1, TimeUnit.HOURS);
     }
@@ -160,7 +164,6 @@ public class DataBase{
        fileWriter.write(jsonArray.toJSONString());
        fileWriter.flush();
        fileWriter.close();
-
    }
 
 
