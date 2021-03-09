@@ -36,7 +36,7 @@ public class FiltersNuvole {
 				long mese = filtraData.getMese();
 				*/
 				
-				DataBase mioDataBase = new DataBase("Database_Raccolta.json");
+				DataBase mioDataBase = new DataBase("Database_Previsioni.json");
 				
 				
 				JSONArray jsonArrayDatiMeteoLettura = mioDataBase.getDatabase();
@@ -47,7 +47,7 @@ public class FiltersNuvole {
 					JSONObject jsondatoMeteoCittaletto = (JSONObject)jsonArrayDatiMeteoLettura.get(i);
 					
 					int nuvolosita = Integer.parseInt(jsondatoMeteoCittaletto.get("nuvolosita").toString());
-					String nomeCitta = jsondatoMeteoCittaletto.get("nuvolosita").toString();
+					String nomeCitta = jsondatoMeteoCittaletto.get("citta").toString();
 					long unixData = Long.parseLong(jsondatoMeteoCittaletto.get("unixData").toString());
 					
 					MeteoCitta datoMeteoCittaletto = new MeteoCitta(nuvolosita,nomeCitta,unixData);
@@ -59,7 +59,7 @@ public class FiltersNuvole {
 					}
 					
 				}
-				
+			
 				//calcola somma e valori max e min dei dati di nuvolosità raccolti con giorno (e mese e anno) coincidente
 				int somma=0;
 				double sommaScartiQuadrati=0;
@@ -86,6 +86,7 @@ public class FiltersNuvole {
 				jsonStatsGiornaliere.put("min_nuvolosita",min);
 				jsonStatsGiornaliere.put("media_nuvolosita",media);
 				jsonStatsGiornaliere.put("varianza_nuvolosita",varianza);
+				jsonStatsGiornaliere.put("citta",mioNomeCitta);
 				
 				return jsonStatsGiornaliere;
 		
@@ -106,7 +107,7 @@ public class FiltersNuvole {
 		long mese = filtraData.getMese();
 		*/
 		
-		DataBase mioDataBase = new DataBase("Database_Raccolta.json");
+		DataBase mioDataBase = new DataBase("Database_Previsioni.json");
 		
 		JSONArray jsonArrayDatiMeteoLettura = mioDataBase.getDatabase();
 		Vector <MeteoCitta> ArrayDatiMeteoRisultato = new Vector <MeteoCitta> ();
@@ -116,7 +117,7 @@ public class FiltersNuvole {
 			JSONObject jsondatoMeteoCittaletto = (JSONObject)jsonArrayDatiMeteoLettura.get(i);
 			
 			int nuvolosita = Integer.parseInt(jsondatoMeteoCittaletto.get("nuvolosita").toString());
-			String nomeCitta = jsondatoMeteoCittaletto.get("nuvolosita").toString();
+			String nomeCitta = jsondatoMeteoCittaletto.get("citta").toString();
 			long unixData = Long.parseLong(jsondatoMeteoCittaletto.get("unixData").toString());
 			
 			MeteoCitta datoMeteoCittaletto = new MeteoCitta(nuvolosita,nomeCitta,unixData);
@@ -155,6 +156,7 @@ public class FiltersNuvole {
 		jsonStatsMensili.put("min_nuvolosita",min);
 		jsonStatsMensili.put("media_nuvolosita",media);
 		jsonStatsMensili.put("varianza_nuvolosita",varianza);
+		jsonStatsMensili.put("citta",mioNomeCitta);
 		
 		return jsonStatsMensili;
 		
@@ -175,7 +177,7 @@ public class FiltersNuvole {
 		long mese = filtraData.getMese();
 		*/
 		
-		DataBase mioDataBase = new DataBase("Database_Raccolta.json");
+		DataBase mioDataBase = new DataBase("Database_Previsioni.json");
 		
 		
 		JSONArray jsonArrayDatiMeteoLettura = mioDataBase.getDatabase();
@@ -186,7 +188,7 @@ public class FiltersNuvole {
 			JSONObject jsondatoMeteoCittaletto = (JSONObject)jsonArrayDatiMeteoLettura.get(i);
 			
 			int nuvolosita = Integer.parseInt(jsondatoMeteoCittaletto.get("nuvolosita").toString());
-			String nomeCitta = jsondatoMeteoCittaletto.get("nuvolosita").toString();
+			String nomeCitta = jsondatoMeteoCittaletto.get("citta").toString();
 			long unixData = Long.parseLong(jsondatoMeteoCittaletto.get("unixData").toString());
 			
 			MeteoCitta datoMeteoCittaletto = new MeteoCitta(nuvolosita,nomeCitta,unixData);
@@ -225,6 +227,7 @@ public class FiltersNuvole {
 		jsonStatsSettimanali.put("min_nuvolosita",min);
 		jsonStatsSettimanali.put("media_nuvolosita",media);
 		jsonStatsSettimanali.put("varianza_nuvolosita",varianza);
+		jsonStatsSettimanali.put("citta",mioNomeCitta);
 		
 		return jsonStatsSettimanali;
 		
@@ -245,7 +248,7 @@ public class FiltersNuvole {
 		long mese = filtraData.getMese();
 		*/
 		
-		DataBase mioDataBase = new DataBase("Database_Raccolta.json");
+		DataBase mioDataBase = new DataBase("Database_Previsioni.json");
 		
 		JSONArray jsonArrayDatiMeteoLettura = mioDataBase.getDatabase();
 		Vector <MeteoCitta> ArrayDatiMeteoRisultato = new Vector <MeteoCitta> ();
@@ -255,7 +258,7 @@ public class FiltersNuvole {
 					JSONObject jsondatoMeteoCittaletto = (JSONObject)jsonArrayDatiMeteoLettura.get(i);
 					
 					int nuvolosita = Integer.parseInt(jsondatoMeteoCittaletto.get("nuvolosita").toString());
-					String nomeCitta = jsondatoMeteoCittaletto.get("nuvolosita").toString();
+					String nomeCitta = jsondatoMeteoCittaletto.get("citta").toString();
 					long unixData = Long.parseLong(jsondatoMeteoCittaletto.get("unixData").toString());
 					
 					MeteoCitta datoMeteoCittaletto = new MeteoCitta(nuvolosita,nomeCitta,unixData);
@@ -291,6 +294,7 @@ public class FiltersNuvole {
 		jsonStatsTotali.put("min_nuvolosita",min);
 		jsonStatsTotali.put("media_nuvolosita",media);
 		jsonStatsTotali.put("varianza_nuvolosita",varianza);
+		jsonStatsTotali.put("citta",mioNomeCitta);
 		
 		return jsonStatsTotali;
 		

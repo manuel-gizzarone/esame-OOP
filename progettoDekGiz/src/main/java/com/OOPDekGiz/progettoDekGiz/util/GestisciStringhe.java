@@ -4,6 +4,7 @@ import java.util.Vector;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;  
 import java.util.Date;
+import java.util.Locale;
 
 import com.OOPDekGiz.progettoDekGiz.exception.GestisciStringaException;
 
@@ -52,7 +53,8 @@ public class GestisciStringhe {
 	 */
 	static public Date StringToData (String dataDaEstrarre) throws ParseException {
  
-	    Date dataEstratta=new SimpleDateFormat("dd/MM/yyyy").parse(dataDaEstrarre); 
+	    Date dataEstratta=new SimpleDateFormat("dd/MM/yyyy",Locale.ITALY).parse(dataDaEstrarre); 
+	    
 	    return dataEstratta;
 	  
 	}

@@ -15,14 +15,6 @@ import com.OOPDekGiz.progettoDekGiz.statistics.*;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
-/**
- *
- * Questa classe rappresenta il servizio sul quale si base l'applicativo e contiene i metodi richiamati dal controller.
- *
- * @author Manuel Gizzarone
- * @author Emanuele De Caro
- *
- */
 
 @Service
 public class ServiceNuvole {
@@ -47,20 +39,30 @@ public class ServiceNuvole {
 
 	public JSONArray serviceNuvole5giorni(JSONObject bodyNomiCitta) throws GestisciStringaException, MalformedURLException, IOException, ParseException, DataMeteoException {
 
-		//è il JSONArray che dovrà essere la risposta alla chiamata del metodo
-		//contiene i JSONObject con le info relative all nuvolosità delle città  ai relativi orari (scritti in formato Unix)
+		/**
+		 * è il JSONArray che dovrà essere la risposta alla chiamata del metodo
+		 * contiene i JSONObject con le info relative all nuvolosità delle città  ai relativi orari (scritti in formato Unix)
+		 */
+
 		JSONArray risultato = new JSONArray();
 		DataBase dataBase = new DataBase("Database_Previsioni.json");
 
-		// il vettore contiene i nomi delle città per cui sono richieste le previsioni sulla nuvolosità
+		/**
+		 *
+		 * il vettore contiene i nomi delle città per cui sono richieste le previsioni sulla nuvolosità
+		 *
+		 */
+
 		Vector<String> nomiCitta = new Vector<String>();
 
 		try {
 
-			//è la stringa contenente i nomi delle città da separare per cui si vogliono le previsioni
-			//(ognuno è separato dall'altro dalla virgola)
-			String nomiCittaDaEstrarre = (String) bodyNomiCitta.get("nomiCitta");
+			/**
+			 * è la stringa contenente i nomi delle città da separare per cui si vogliono le previsioni
+			 * (ognuno è separato dall'altro dalla virgola)
+			 */
 
+			String nomiCittaDaEstrarre = (String) bodyNomiCitta.get("nomiCitta");
 			//ATTENZIONE!!! la key associata alla stringa contenente i nom delle città separate dalla virgola deve essere "nomiCitta"
 
 			GestisciStringhe gestisciStringa = new GestisciStringhe(nomiCittaDaEstrarre);
@@ -70,15 +72,16 @@ public class ServiceNuvole {
 			for (int i = 0; i < gestisciStringa.estraiConVirgola().size(); i++) {
 				String temp = gestisciStringa.estraiConVirgola().get(i);
 				nomiCitta.add(temp);
-			}   //il for si potrebbe eliminare usando poi il metodo addAll come indicato: nomiCitta.addAll(gestisciStringa.estraiConVirgola());
+			} //il for si potrebbe eliminare usando poi il metodo addAll
 
 			//Collections.copy(nomiCitta,gestisciStringa.estraiConVirgola());
 
 			//formatta il JSONArray da restituire come risultato
+
 			for (int i = 0; i < nomiCitta.size(); i++) {
 				OpenWeather5giorni api5 = new OpenWeather5giorni(apiKey, nomiCitta.get(i));
 				Vector<MeteoCitta> temp = new Vector<MeteoCitta>();
-				temp.addAll(api5.estraiDatiMeteo()); //potrebbe sostituirsi direttamente con: Vector<MeteoCitta> temp = new Vector<MeteoCitta>(api5.estraiDatiMeteo());
+				temp.addAll(api5.estraiDatiMeteo());
 				dataBase.salvaSulDatabase(temp);
 
 				for (int j = 0; j < temp.size(); j++) {
@@ -92,10 +95,12 @@ public class ServiceNuvole {
 			JSONObject o = new JSONObject();
 			o.put("c'è", "un'eccezione");
 			risultato.add(o);
-			return risultato; //si puo sostituire direttamente con "return "C'è un'eccezione!" viene comunque visualizzato su postman come stringa
+			return risultato;
 		}
+		//fine metodo relativo alla rotta api5 giorni
 	}
-
+	
+	
 	/**
 	 *
 	 * Metodo che salva sul database "Database_Raccolta" i dati meteo di una citta aggiornati ogni ora.
@@ -167,7 +172,9 @@ public class ServiceNuvole {
 
 
 	//metodi per le statistiche media varianza max e min di nuvolosità giornaliere settimanali e mensili
-	//NOTA!! I codici ripetuti potrebbero essere sostituiti da metodi ausiliari
+	
+	
+	//metodi per le statistiche media varianza max e min di nuvolosità giornaliere settimanali e mensili 
 	
 	public JSONObject statsGiornaliere (String data) throws IOException, ParseException, DataMeteoException, java.text.ParseException {
 		
@@ -175,7 +182,7 @@ public class ServiceNuvole {
 		StatsNuvole stats = new StatsNuvole ();
 		//ATTENZIONE!!! la data deve essere scritta nel formato gg/mm/aaaa
 		//salvo la data ottenuta come stringa come oggetto di tipo DataMeteo
-		DataMeteo dataMeteo = new DataMeteo ((long)((GestisciStringhe.StringToData(data).getTime())*1000));
+		DataMeteo dataMeteo = new DataMeteo ((long)((GestisciStringhe.StringToData(data).getTime())/1000));
 		
 		JSONObject risultato = new JSONObject();
 		risultato=stats.statisticheGiornaliere(dataMeteo);
@@ -194,7 +201,7 @@ public class ServiceNuvole {
 		StatsNuvole stats = new StatsNuvole ();
 		//ATTENZIONE!!! la data deve essere scritta nel formato gg/mm/aaaa
 		//salvo la data ottenuta come stringa come oggetto di tipo DataMeteo
-		DataMeteo dataMeteo = new DataMeteo ((long)((GestisciStringhe.StringToData(data).getTime())*1000));
+		DataMeteo dataMeteo = new DataMeteo ((long)((GestisciStringhe.StringToData(data).getTime())/1000));
 		
 		JSONObject risultato = new JSONObject();
 		risultato=stats.statisticheSettimanali(dataMeteo);
@@ -211,9 +218,10 @@ public class ServiceNuvole {
 	
     	try {
 	    StatsNuvole stats = new StatsNuvole ();
-		//ATTENZIONE!!! la data deve essere scritta nel formato gg/mm/aaaa
+		//ATTENZIONE!!! la data deve essere scritta nel formato mm/aaaa
 	    //salvo la data ottenuta come stringa come oggetto di tipo DataMeteo
-	    DataMeteo dataMeteo = new DataMeteo ((long)((GestisciStringhe.StringToData(data).getTime())*1000));
+	    DataMeteo dataMeteo = new DataMeteo ((long)((GestisciStringhe.StringToData("10/"+data).getTime())/1000));
+	    //il giorno 10 è predefinito e utilizzato esclusivamente per la creazione del relativo oggetto dataMeteo
 	
 	    JSONObject risultato = new JSONObject();
 	    risultato=stats.statisticheMensili(dataMeteo);
@@ -245,8 +253,7 @@ public class ServiceNuvole {
     }
 	
     //fine metodi statistiche
-
-
+    
   //metodi per filtrare le statistiche media varianza max e min di nuvolosità giornaliere settimanali e mensili su una o più nomi di città
 	
   	public JSONArray filtraStatsGiornaliere (JSONObject bodyNomiCittaData) throws IOException, ParseException, DataMeteoException, java.text.ParseException {
@@ -256,7 +263,7 @@ public class ServiceNuvole {
   		
   		//estraggo la data come stringa e la converto come oggetto di tipo DataMeteo
   	    //ATTENZIONE!!! la key associata alla stringa deve essere "data" e la data deve essere scritta nel formato gg/mm/aaaa
-  		DataMeteo dataMeteo = new DataMeteo ((long)((GestisciStringhe.StringToData((String)bodyNomiCittaData.get("data")).getTime())*1000));
+  		DataMeteo dataMeteo = new DataMeteo ((long)((GestisciStringhe.StringToData((String)bodyNomiCittaData.get("data")).getTime())/1000));
   		
   		/**
   		 * è il vettore che conterrà i nomi delle città inserite
@@ -305,7 +312,7 @@ public class ServiceNuvole {
     	  		
     	  		//estraggo la data come stringa e la converto come oggetto di tipo DataMeteo
     	  	    //ATTENZIONE!!! la key associata alla stringa deve essere "data" e la data deve essere scritta nel formato gg/mm/aaaa
-    	  		DataMeteo dataMeteo = new DataMeteo ((long)((GestisciStringhe.StringToData((String)bodyNomiCittaData.get("data")).getTime())*1000));
+    	  		DataMeteo dataMeteo = new DataMeteo ((long)((GestisciStringhe.StringToData((String)bodyNomiCittaData.get("data")).getTime())/1000));
     	  		
     	  		/**
     	  		 * è il vettore che conterrà i nomi delle città inserite
@@ -354,8 +361,8 @@ public class ServiceNuvole {
   	  		
   	  		//estraggo la data come stringa e la converto come oggetto di tipo DataMeteo
   	  	    //ATTENZIONE!!! la key associata alla stringa deve essere "data" e la data deve essere scritta nel formato gg/mm/aaaa
-  	  		DataMeteo dataMeteo = new DataMeteo ((long)((GestisciStringhe.StringToData((String)bodyNomiCittaData.get("data")).getTime())*1000));
-  	  		
+  	  		DataMeteo dataMeteo = new DataMeteo ((long)((GestisciStringhe.StringToData("10/"+(String)bodyNomiCittaData.get("data")).getTime())/1000));
+  	  	    //il giorno 10 è predefinito e utilizzato esclusivamente per la creazione del relativo oggetto dataMeteo
   	  		/**
   	  		 * è il vettore che conterrà i nomi delle città inserite
   	  		 */
@@ -428,7 +435,7 @@ public class ServiceNuvole {
     	  		JSONObject elemento = new JSONObject();
     	  		
     	  		for (String nome : nomiCitta) {
-    	  		elemento=filterStats.filtraStatisticheTotali((String)bodyNomiCitta.get("nomiCitta"));
+    	  		elemento=filterStats.filtraStatisticheTotali(nome);
     	  		risultato.add(elemento);
     	  		}
     	  		return risultato;
