@@ -20,7 +20,7 @@ import java.net.MalformedURLException;
 @Service
 public class ServiceNuvole {
 
-	String apiKey = "2300b41a61721439ff98965f79ff40db";
+	private final String apiKey = "2300b41a61721439ff98965f79ff40db";
 
 	/**
 	 *
@@ -38,54 +38,43 @@ public class ServiceNuvole {
 	 *
 	 */
 
-	public JSONArray serviceNuvole5giorni(JSONObject bodyNomiCitta) throws  IOException, ParseException {
+	public JSONArray serviceNuvole5giorni(JSONObject bodyNomiCitta)
+			throws IOException, ParseException, InserimentoException, GestisciStringaException, DataMeteoException, NomeCittaException {
 
-		//è il JSONArray che dovrà essere la risposta alla chiamata del metodo
-		//contiene i JSONObject con le info relative alla nuvolosità delle città  ai relativi orari (scritti in formato Unix)
 		JSONArray risultato = new JSONArray();
-
 		DataBase dataBase = new DataBase("Database_Previsioni.json");
 
-		//il vettore contiene i nomi delle città per cui sono richieste le previsioni sulla nuvolosità
 		Vector<String> nomiCitta = new Vector<String>();
+		String nomiCittaDaEstrarre = (String) bodyNomiCitta.get("nomiCitta");
+		if(nomiCittaDaEstrarre.isEmpty()){
+			throw new InserimentoException("nomiCitta");
+		}
 
-		try {
-
-			 //è la stringa contenente i nomi delle città da separare per cui si vogliono le previsioni
-			 //(ognuno è separato dall'altro dalla virgola)
-			String nomiCittaDaEstrarre = (String) bodyNomiCitta.get("nomiCitta");
-			//ATTENZIONE!!! la key associata alla stringa contenente i nom delle città separate dalla virgola deve essere "nomiCitta"
-
+		try{
 			GestisciStringhe gestisciStringa = new GestisciStringhe(nomiCittaDaEstrarre);
-
-
-			//inserisce i nomi delle citta estratti dal bodyNomiCitta nel vettore di stringhe nomiCitta
 			for (int i = 0; i < gestisciStringa.estraiConVirgola().size(); i++) {
 				String temp = gestisciStringa.estraiConVirgola().get(i);
 				nomiCitta.add(temp);
-			}   //il for si potrebbe eliminare usando poi il metodo addAll
+			}
+		} catch (Exception e) {
+			throw new GestisciStringaException();
+		}
 
-
-			//formatta il JSONArray da restituire come risultato
-			for (int i = 0; i < nomiCitta.size(); i++) {
-				OpenWeather5giorni api5 = new OpenWeather5giorni(apiKey, nomiCitta.get(i));
+		for (int i = 0; i < nomiCitta.size(); i++) {
+			try{
+				OpenWeather5giorni api5 = new OpenWeather5giorni(this.apiKey, nomiCitta.get(i));
 				Vector<MeteoCitta> temp = new Vector<MeteoCitta>();
 				temp.addAll(api5.estraiDatiMeteo());
 				dataBase.salvaSulDatabase(temp);
-
 				for (int j = 0; j < temp.size(); j++) {
 					risultato.add(temp.get(j).castToJsonObject());
 				}
+			} catch (IOException e) {
+				throw new NomeCittaException(nomiCitta.get(i));
 			}
-
-			return risultato;
-		} catch (Exception e) {
-			e.printStackTrace();
-			JSONObject o = new JSONObject();
-			o.put("c'è", "un'eccezione");
-			risultato.add(o);
-			return risultato;
 		}
+
+		return risultato;
 	}
 	
 	
@@ -101,13 +90,21 @@ public class ServiceNuvole {
 	 *
 	 */
 
-	public String salvaOgniOra(String nomeCitta) throws ParseException, InserimentoException, IOException {
-		if(nomeCitta.isEmpty()){
-			throw new InserimentoException("nomeCitta");
-		} else{
-			DataBase dataBase = new DataBase("Database_Raccolta.json");
-			dataBase.salvaSulDatabaseOgniOra(nomeCitta);
-			return "Path database:  " + System.getProperty("user.dir") + "/" + dataBase.getNomeDatabase();
+	public String salvaOgniOra(String nomeCitta)
+			throws ParseException, InserimentoException, NomeCittaException {
+
+		try{
+			if(nomeCitta.isEmpty()){
+				throw new InserimentoException("nomeCitta");
+			} else {
+				OpenWeatherCurrentMeteo openWeatherCurrentMeteo = new OpenWeatherCurrentMeteo(this.apiKey, nomeCitta);
+				MeteoCitta meteoCitta = openWeatherCurrentMeteo.estraiDatiMeteo();
+				DataBase dataBase = new DataBase(nomeCitta + ".json");
+				dataBase.salvaSulDatabaseOgniOra(meteoCitta);
+				return "Path database:  " + System.getProperty("user.dir") + "/" + dataBase.getNomeDatabase();
+			}
+		} catch (IOException | DataMeteoException e){
+			throw  new NomeCittaException(nomeCitta);
 		}
 	}
 
@@ -127,7 +124,9 @@ public class ServiceNuvole {
 	 *
 	 */
 
-	public String eliminaDatabase(String nomeDatabase) throws IOException, ParseException, InserimentoException, DatabaseNotFoundException {
+	public String eliminaDatabase(String nomeDatabase)
+			throws IOException, ParseException, InserimentoException, DatabaseNotFoundException {
+
 		if(nomeDatabase.isEmpty()) {
 			throw new InserimentoException("nomeDatabase");
 		} else {
@@ -157,7 +156,8 @@ public class ServiceNuvole {
 	 *
 	 */
 
-	public JSONArray getDatabase(String nomeDatabase) throws IOException, ParseException, InserimentoException, DatabaseNotFoundException {
+	public JSONArray getDatabase(String nomeDatabase)
+			throws IOException, ParseException, InserimentoException, DatabaseNotFoundException {
 		if(nomeDatabase.isEmpty()){
 			throw new InserimentoException("nomeDatabase");
 		} else{

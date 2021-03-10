@@ -1,9 +1,8 @@
 package com.OOPDekGiz.progettoDekGiz.util;
 
 import java.io.BufferedReader;
-
-
 import java.io.InputStreamReader;
+
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -19,117 +18,98 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import org.json.simple.parser.ParseException;
 
+
 /**
- * legge il contenuto della risposta alle api di openweather per le previsioni meteo ogni 3 ore fino a 5 giorni successivi alla chiamata
- * estrae dalla risposta le informazioni relative alla nuvolosità di una citta ad ogni orario (tra quelli della risposta)
- * @author emanuele
+ *
+ * Questa classe estende la superclasse OpenWeatherApiUrlGen e si occupa di gestire le chiamate alle Api5Giorni
+ * per il salvataggio dei dati meteo sulla nuvolosità ogni 3 ore fino a 5 giorni successivi alla chiamata.
+ *
+ * @author Manuel Gizzarone
+ * @author Emanuele De Caro
  *
  */
+
 public class OpenWeather5giorni extends OpenWeatherApiUrlGen {
-	
+
+	private String Url5giorni = super.UrlBase + "forecast?";
+
+	BufferedReader leggiApi5;
+
 	/**
-	 * contiene l'url completo per la chiamata all'api meteo 5 giorni
+	 *
+	 * Costruttore della classe che ha il compito di costruire l'URL completo per la chiamata alle Api5Giorni. Dopo aver
+	 * ottenuto il nome della città e l'apiKey, apre il flusso di input BufferedReader per leggere la risposta.
+	 *
+	 * @param apiKey apiKey necessaria per la costruzione dell'URL
+	 * @param nomeCitta nome della citta di cui si vogliono ottenere previsioni sulla nuvolosità ogni 3 ore fino a 5
+	 * giorni successivi alla chiamata
+	 * @throws MalformedURLException
+	 * @throws IOException
+	 *
 	 */
-	protected String Url5giorni=UrlBase+"forecast?";
-	
-	protected URLConnection ApiOpenWeather5;
-	protected BufferedReader leggiApi5;
-	
+
+	public OpenWeather5giorni (String apiKey, String nomeCitta)
+			throws MalformedURLException, IOException {
+		super(apiKey, nomeCitta);
+		URLConnection ApiOpenWeather5 = new URL(this.costruisciUrl5giorni()).openConnection();
+		leggiApi5 = new BufferedReader(new InputStreamReader(ApiOpenWeather5.getInputStream()));
+	}
+
 	/**
-	 * costruttore
-	 * costruisce l'url completo per la chiamata all'api meteo 5 giorni una volta ottenuti il nome della città e l'apikey
-	 * apre un flusso di input BufferedReader per leggere la risposta delle api
+	 *
+	 * Questo metodo costruisce l'URL corrispondente alla chiamata alle Api5Giorni.
+	 *
+	 * @return URL completo per la chiamata alle Api5Giorni
+	 *
 	 */
-	public OpenWeather5giorni (String apiKey, String nomeCitta) throws MalformedURLException, IOException{	
-	super(apiKey,nomeCitta);
-	
-    ApiOpenWeather5 = new URL(this.costruisciUrl5giorni(apiKey,nomeCitta)).openConnection();
-	leggiApi5 = new BufferedReader(new InputStreamReader(ApiOpenWeather5.getInputStream()));
-	
+
+	public String costruisciUrl5giorni() {
+		return (Url5giorni + "q=" + super.getNomeCitta() + "&appid=" + super.getApiKey());
 	}
 	
-	
 	/**
-	 * costruisce l'url corrispondente alla chiamata api 3 ore 5 giorni forecast
-	 * @param apiKey
-	 * @param nomeCitta
-	 * @return l'url completo
-	 */
-	public String costruisciUrl5giorni(String apiKey,String nomeCitta) {
-		Url5giorni+="q="+nomeCitta;
-		Url5giorni+="&";
-	    Url5giorni+="appid="+apiKey;
-		return Url5giorni;
-	}
-	
-	/**
-	 * estrae i dati sulla nuvolosità città relativi alla chiamata api 3 ore 5 giorni forecast
+	 *
+	 * Questo metodo estrae i dati meteo sulla nuvolosità (ogni 3 ore fino a 5 giorni successivi la chiamata)
+	 * della città inserita dall'utente.
 	 * 
-	 * @return il vettore di oggetti di tipo MeteoCitta costruiti dai dati estratti dalla chiamata all'api
+	 * @return il vettore di oggetti di tipo MeteoCitta costruiti dai dati estratti dalla chiamata alle Api5Giorni
 	 * @throws ParseException
 	 * @throws MalformedURLException
 	 * @throws IOException
 	 * @throws DataMeteoException
+	 *
 	 */
-	public Vector<MeteoCitta> estraiDatiMeteo () throws ParseException,MalformedURLException, IOException, DataMeteoException{
-		/**
-		 * oggetto utilizzato per il parsing String - JSONObject 
-		 */
+
+	public Vector<MeteoCitta> estraiDatiMeteo ()
+			throws ParseException,MalformedURLException, IOException, DataMeteoException {
+		String StringRisultatoApi = leggiApi5.readLine();
+
 		JSONParser parser = new JSONParser();
-		
-		/**
-		 * è il vettore in cui saranno contenuti gli oggetti di tipo MeteoCitta - è l'oggetto che sarà dato in risposta al metodo
-		 */
+		JSONObject JsonObjectRisultatoApi = (JSONObject)parser.parse(StringRisultatoApi);
+		JSONObject JsonObjectCity = (JSONObject)JsonObjectRisultatoApi.get("city");
+		String nomeCitta = (String) JsonObjectCity.get("name");
+		JSONArray arrayDatiCitta = (JSONArray) JsonObjectRisultatoApi.get("list");
 		Vector<MeteoCitta> vettoreMeteoCitta = new Vector<MeteoCitta>();
 
-		/**
-		 * è la stringa in cui verrà inserita la risposta dell'api
-		 */
-		String StringRisultatoApi = leggiApi5.readLine();
-		
-		/**
-		 * è il JSONObject in cui verrà inserita la risposta dell'api
-		 */
-		JSONObject JsonObjectRisultatoApi = (JSONObject)parser.parse(StringRisultatoApi);
-		
-		
-		/**
-		 * è il JSONObject i cui campi specificano i dettagli sulla città a cui la chiamata è riferita
-		 */
-		JSONObject JsonObjectCity = (JSONObject)JsonObjectRisultatoApi.get("city");
-		/**
-		 * è la stringa in cui è inserito il nome della città a cui la chiamata è riferita
-		 */
-		String nomeCitta = (String) JsonObjectCity.get("name");
-		
-		/**
-		 * è il JSONArray i cui elementi sono i JSONObject che specificano le condizioni meteo della città ad una relativa ora 
-		 */
-		JSONArray arrayDatiCitta = (JSONArray) JsonObjectRisultatoApi.get("list");
-		
-		for(int i=0; i<arrayDatiCitta.size(); i++)
-		{
+		for(int i = 0; i < arrayDatiCitta.size(); i++) {
 			JSONObject DatiCitta = (JSONObject) arrayDatiCitta.get(i);
-			
 			long UnixTime = (long) DatiCitta.get("dt");
 			JSONObject JsonObjectClouds =(JSONObject) DatiCitta.get("clouds");
-			
-			//per nuvolosita si intende il numero %
 			int nuvolosita = Integer.parseInt(JsonObjectClouds.get("all").toString());
-			
-			MeteoCitta meteoCitta = new MeteoCitta(nuvolosita,nomeCitta,UnixTime);
-				
+			MeteoCitta meteoCitta = new MeteoCitta(nuvolosita, nomeCitta, UnixTime);
 			vettoreMeteoCitta.add(meteoCitta);
 		}
-	return vettoreMeteoCitta;
+
+		return vettoreMeteoCitta;
     }
 
     //metodi get e set
+
 	public String getUrl5giorni() {
 		return Url5giorni;
 	}
-	
-	
-	
-	
+
+	public void setUrl5giorni(String url5giorni) {
+		Url5giorni = url5giorni;
+	}
 }

@@ -34,16 +34,16 @@ public class Controller {
 	 * @param bodyNomiCitta JSONObject contenente i nomi delle città di cui sono richieste le previsioni
 	 * @return JSONArray contenente gli oggetti di tipo MeteoCitta della risposta (ognuno castato in JSONObject)
 	 * @throws ParseException
-	 * @throws MalformedURLException
 	 * @throws IOException
-	 * @throws GestisciStringaException 
-	 * @throws DataMeteoException
+	 * @throws InserimentoException eccezione che viene lanciata se l'utente dimentica di inserire i nomi delle città
+	 * nel body della richiesta.
 	 *
 	 */
 
 	@RequestMapping(value = "/nuvoleCitta5giorni", method = RequestMethod.POST)
 	@ResponseBody
-	public JSONArray nuvole5giorni(@RequestBody JSONObject bodyNomiCitta) throws ParseException,MalformedURLException,IOException, GestisciStringaException, DataMeteoException{
+	public JSONArray nuvole5giorni(@RequestBody JSONObject bodyNomiCitta)
+			throws ParseException, IOException, InserimentoException, NomeCittaException, GestisciStringaException, DataMeteoException {
 		return serviceNuvole.serviceNuvole5giorni(bodyNomiCitta);
 		//ATTENZIONE!!! il JSONObject deve contenere 1 campo "nomiCitta"
 		//ATTENZIONE!!! la key associata alla stringa contenente i nomi delle città separate dalla virgola deve essere "nomiCitta"
@@ -69,9 +69,9 @@ public class Controller {
 	
 	@RequestMapping(value = "/salvaOgniOra", method = RequestMethod.GET)
 	@ResponseBody
-	public String salvaDati(@RequestParam String nomeCitta) throws ParseException, IOException, InserimentoException {
+	public String salvaDati(@RequestParam String nomeCitta)
+			throws ParseException, InserimentoException, NomeCittaException {
 		return serviceNuvole.salvaOgniOra(nomeCitta);
-		//La key del parametro deve essere "nomeCitta"
 	}
 	
 	//FINE ROTTA
@@ -87,16 +87,11 @@ public class Controller {
 	 *
 	 * @param data data sulla quale si vogliono visualizzare le statistiche
 	 * @return JSONObject contenente i valori delle statistiche calcolate
-	 * @throws IOException
-	 * @throws ParseException
-	 * @throws DataMeteoException
-	 * @throws java.text.ParseException
-	 * @throws InserimentoException eccezione che viene lanciata se l'utente dimentica di inserire la data
 	 *
 	 */
 
 	@RequestMapping(value = "/statsGiornaliere", method = RequestMethod.GET)
-	public JSONObject statsGiornaliere (@RequestParam String data) throws IOException, ParseException, DataMeteoException, java.text.ParseException, InserimentoException {
+	public JSONObject statsGiornaliere (@RequestParam String data) {
 		return serviceNuvole.statsGiornaliere(data);
 		//ATTENZIONE!!! la rotta richiede l'inserimento di un parametro "data"
 	}
@@ -114,16 +109,11 @@ public class Controller {
 	 *
 	 * @param data data sulla quale si vogliono visualizzare le statistiche (settimanali)
 	 * @return JSONObject contenente i valori delle statistiche calcolate
-	 * @throws IOException
-	 * @throws ParseException
-	 * @throws DataMeteoException
-	 * @throws java.text.ParseException
-	 * @throws InserimentoException eccezione che viene lanciata se l'utente dimentica di inserire la data
 	 *
 	 */
 
 	@RequestMapping(value = "/statsSettimanali", method = RequestMethod.GET)
-	public JSONObject statsSettimanali (@RequestParam String data) throws IOException, ParseException, DataMeteoException, java.text.ParseException, InserimentoException {
+	public JSONObject statsSettimanali (@RequestParam String data) {
 		return serviceNuvole.statsSettimanali(data);
 		//ATTENZIONE!!! la rotta richiede l'inserimento di un parametro "data"
 	}
@@ -141,16 +131,11 @@ public class Controller {
 	 *
 	 * @param data nel formato mm/AAAA
 	 * @return JSONObject contenente i valori delle statistiche calcolate
-	 * @throws IOException
-	 * @throws ParseException
-	 * @throws DataMeteoException
-	 * @throws java.text.ParseException
-	 * @throws InserimentoException eccezione che viene lanciata se l'utente dimentica di inserire la data
 	 *
 	 */
 
 	@RequestMapping(value = "/statsMensili", method = RequestMethod.GET)
-	public JSONObject statsMensili(@RequestParam String data) throws IOException, ParseException, DataMeteoException, java.text.ParseException, InserimentoException {
+	public JSONObject statsMensili(@RequestParam String data) {
 			return serviceNuvole.statsMensili(data);
 			//ATTENZIONE!!! la rotta richiede l'inserimento di un parametro "data"
 			//ATTENZIONE!!! il mese nel parametro data deve essere scritto come mm/AAAA
@@ -167,16 +152,11 @@ public class Controller {
 	 * nel "Database_Previsioni". Le statistiche riguardano valori massimi, minimi media e varianza della nuvolosità.
 	 *
 	 * @return JSONObject contenente i valori delle statistiche calcolate
-	 * @throws IOException
-	 * @throws ParseException
-	 * @throws DataMeteoException
-	 * @throws java.text.ParseException
-	 * @throws InserimentoException
 	 *
 	 */
 
 	@RequestMapping(value = "/statsTotali", method = RequestMethod.GET)
-	public JSONObject statsTotali() throws IOException, ParseException, DataMeteoException, java.text.ParseException, InserimentoException {
+	public JSONObject statsTotali() {
 			return serviceNuvole.statsTotali();
 	}
 			
@@ -189,18 +169,12 @@ public class Controller {
 	 *
 	 * @param bodyNomiCittaData
 	 * @return
-	 * @throws ParseException
-	 * @throws MalformedURLException
-	 * @throws IOException
-	 * @throws GestisciStringaException
-	 * @throws DataMeteoException
-	 * @throws java.text.ParseException
 	 *
 	 */
 
 	@RequestMapping(value = "/filtraStatsGiornaliero", method = RequestMethod.POST)
 	@ResponseBody
-	public JSONArray filtraStatsGiornaliero(@RequestBody JSONObject bodyNomiCittaData) throws ParseException,IOException, DataMeteoException, java.text.ParseException{
+	public JSONArray filtraStatsGiornaliero(@RequestBody JSONObject bodyNomiCittaData) {
 		return serviceNuvole.filtraStatsGiornaliere(bodyNomiCittaData);
 		//ATTENZIONE!!! il JSONObject deve contenere 2 campi "nomiCitta" e "data"
 		//ATTENZIONE!!! la key associata alla stringa contenente i nomi delle città separate dalla virgola deve essere "nomiCitta"
@@ -216,18 +190,12 @@ public class Controller {
 	 *
 	 * @param bodyNomiCittaData
 	 * @return
-	 * @throws ParseException
-	 * @throws MalformedURLException
-	 * @throws IOException
-	 * @throws GestisciStringaException
-	 * @throws DataMeteoException
-	 * @throws java.text.ParseException
 	 *
 	 */
 
 	@RequestMapping(value = "/filtraStatsSettimanale", method = RequestMethod.POST)
 	@ResponseBody
-	public JSONArray filtraStatsSettimanale(@RequestBody JSONObject bodyNomiCittaData) throws ParseException, IOException,  DataMeteoException, java.text.ParseException{
+	public JSONArray filtraStatsSettimanale(@RequestBody JSONObject bodyNomiCittaData) {
 		return serviceNuvole.filtraStatsSettimanali(bodyNomiCittaData);
 		//ATTENZIONE!!! il JSONObject deve contenere 2 campi "nomiCitta" e "data"
 		//ATTENZIONE!!! la key associata alla stringa contenente i nomi delle città separate dalla virgola deve essere "nomiCitta"
@@ -243,18 +211,12 @@ public class Controller {
 	 *
 	 * @param bodyNomiCittaData
 	 * @return
-	 * @throws ParseException
-	 * @throws MalformedURLException
-	 * @throws IOException
-	 * @throws GestisciStringaException
-	 * @throws DataMeteoException
-	 * @throws java.text.ParseException
 	 *
 	 */
 
 	@RequestMapping(value = "/filtraStatsMensile", method = RequestMethod.POST)
 	@ResponseBody
-	public JSONArray filtraStatsMensile(@RequestBody JSONObject bodyNomiCittaData) throws ParseException, IOException,  DataMeteoException, java.text.ParseException{
+	public JSONArray filtraStatsMensile(@RequestBody JSONObject bodyNomiCittaData) {
 		return serviceNuvole.filtraStatsMensili(bodyNomiCittaData);
 		//ATTENZIONE!!! il JSONObject deve contenere 2 campi "nomiCitta" e "data"
 		//ATTENZIONE!!! la key associata alla stringa contenente i nomi delle città separate dalla virgola deve essere "nomiCitta"
@@ -270,18 +232,12 @@ public class Controller {
 	 *
 	 * @param bodyNomiCittaData
 	 * @return
-	 * @throws ParseException
-	 * @throws MalformedURLException
-	 * @throws IOException
-	 * @throws GestisciStringaException
-	 * @throws DataMeteoException
-	 * @throws java.text.ParseException
 	 *
 	 */
 
 	@RequestMapping(value = "/filtraStatsTotale", method = RequestMethod.POST)
 	@ResponseBody
-	public JSONArray filtraStatsTotale(@RequestBody JSONObject bodyNomiCittaData) throws ParseException,MalformedURLException,IOException, GestisciStringaException, DataMeteoException, java.text.ParseException{
+	public JSONArray filtraStatsTotale(@RequestBody JSONObject bodyNomiCittaData) {
 		return serviceNuvole.filtraStatsTotali(bodyNomiCittaData);
 		//ATTENZIONE!!! il JSONObject deve contenere 1 campo "nomiCitta"
 		//ATTENZIONE!!! la key associata alla stringa contenente i nomi delle città separate dalla virgola deve essere "nomiCitta"
@@ -303,12 +259,15 @@ public class Controller {
 	 * @throws ParseException
 	 * @throws InserimentoException eccezione che viene lanciata se l'utente dimentica di inserire il nome del database
 	 * da formattare
+	 * @throws DatabaseNotFoundException eccezione che viene lanciata se l'utente tenta di formattare un database
+	 * inesistente.
 	 *
 	 */
 
 	@RequestMapping(value = "/deleteDatabase", method = RequestMethod.DELETE)
 	@ResponseBody
-	public String eliminaDatabase(@RequestParam String nomeDatabase) throws IOException, ParseException, InserimentoException, DatabaseNotFoundException {
+	public String eliminaDatabase(@RequestParam String nomeDatabase)
+			throws IOException, ParseException, InserimentoException, DatabaseNotFoundException {
 		return serviceNuvole.eliminaDatabase(nomeDatabase);
 		//La key del parametro deve essere "nomeDatabase"
 	}
@@ -328,12 +287,15 @@ public class Controller {
 	 * @throws ParseException
 	 * @throws InserimentoException eccezione che viene lanciata nel caso in cui l'utente non inserisce il nome del
 	 * database da visualizzare
+	 * @throws DatabaseNotFoundException eccezione che viene lanciata se l'utente tenta di visualizzare un database
+	 * inesistente.
 	 *
 	 */
 
 	@RequestMapping(value = "/getDatabase", method = RequestMethod.GET)
 	@ResponseBody
-	public JSONArray getDatabase(@RequestParam String nomeDatabase) throws IOException, ParseException, InserimentoException, DatabaseNotFoundException {
+	public JSONArray getDatabase(@RequestParam String nomeDatabase)
+			throws IOException, ParseException, InserimentoException, DatabaseNotFoundException {
 		return serviceNuvole.getDatabase(nomeDatabase);
 		//La key del parametro deve essere "nomeDatabase"
 	}
