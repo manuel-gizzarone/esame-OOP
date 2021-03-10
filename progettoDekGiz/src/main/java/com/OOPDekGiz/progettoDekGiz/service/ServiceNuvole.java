@@ -41,17 +41,31 @@ public class ServiceNuvole {
 	public JSONArray serviceNuvole5giorni(JSONObject bodyNomiCitta)
 			throws IOException, ParseException, InserimentoException, GestisciStringaException, DataMeteoException, NomeCittaException {
 
+		/*
+		 * è il JSONArray che dovrà essere la risposta alla chiamata del metodo
+		 * contiene i JSONObject con le info relative all nuvolosità delle città  ai relativi orari (scritti in formato Unix)
+		 */
 		JSONArray risultato = new JSONArray();
 		DataBase dataBase = new DataBase("Database_Previsioni.json");
 
+		//il vettore contiene i nomi delle città per cui sono richieste le previsioni sulla nuvolosità
 		Vector<String> nomiCitta = new Vector<String>();
+		
+		/*
+		 * è la stringa contenente i nomi delle città da separare per cui si vogliono le previsioni
+		 * (ognuno è separato dall'altro dalla virgola)
+		 */
 		String nomiCittaDaEstrarre = (String) bodyNomiCitta.get("nomiCitta");
+		//ATTENZIONE!!! la key associata alla stringa contenente i nom delle città separate dalla virgola deve essere "nomiCitta"
+		
 		if(nomiCittaDaEstrarre.isEmpty()){
 			throw new InserimentoException("nomiCitta");
 		}
 
 		try{
+			
 			GestisciStringhe gestisciStringa = new GestisciStringhe(nomiCittaDaEstrarre);
+			//inserisce i nomi delle citta estratti dal bodyNomiCitta nel vettore di stringhe nomiCitta
 			for (int i = 0; i < gestisciStringa.estraiConVirgola().size(); i++) {
 				String temp = gestisciStringa.estraiConVirgola().get(i);
 				nomiCitta.add(temp);
@@ -257,10 +271,13 @@ public class ServiceNuvole {
 	
   	public JSONArray filtraStatsGiornaliere (JSONObject bodyNomiCittaData) {
   		
-  		try { FiltersNuvole filterStats = new FiltersNuvole ();
+  		try {
+  			FiltersNuvole filterStats = new FiltersNuvole ();
 			//estraggo la data come stringa e la converto come oggetto di tipo DataMeteo
 			//ATTENZIONE!!! la key associata alla stringa deve essere "data" e la data deve essere scritta nel formato gg/mm/aaaa
 			DataMeteo dataMeteo = new DataMeteo ((long)((GestisciStringhe.StringToData((String)bodyNomiCittaData.get("data")).getTime())/1000));
+			
+			//DataMeteo dataMeteo = new DataMeteo ((long)((GestisciStringhe.StringToData(data).getTime())/1000));
 
 			//è il vettore che conterrà i nomi delle città inserite
 			Vector<String> nomiCitta = new Vector<String>();

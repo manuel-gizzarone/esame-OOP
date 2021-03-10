@@ -25,7 +25,7 @@ public class FiltersNuvole {
 	public JSONObject filtraStatisticheGiornaliere (DataMeteo filtraData,String mioNomeCitta) throws DataMeteoException, ParseException, IOException {
 		
 		//statistiche disponibili sulla nuvolosità
-				long min=0;
+				long min=1000;
 				long max=0;
 				double media=0;
 				double varianza=0;
@@ -54,7 +54,7 @@ public class FiltersNuvole {
 					
 					DataMeteo DATAMeteoCittaletto = datoMeteoCittaletto.getDataMeteo();
 					
-					if(DATAMeteoCittaletto.confrontaData(filtraData)&&datoMeteoCittaletto.getNomeCitta().equals(mioNomeCitta)) {
+					if(DATAMeteoCittaletto.getGiorno()==filtraData.getGiorno()&&datoMeteoCittaletto.getNomeCitta().equals(mioNomeCitta)) {
 						ArrayDatiMeteoRisultato.add(datoMeteoCittaletto);
 					}
 					
@@ -87,6 +87,7 @@ public class FiltersNuvole {
 				jsonStatsGiornaliere.put("media_nuvolosita",media);
 				jsonStatsGiornaliere.put("varianza_nuvolosita",varianza);
 				jsonStatsGiornaliere.put("citta",mioNomeCitta);
+				//jsonStatsGiornaliere.put("data",filtraData.toString());
 				
 				return jsonStatsGiornaliere;
 		
@@ -96,7 +97,7 @@ public class FiltersNuvole {
 	public JSONObject filtraStatisticheMensili (DataMeteo filtraData,String mioNomeCitta) throws IOException, ParseException, DataMeteoException {
 		
 		//statistiche disponibili sulla nuvolosità
-		long min=0;
+		long min=1000;
 		long max=0;
 		double media=0;
 		double varianza=0;
@@ -166,7 +167,7 @@ public class FiltersNuvole {
 	public JSONObject filtraStatisticheSettimanali (DataMeteo filtraData,String mioNomeCitta) throws IOException, ParseException, DataMeteoException {
 		
 		//statistiche disponibili sulla nuvolosità
-		long min=0;
+		long min=1000;
 		long max=0;
 		double media=0;
 		double varianza=0;
@@ -237,7 +238,7 @@ public class FiltersNuvole {
 	public JSONObject filtraStatisticheTotali (String mioNomeCitta) throws IOException, ParseException, DataMeteoException {
 		
 		//statistiche disponibili sulla nuvolosità
-		long min=0;
+		long min=1000;
 		long max=0;
 		double media=0;
 		double varianza=0;

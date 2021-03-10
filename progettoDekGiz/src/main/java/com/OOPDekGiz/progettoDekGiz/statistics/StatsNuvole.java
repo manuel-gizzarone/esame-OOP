@@ -26,7 +26,7 @@ public class StatsNuvole {
 	public JSONObject statisticheGiornaliere (DataMeteo filtraData) throws IOException, ParseException, DataMeteoException {
 		
 		//statistiche disponibili sulla nuvolosità
-		long min=0;
+		long min=1000;
 		long max=0;
 		double media=0;
 		double varianza=0;
@@ -55,7 +55,7 @@ public class StatsNuvole {
 			
 			DataMeteo DATAMeteoCittaletto = datoMeteoCittaletto.getDataMeteo();
 			
-			if(DATAMeteoCittaletto.confrontaData(filtraData)) {
+			if(DATAMeteoCittaletto.getGiorno()==filtraData.getGiorno()) {
 				ArrayDatiMeteoRisultato.add(datoMeteoCittaletto);
 			}
 			
@@ -87,7 +87,7 @@ public class StatsNuvole {
 		jsonStatsGiornaliere.put("min_nuvolosita",min);
 		jsonStatsGiornaliere.put("media_nuvolosita",media);
 		jsonStatsGiornaliere.put("varianza_nuvolosita",varianza);
-		jsonStatsGiornaliere.put("data",filtraData.toString());
+		//jsonStatsGiornaliere.put("data",filtraData.toString());
 		
 		return jsonStatsGiornaliere;
 		
@@ -100,7 +100,7 @@ public class StatsNuvole {
 	public JSONObject statisticheMensili (DataMeteo filtraData) throws IOException, ParseException, DataMeteoException {
 		
 		//statistiche disponibili sulla nuvolosità
-		long min=0;
+		long min=1000;
 		long max=0;
 		double media=0;
 		double varianza=0;
@@ -170,7 +170,7 @@ public class StatsNuvole {
 	public JSONObject statisticheSettimanali (DataMeteo filtraData) throws IOException, ParseException, DataMeteoException {
 		
 		//statistiche disponibili sulla nuvolosità
-		long min=0;
+		long min=1000;
 		long max=0;
 		double media=0;
 		double varianza=0;
@@ -240,7 +240,7 @@ public class StatsNuvole {
 	public JSONObject statisticheTotali () throws IOException, ParseException, DataMeteoException {
 		
 		//statistiche disponibili sulla nuvolosità
-		long min=0;
+		long min=1000;
 		long max=0;
 		double media=0;
 		double varianza=0;
