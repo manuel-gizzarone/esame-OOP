@@ -55,7 +55,7 @@ public class StatsNuvole {
 			
 			DataMeteo DATAMeteoCittaletto = datoMeteoCittaletto.getDataMeteo();
 			
-			if(DATAMeteoCittaletto.getGiorno()==filtraData.getGiorno()) {
+			if(DATAMeteoCittaletto.getGiorno()==filtraData.getGiorno()&&DATAMeteoCittaletto.getMese()==filtraData.getMese()&&DATAMeteoCittaletto.getAnno()==filtraData.getAnno()) {
 				ArrayDatiMeteoRisultato.add(datoMeteoCittaletto);
 			}
 			

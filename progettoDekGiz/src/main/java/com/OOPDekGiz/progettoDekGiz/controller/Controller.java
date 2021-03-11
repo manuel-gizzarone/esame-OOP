@@ -301,5 +301,24 @@ public class Controller {
 	}
 
 	//FINE ROTTA
+	
+	//INIZIO ROTTA
+
+	/**
+	 * 
+	 * @param bodyInizioFineCittaSoglia
+	 * @return
+	 */
+	@RequestMapping(value = "/previsioniSoglia", method = RequestMethod.POST)
+	@ResponseBody
+	public JSONObject controllaPrevisioniSoglia(@RequestBody JSONObject bodyInizioFineCittaSoglia) {
+		return serviceNuvole.controllaPrevisioniSoglia(bodyInizioFineCittaSoglia);
+		//ATTENZIONE!!! il JSONObject deve contenere 4 campi "nomeCitta", "dataInizio" ,"dataFine" ,"sogliaErrore"
+		//ATTENZIONE!!! il value associato alle date deve essere scritto come gg/mm/AAAA
+		//ATTENZIONE!!! la sogliaErrore deve essere un valore compreso tra 1 e 99
+		//ATTENZIONE!!! il nome della citta deve essere uno solo
+	}
+	
+	//FINE ROTTA
 
 }

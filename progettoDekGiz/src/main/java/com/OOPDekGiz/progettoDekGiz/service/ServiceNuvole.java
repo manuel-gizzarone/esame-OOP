@@ -448,5 +448,49 @@ public class ServiceNuvole {
       }
   	
       //fine metodi filtri
+      
+      //inizio metodo soglia
+      
+      public JSONObject controllaPrevisioniSoglia (JSONObject bodyInizioFineCittaSoglia) {
+    		
+    		try {
+    		
+    		ControllaPrevisioni calcola = new ControllaPrevisioni();
+    		
+  			//estraggo la data come stringa e la converto come oggetto di tipo DataMeteo
+  			//ATTENZIONE!!! la key associata alla stringa deve essere "dataInizio" e la data deve essere scritta nel formato gg/mm/aaaa
+  			DataMeteo dataInizio = new DataMeteo ((long)((GestisciStringhe.StringToData((String)bodyInizioFineCittaSoglia.get("dataInizio")).getTime())/1000));
+  			
+  		    //estraggo la data come stringa e la converto come oggetto di tipo DataMeteo
+  			//ATTENZIONE!!! la key associata alla stringa deve essere "dataFine" e la data deve essere scritta nel formato gg/mm/aaaa
+  			DataMeteo dataFine = new DataMeteo ((long)((GestisciStringhe.StringToData((String)bodyInizioFineCittaSoglia.get("dataFine")).getTime())/1000));
+  			
+  			double sogliaErrore = Double.parseDouble(bodyInizioFineCittaSoglia.get("sogliaErrore").toString());
+  			
+  			String nomeCitta = bodyInizioFineCittaSoglia.get("nomeCitta").toString();
+  	
+  			return calcola.controllaPrevisioniSoglia(dataInizio,dataFine,nomeCitta,sogliaErrore);
+  					
+    		}catch (SogliaErroreNotValidException e) {
+    			e.printStackTrace();
+    			JSONObject o = new JSONObject();
+    			o.put("c'è", "un'eccezione sulla soglia inserita");
+    			return o;
+    		}catch (DataMeteoException e) {
+    			e.printStackTrace();
+    			JSONObject o = new JSONObject();
+    			o.put("c'è", "un'eccezione sulla data");
+    			return o;
+    		}catch (Exception e) {
+    			e.printStackTrace();
+    			JSONObject o = new JSONObject();
+    			o.put("c'è", "un'eccezione");
+    			return o;
+    		}
+    	}
+      
+      //fine metodo soglia
+     
+      
 }
 

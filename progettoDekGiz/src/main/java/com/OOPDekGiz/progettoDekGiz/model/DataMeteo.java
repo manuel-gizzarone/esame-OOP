@@ -74,6 +74,7 @@ public class DataMeteo {
 			
 			
 			settimana = calcolaSettimana(giorno);
+			this.unixData=unixData;
 			
     }
 	
@@ -149,6 +150,36 @@ public class DataMeteo {
 		if(data2.getAnno()==this.getAnno()&& data2.getMese()==this.getMese()&&data2.getGiorno()==this.getGiorno())
 			flag=true;
 		return flag;
+	}
+	
+	public long calcolaLimiteMese(long mese) {
+		long limite=0;
+		if(mese==1)
+			limite=31;
+		if(mese==2)
+			limite=28;
+		if(mese==3)
+			limite=31;
+		if(mese==4)
+			limite=30;
+		if(mese==5)
+			limite=31;
+		if(mese==6)
+			limite=30;
+		if(mese==7)
+			limite=31;
+		if(mese==8)
+			limite=31;
+		if(mese==9)
+			limite=30;
+		if(mese==10)
+			limite=31;
+		if(mese==11)
+			limite=30;
+		if(mese==12)
+			limite=31;
+		return limite;
+		
 	}
 	
 	public String toString () {

@@ -54,7 +54,7 @@ public class FiltersNuvole {
 					
 					DataMeteo DATAMeteoCittaletto = datoMeteoCittaletto.getDataMeteo();
 					
-					if(DATAMeteoCittaletto.getGiorno()==filtraData.getGiorno()&&datoMeteoCittaletto.getNomeCitta().equals(mioNomeCitta)) {
+					if(DATAMeteoCittaletto.getGiorno()==filtraData.getGiorno()&&DATAMeteoCittaletto.getMese()==filtraData.getMese()&&DATAMeteoCittaletto.getAnno()==filtraData.getAnno()&&datoMeteoCittaletto.getNomeCitta().equals(mioNomeCitta)) {
 						ArrayDatiMeteoRisultato.add(datoMeteoCittaletto);
 					}
 					
@@ -300,5 +300,6 @@ public class FiltersNuvole {
 		return jsonStatsTotali;
 		
 	}
+	
 
 }
