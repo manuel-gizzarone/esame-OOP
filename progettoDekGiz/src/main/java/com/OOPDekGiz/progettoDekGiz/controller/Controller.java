@@ -1,7 +1,6 @@
 package com.OOPDekGiz.progettoDekGiz.controller;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
@@ -17,13 +16,20 @@ import org.json.simple.parser.ParseException;
 import com.OOPDekGiz.progettoDekGiz.exception.*;
 import com.OOPDekGiz.progettoDekGiz.service.*;
 
+/**
+ *
+ * Questa classe ha il compito di gestire tutte le possibili chiamate al server che l'utente (client) può fare.
+ *
+ * @author Emanuele De Caro
+ * @author Manuel Gizzarone
+ *
+ */
 
 @RestController
 public class Controller {
 
 	@Autowired
 	private ServiceNuvole serviceNuvole;
-
 
 	//INIZIO ROTTA
 
@@ -37,16 +43,18 @@ public class Controller {
 	 * @throws IOException
 	 * @throws InserimentoException eccezione che viene lanciata se l'utente dimentica di inserire i nomi delle città
 	 * nel body della richiesta.
+	 * @throws NomeCittaException
+	 * @throws GestisciStringaException
+	 * @throws DataMeteoException
 	 *
 	 */
 
 	@RequestMapping(value = "/nuvoleCitta5giorni", method = RequestMethod.POST)
 	@ResponseBody
 	public JSONArray nuvole5giorni(@RequestBody JSONObject bodyNomiCitta)
-			throws ParseException, IOException, InserimentoException, NomeCittaException, GestisciStringaException, DataMeteoException {
+			throws ParseException, IOException, InserimentoException, NomeCittaException, GestisciStringaException, DataMeteoException, ConfigFileException {
 		return serviceNuvole.serviceNuvole5giorni(bodyNomiCitta);
 		//ATTENZIONE!!! il JSONObject deve contenere 1 campo "nomiCitta"
-		//ATTENZIONE!!! la key associata alla stringa contenente i nomi delle città separate dalla virgola deve essere "nomiCitta"
 	}
 	
 	//FINE ROTTA
@@ -61,16 +69,16 @@ public class Controller {
 	 * @param nomeCitta nome della città di cui si vogliono raccogliere i dati meteo sulla nuvolosità
 	 * @return
 	 * @throws ParseException
-	 * @throws IOException
 	 * @throws InserimentoException eccezione che viene lanciata se l'utente dimentica di inserire il nome della città
 	 * di cui si vogliono raccogliere i dati meteo
+	 * @throws NomeCittaException
 	 *
 	 */
 	
 	@RequestMapping(value = "/salvaOgniOra", method = RequestMethod.GET)
 	@ResponseBody
 	public String salvaDati(@RequestParam String nomeCitta)
-			throws ParseException, InserimentoException, NomeCittaException {
+			throws ParseException, InserimentoException, NomeCittaException, IOException, ConfigFileException, DataMeteoException {
 		return serviceNuvole.salvaOgniOra(nomeCitta);
 	}
 	
@@ -91,12 +99,13 @@ public class Controller {
 	 */
 
 	@RequestMapping(value = "/statsGiornaliere", method = RequestMethod.GET)
-	public JSONObject statsGiornaliere (@RequestParam String data) {
+	public JSONObject statsGiornaliere (@RequestParam String data)
+			throws ParseException, IOException, DataMeteoException, java.text.ParseException, InserimentoException {
 		return serviceNuvole.statsGiornaliere(data);
 		//ATTENZIONE!!! la rotta richiede l'inserimento di un parametro "data"
 	}
 	
-	//Fine ROTTA
+	//FINE ROTTA
 
 
 	//INIZIO ROTTA
@@ -113,7 +122,8 @@ public class Controller {
 	 */
 
 	@RequestMapping(value = "/statsSettimanali", method = RequestMethod.GET)
-	public JSONObject statsSettimanali (@RequestParam String data) {
+	public JSONObject statsSettimanali (@RequestParam String data)
+			throws ParseException, IOException, DataMeteoException, java.text.ParseException, InserimentoException {
 		return serviceNuvole.statsSettimanali(data);
 		//ATTENZIONE!!! la rotta richiede l'inserimento di un parametro "data"
 	}
@@ -135,10 +145,10 @@ public class Controller {
 	 */
 
 	@RequestMapping(value = "/statsMensili", method = RequestMethod.GET)
-	public JSONObject statsMensili(@RequestParam String data) {
-			return serviceNuvole.statsMensili(data);
-			//ATTENZIONE!!! la rotta richiede l'inserimento di un parametro "data"
-			//ATTENZIONE!!! il mese nel parametro data deve essere scritto come mm/AAAA
+	public JSONObject statsMensili(@RequestParam String data)
+			throws DataMeteoException, java.text.ParseException, ParseException, IOException, InserimentoException {
+		return serviceNuvole.statsMensili(data);
+		//ATTENZIONE!!! la rotta richiede l'inserimento di un parametro "data" nel formato mm/AA
 	}
 		
 	//FINE ROTTA
@@ -156,8 +166,9 @@ public class Controller {
 	 */
 
 	@RequestMapping(value = "/statsTotali", method = RequestMethod.GET)
-	public JSONObject statsTotali() {
-			return serviceNuvole.statsTotali();
+	public JSONObject statsTotali()
+			throws ParseException, IOException, DataMeteoException {
+		return serviceNuvole.statsTotali();
 	}
 			
 	//FINE ROTTA
@@ -174,7 +185,8 @@ public class Controller {
 
 	@RequestMapping(value = "/filtraStatsGiornaliero", method = RequestMethod.POST)
 	@ResponseBody
-	public JSONArray filtraStatsGiornaliero(@RequestBody JSONObject bodyNomiCittaData) {
+	public JSONArray filtraStatsGiornaliero(@RequestBody JSONObject bodyNomiCittaData)
+			throws GestisciStringaException, java.text.ParseException, DataMeteoException, IOException, ParseException, NomeCittaException, InserimentoException {
 		return serviceNuvole.filtraStatsGiornaliere(bodyNomiCittaData);
 		//ATTENZIONE!!! il JSONObject deve contenere 2 campi "nomiCitta" e "data"
 		//ATTENZIONE!!! la key associata alla stringa contenente i nomi delle città separate dalla virgola deve essere "nomiCitta"
@@ -195,7 +207,8 @@ public class Controller {
 
 	@RequestMapping(value = "/filtraStatsSettimanale", method = RequestMethod.POST)
 	@ResponseBody
-	public JSONArray filtraStatsSettimanale(@RequestBody JSONObject bodyNomiCittaData) {
+	public JSONArray filtraStatsSettimanale(@RequestBody JSONObject bodyNomiCittaData)
+			throws GestisciStringaException, DataMeteoException, ParseException, java.text.ParseException, IOException, InserimentoException {
 		return serviceNuvole.filtraStatsSettimanali(bodyNomiCittaData);
 		//ATTENZIONE!!! il JSONObject deve contenere 2 campi "nomiCitta" e "data"
 		//ATTENZIONE!!! la key associata alla stringa contenente i nomi delle città separate dalla virgola deve essere "nomiCitta"
@@ -216,7 +229,8 @@ public class Controller {
 
 	@RequestMapping(value = "/filtraStatsMensile", method = RequestMethod.POST)
 	@ResponseBody
-	public JSONArray filtraStatsMensile(@RequestBody JSONObject bodyNomiCittaData) {
+	public JSONArray filtraStatsMensile(@RequestBody JSONObject bodyNomiCittaData)
+			throws DataMeteoException, GestisciStringaException, ParseException, java.text.ParseException, IOException, InserimentoException {
 		return serviceNuvole.filtraStatsMensili(bodyNomiCittaData);
 		//ATTENZIONE!!! il JSONObject deve contenere 2 campi "nomiCitta" e "data"
 		//ATTENZIONE!!! la key associata alla stringa contenente i nomi delle città separate dalla virgola deve essere "nomiCitta"
@@ -237,7 +251,8 @@ public class Controller {
 
 	@RequestMapping(value = "/filtraStatsTotale", method = RequestMethod.POST)
 	@ResponseBody
-	public JSONArray filtraStatsTotale(@RequestBody JSONObject bodyNomiCittaData) {
+	public JSONArray filtraStatsTotale(@RequestBody JSONObject bodyNomiCittaData)
+			throws DataMeteoException, ParseException, GestisciStringaException, IOException, InserimentoException {
 		return serviceNuvole.filtraStatsTotali(bodyNomiCittaData);
 		//ATTENZIONE!!! il JSONObject deve contenere 1 campo "nomiCitta"
 		//ATTENZIONE!!! la key associata alla stringa contenente i nomi delle città separate dalla virgola deve essere "nomiCitta"
@@ -301,7 +316,8 @@ public class Controller {
 	}
 
 	//FINE ROTTA
-	
+
+
 	//INIZIO ROTTA
 
 	/**
@@ -309,9 +325,11 @@ public class Controller {
 	 * @param bodyInizioFineCittaSoglia
 	 * @return
 	 */
+
 	@RequestMapping(value = "/previsioniSoglia", method = RequestMethod.POST)
 	@ResponseBody
-	public JSONObject controllaPrevisioniSoglia(@RequestBody JSONObject bodyInizioFineCittaSoglia) {
+	public JSONObject controllaPrevisioniSoglia(@RequestBody JSONObject bodyInizioFineCittaSoglia)
+			throws PeriodNotValidException, DataMeteoException, ParseException, SogliaErroreNotValidException, java.text.ParseException, IOException, InserimentoException {
 		return serviceNuvole.controllaPrevisioniSoglia(bodyInizioFineCittaSoglia);
 		//ATTENZIONE!!! il JSONObject deve contenere 4 campi "nomeCitta", "dataInizio" ,"dataFine" ,"sogliaErrore"
 		//ATTENZIONE!!! il value associato alle date deve essere scritto come gg/mm/AAAA

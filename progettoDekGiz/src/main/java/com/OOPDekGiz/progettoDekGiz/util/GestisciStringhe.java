@@ -30,12 +30,16 @@ public class GestisciStringhe {
 	 * @return il vector di stringhe estratte
 	 */
 
-	public Vector<String> estraiConVirgola () throws GestisciStringaException {
+	public Vector<String> estraiConVirgola ()
+			throws GestisciStringaException {
 		Vector<String> risultato = new Vector<String> ();
+		String[] risultatoArray = daLavorare.split(",");
 
-		String risultatoArray []= daLavorare.split(",");
 		for (String s : risultatoArray) {
-				risultato.add(s);
+			if(s.charAt(0) == ' ' || s.endsWith(" ")){
+				throw new GestisciStringaException();
+			}
+			risultato.add(s);
 		}
 
 		return risultato;
@@ -47,6 +51,7 @@ public class GestisciStringhe {
 	 * @return la data estratta come oggetto Date
 	 * @throws ParseException
 	 */
+
 	static public Date StringToData (String dataDaEstrarre)
 			throws ParseException {
 	    return new SimpleDateFormat("dd/MM/yyyy", Locale.ITALY).parse(dataDaEstrarre);

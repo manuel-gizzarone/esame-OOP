@@ -58,7 +58,10 @@ public class StatsNuvole {
 			if(DATAMeteoCittaletto.getGiorno()==filtraData.getGiorno()&&DATAMeteoCittaletto.getMese()==filtraData.getMese()&&DATAMeteoCittaletto.getAnno()==filtraData.getAnno()) {
 				ArrayDatiMeteoRisultato.add(datoMeteoCittaletto);
 			}
-			
+		}
+		//se il JSONArray e vuoto significa che la data inserita non e presente nei dati del database
+		if(ArrayDatiMeteoRisultato.isEmpty()){
+			throw new DataMeteoException();
 		}
 		
 		//calcola somma e valori max e min dei dati di nuvolosità raccolti con giorno (e mese e anno) coincidente
@@ -133,6 +136,10 @@ public class StatsNuvole {
 			}
 			
 		}
+		//se il JSONArray e vuoto significa che la data inserita non e presente nei dati del database
+		if(ArrayDatiMeteoRisultato.isEmpty()){
+			throw new DataMeteoException();
+		}
 		
 		//calcola somma e valori max e min dei dati di nuvolosità raccolti con mese (e anno) coincidente
 		int somma=0;
@@ -203,6 +210,10 @@ public class StatsNuvole {
 				ArrayDatiMeteoRisultato.add(datoMeteoCittaletto);
 			}
 			
+		}
+		//se il JSONArray e vuoto significa che la data inserita non e presente nei dati del database
+		if(ArrayDatiMeteoRisultato.isEmpty()){
+			throw new DataMeteoException();
 		}
 		
 		//calcola somma e valori max e min dei dati di nuvolosità raccolti con settimana , mese e anno coincidenti

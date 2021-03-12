@@ -7,6 +7,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
+import com.OOPDekGiz.progettoDekGiz.exception.NomeCittaException;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -44,11 +45,14 @@ public class OpenWeatherCurrentMeteo extends OpenWeatherApiUrlGen {
 	 *
 	 */
 
-	public OpenWeatherCurrentMeteo (String apiKey, String nomeCitta)
-			throws IOException {
+	public OpenWeatherCurrentMeteo (String apiKey, String nomeCitta) throws NomeCittaException {
 		super(apiKey, nomeCitta);
-		URLConnection ApiOpenWeatherC = new URL(this.costruisciUrlCurrent()).openConnection();
-		leggiApiC = new BufferedReader(new InputStreamReader(ApiOpenWeatherC.getInputStream()));
+		try {
+			URLConnection ApiOpenWeatherC = new URL(this.costruisciUrlCurrent()).openConnection();
+			leggiApiC = new BufferedReader(new InputStreamReader(ApiOpenWeatherC.getInputStream()));
+		} catch (IOException e) {
+			throw new NomeCittaException(super.getNomeCitta());
+		}
 	}
 
 	/**

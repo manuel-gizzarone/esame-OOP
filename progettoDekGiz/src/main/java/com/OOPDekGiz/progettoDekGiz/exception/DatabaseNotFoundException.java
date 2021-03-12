@@ -11,13 +11,27 @@ public class DatabaseNotFoundException extends Exception {
 
     /**
      *
-     * Costruttore della classe che richiama il costruttore della superclasse Exeption per visualizzare il messaggio di
-     * errore.
+     * Costruttore della classe che fa visualizzare il messaggio di errore.
+     *
+     * @param nomeDatabase nome del database inesistente
      *
      */
 
     public DatabaseNotFoundException(String nomeDatabase){
 
         super("Non ho trovato nessun database '" + nomeDatabase + "'. Inserire il nome di un database esistente!");
+    }
+
+    /**
+     *
+     * Metodo getter per ottenere il messaggio di errore.
+     *
+     * @return messaggio di errore
+     *
+     */
+
+    @Override
+    public String getMessage() {
+        return super.getMessage();
     }
 }

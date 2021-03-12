@@ -7,6 +7,8 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import java.util.Vector;
+
+import com.OOPDekGiz.progettoDekGiz.exception.NomeCittaException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -48,11 +50,14 @@ public class OpenWeather5giorni extends OpenWeatherApiUrlGen {
 	 *
 	 */
 
-	public OpenWeather5giorni (String apiKey, String nomeCitta)
-			throws MalformedURLException, IOException {
+	public OpenWeather5giorni (String apiKey, String nomeCitta) throws NomeCittaException {
 		super(apiKey, nomeCitta);
-		URLConnection ApiOpenWeather5 = new URL(this.costruisciUrl5giorni()).openConnection();
-		leggiApi5 = new BufferedReader(new InputStreamReader(ApiOpenWeather5.getInputStream()));
+		try{
+			URLConnection ApiOpenWeather5 = new URL(this.costruisciUrl5giorni()).openConnection();
+			leggiApi5 = new BufferedReader(new InputStreamReader(ApiOpenWeather5.getInputStream()));
+		} catch (IOException e) {
+			throw new NomeCittaException(super.getNomeCitta());
+		}
 	}
 
 	/**

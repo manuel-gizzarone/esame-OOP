@@ -7,120 +7,86 @@ import java.util.GregorianCalendar;
 
 import com.OOPDekGiz.progettoDekGiz.exception.*;
 
-
 /**
+ *
  * la classe gestisce la data di un certo oggetto MeteoCitta 
  * @author emanuele
  *
  */
+
 public class DataMeteo {
+
+	private long giorno;
+
+	private long mese;
+
+	private long anno;
+
+	private Date data;
+
+	private int settimana;
 	
-	/**
-	 * giorno
-	 */
-	protected long giorno;
-	
-	/**
-	 * mese
-	 */
-	protected long mese;
-	
-	/**
-	 * anno
-	 */
-	protected long anno;
-	
-	/**
-	 * data completa
-	 */
-	protected Date data;
-	
-	/**
-	 * istanza di calendar per gestire le date
-	 */
-	Calendar calendario;
-	
-	/**
-	 * indice di numero di settimana del mese variabile tra 1 e 5
-	 */
-	protected int settimana=-1;
-	
-	/**
-	 * unixData contiene i secondi trascorsi tra la data ed il 1/1/1970
-	 */
-	protected long unixData;  //seconds from first january 1970
+	private long unixData;  //seconds from first january 1970
 
 	/**
 	 * 
 	 * @param unixData contiene i secondi trascorsi tra la data ed il 1/1/1970
-	 * @throws DataMeteoException 
+	 * @throws DataMeteoException
+	 *
 	 */
-	public DataMeteo(long unixData) throws DataMeteoException {
-		    /**
-		     * unixDataMillis contiene i millisecondi trascorsi tra la data ed il 1/1/1970
-		     */
-			long unixDataMillis = (long)(unixData*1000);
-			
 
-		    calendario = new GregorianCalendar();
-			data = new Date(unixDataMillis);
-			
-			calendario.setTimeInMillis(unixDataMillis);
-			
-			
-			giorno=calendario.get(Calendar.DATE);
-			mese=calendario.get(Calendar.MONTH)+1;
-			anno=calendario.get(Calendar.YEAR);
-			
-			
-			settimana = calcolaSettimana(giorno);
-			this.unixData=unixData;
-			
+	public DataMeteo(long unixData) throws DataMeteoException {
+		this.unixData=unixData;
+
+		//millisecondi dal 1970
+		long unixDataMillis = (this.unixData*1000);
+		this.data = new Date(unixDataMillis);
+
+		Calendar calendario = new GregorianCalendar();
+		calendario.setTimeInMillis(unixDataMillis);
+
+		this.giorno= calendario.get(Calendar.DATE);
+		this.mese= calendario.get(Calendar.MONTH)+1;
+		this.anno= calendario.get(Calendar.YEAR);
+
+		this.settimana = calcolaSettimana(this.giorno);
+
     }
-	
 
 	/**
 	 * 
 	 * @param giorno
 	 * @return indice settimana nel mese
+	 *
 	 */
-	public int calcolaSettimana(long giorno) throws DataMeteoException {     //throws exception
+
+	public int calcolaSettimana(long giorno) throws DataMeteoException {
 		if(giorno>=1 & giorno<=7) {
-			settimana=1;
-			return settimana;
+			return 1;
 		}
 		else if(giorno>=8 & giorno<=14) {
-			settimana=2;
-			return settimana;
+			return 2;
 		}
 		else if(giorno>=15 & giorno<=21) {
-			settimana=3;
-			return settimana;
+			return 3;
 		}
 		else if(giorno>=22 & giorno<=28) {
-			settimana=4;
-			return settimana;
+			return 4;
 		}
 		else if(giorno>=28 & giorno<=31) {
-			settimana=5;
-			return settimana;
+			return 5;
+		} else {
+			throw new DataMeteoException();
 		}
-		
-		if(settimana==-1) {
-			
-		throw new DataMeteoException();
-		
-		}
-		
-		return -1; //problemi 
-		
 	}
 	
 	/**
 	 * 
 	 * @param data2 è la data da confrontare come oggetto Date
 	 * @return se è vero o falso che le due date coincidono
+	 *
 	 */
+
 	public boolean confrontaData (Date data2) {
 	
 		if (this.data.compareTo(data2)==0)
@@ -153,7 +119,7 @@ public class DataMeteo {
 	}
 	
 	public long calcolaLimiteMese(long mese) {
-		long limite=0;
+		long limite = 0;
 		if(mese==1)
 			limite=31;
 		if(mese==2)
@@ -178,12 +144,12 @@ public class DataMeteo {
 			limite=30;
 		if(mese==12)
 			limite=31;
+
 		return limite;
-		
 	}
 	
 	public String toString () {
-		return data.toString();
+		return this.data.toString();
 	}
 	
 	//metodi set e get di tutti campi della classe

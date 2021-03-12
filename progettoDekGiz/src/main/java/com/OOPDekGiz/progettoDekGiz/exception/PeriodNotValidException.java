@@ -2,23 +2,21 @@ package com.OOPDekGiz.progettoDekGiz.exception;
 
 /**
  *
- * Questa classe segnala l'eccezione generata a causa dell'inserimento di una stringa vuota.
+ * Questa classe segnale l'eccezione generata dall'inserimento di un periodo errato.
  *
  */
 
-public class InserimentoException extends Exception {
+public class PeriodNotValidException extends Exception {
 
     /**
      *
      * Costruttore della classe che fa visualizzare il messaggio di errore.
      *
-     * @param campo campo il cui valore non è stato inserito
-     *
      */
 
-    public InserimentoException(String campo){
+    public PeriodNotValidException() {
 
-        super("ERRORE! Il campo '" + campo + "' è vuoto. Riprovare!");
+        super("Errore con il periodo! Controllare che la data finale sia successiva a quella iniziale.");
     }
 
     /**
