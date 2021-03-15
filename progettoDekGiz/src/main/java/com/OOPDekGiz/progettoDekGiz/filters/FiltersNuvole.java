@@ -11,6 +11,7 @@ import org.json.simple.JSONObject;
 
 import com.OOPDekGiz.progettoDekGiz.exception.*;
 import com.OOPDekGiz.progettoDekGiz.model.*;
+import com.OOPDekGiz.progettoDekGiz.util.Calcola;
 import com.OOPDekGiz.progettoDekGiz.util.DataBase;
 
 import org.json.simple.parser.ParseException;
@@ -21,12 +22,6 @@ public class FiltersNuvole {
 	@SuppressWarnings("unchecked")
 	public JSONObject filtraStatisticheGiornaliere (DataMeteo filtraData,String mioNomeCitta) throws DataMeteoException, ParseException, IOException, NomeCittaException {
 		
-		//statistiche disponibili sulla nuvolosità
-		long min=1000;
-		long max=0;
-		double media=0;
-		double varianza=0;
-
 		DataBase mioDataBase = new DataBase("Database_Previsioni.json");
 
 		JSONArray jsonArrayDatiMeteoLettura = mioDataBase.getDatabase();
@@ -44,7 +39,7 @@ public class FiltersNuvole {
 
 			DataMeteo DATAMeteoCittaletto = datoMeteoCittaletto.getDataMeteo();
 
-			if(DATAMeteoCittaletto.getGiorno()==filtraData.getGiorno()&&DATAMeteoCittaletto.getMese()==filtraData.getMese()&&DATAMeteoCittaletto.getAnno()==filtraData.getAnno()&&datoMeteoCittaletto.getNomeCitta().equals(mioNomeCitta)) {
+			if(DATAMeteoCittaletto.confrontaData(filtraData)&&datoMeteoCittaletto.getNomeCitta().equals(mioNomeCitta)) {
 				ArrayDatiMeteoRisultato.add(datoMeteoCittaletto);
 			}
 		}
@@ -53,48 +48,12 @@ public class FiltersNuvole {
 			throw new DataMeteoException();
 		}
 
-		//calcola somma e valori max e min dei dati di nuvolosità raccolti con giorno (e mese e anno) coincidente
-		int somma=0;
-		double sommaScartiQuadrati=0;
-
-		int conta=0;
-		for(MeteoCitta analizza : ArrayDatiMeteoRisultato ) {
-			if(analizza.getNuvolosita()>=max)
-				max=analizza.getNuvolosita();
-			if(analizza.getNuvolosita()<=min)
-				min=analizza.getNuvolosita();
-
-			somma+=analizza.getNuvolosita();
-			conta++;         //per lo scopo di conta sarebbe stato equivalente usare ArrayDatiMeteoRisultato.size() però così mi sembrava più pulito
-		}
-
-		media=((double)somma)/conta;
-		for(MeteoCitta analizza : ArrayDatiMeteoRisultato ) {
-			sommaScartiQuadrati+=Math.pow((analizza.getNuvolosita()-media),2);
-		}
-
-		varianza = ((double)sommaScartiQuadrati)/(conta-1);
-
-		//costruisco il jsonObject i cui campi sono media varianza max min di nuvolosità tra i dati su database alla data inserita(giorno mese e anno) (filtraData)
-		JSONObject jsonStatsGiornaliere = new JSONObject();
-		jsonStatsGiornaliere.put("max_nuvolosita",max);
-		jsonStatsGiornaliere.put("min_nuvolosita",min);
-		jsonStatsGiornaliere.put("media_nuvolosita",media);
-		jsonStatsGiornaliere.put("varianza_nuvolosita",varianza);
-		jsonStatsGiornaliere.put("citta",mioNomeCitta);
-		//jsonStatsGiornaliere.put("data",filtraData.toString());
-
-		return jsonStatsGiornaliere;
+		Calcola calcolaFilters = new Calcola ();
+		return calcolaFilters.calcolaFilters(ArrayDatiMeteoRisultato, mioNomeCitta);
 	}
 	
 	@SuppressWarnings("unchecked")
 	public JSONObject filtraStatisticheMensili (DataMeteo filtraData,String mioNomeCitta) throws IOException, ParseException, DataMeteoException {
-		
-		//statistiche disponibili sulla nuvolosità
-		long min=1000;
-		long max=0;
-		double media=0;
-		double varianza=0;
 		
 		DataBase mioDataBase = new DataBase("Database_Previsioni.json");
 		
@@ -122,37 +81,8 @@ public class FiltersNuvole {
 			throw new DataMeteoException();
 		}
 		
-		//calcola somma e valori max e min dei dati di nuvolosità raccolti con mese (e anno) coincidente
-		int somma=0;
-		double sommaScartiQuadrati=0;
-		
-		int conta=0;
-		for(MeteoCitta analizza : ArrayDatiMeteoRisultato ) {
-			if(analizza.getNuvolosita()>=max)
-				max=analizza.getNuvolosita();
-			if(analizza.getNuvolosita()<=min)
-				min=analizza.getNuvolosita();
-
-			somma+=analizza.getNuvolosita();
-			conta++;
-		}
-
-		media=((double)somma)/conta;
-		for(MeteoCitta analizza : ArrayDatiMeteoRisultato ) {
-			sommaScartiQuadrati+=Math.pow((analizza.getNuvolosita()-media),2);
-		}
-		
-		varianza = ((double)sommaScartiQuadrati)/(conta-1);
-		
-		//costruisco il jsonObject i cui campi sono media varianza max min di nuvolosità tra i dati su database al mese (nello stesso anno) della data inserita (filtraData)
-		JSONObject jsonStatsMensili = new JSONObject();
-		jsonStatsMensili.put("max_nuvolosita",max);
-		jsonStatsMensili.put("min_nuvolosita",min);
-		jsonStatsMensili.put("media_nuvolosita",media);
-		jsonStatsMensili.put("varianza_nuvolosita",varianza);
-		jsonStatsMensili.put("citta",mioNomeCitta);
-		
-		return jsonStatsMensili;
+		Calcola calcolaFilters = new Calcola ();
+		return calcolaFilters.calcolaFilters(ArrayDatiMeteoRisultato, mioNomeCitta);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -190,47 +120,12 @@ public class FiltersNuvole {
 			throw new DataMeteoException();
 		}
 		
-		//calcola somma e valori max e min dei dati di nuvolosità raccolti con settimana , mese e anno coincidenti
-		int somma=0;
-		double sommaScartiQuadrati=0;
-		
-		int conta=0;
-		for(MeteoCitta analizza : ArrayDatiMeteoRisultato ) {
-			if(analizza.getNuvolosita()>=max)
-				max=analizza.getNuvolosita();
-			if(analizza.getNuvolosita()<=min)
-				min=analizza.getNuvolosita();
-
-			somma+=analizza.getNuvolosita();
-			conta++;
-		}
-
-		media=((double)somma)/conta;
-		for(MeteoCitta analizza : ArrayDatiMeteoRisultato ) {
-			sommaScartiQuadrati+=Math.pow((analizza.getNuvolosita()-media),2);
-		}
-		
-		varianza = ((double)sommaScartiQuadrati)/(conta-1);
-		
-		//costruisco il jsonObject i cui campi sono media varianza max min di nuvolosità tra i dati su database alla settimana (e mese e anno) della data inserita (filtraData)
-		JSONObject jsonStatsSettimanali = new JSONObject();
-		jsonStatsSettimanali.put("max_nuvolosita",max);
-		jsonStatsSettimanali.put("min_nuvolosita",min);
-		jsonStatsSettimanali.put("media_nuvolosita",media);
-		jsonStatsSettimanali.put("varianza_nuvolosita",varianza);
-		jsonStatsSettimanali.put("citta",mioNomeCitta);
-		
-		return jsonStatsSettimanali;
+		Calcola calcolaFilters = new Calcola ();
+		return calcolaFilters.calcolaFilters(ArrayDatiMeteoRisultato, mioNomeCitta);
 	}
 	
 	@SuppressWarnings("unchecked")
 	public JSONObject filtraStatisticheTotali (String mioNomeCitta) throws IOException, ParseException, DataMeteoException {
-		
-		//statistiche disponibili sulla nuvolosità
-		long min=1000;
-		long max=0;
-		double media=0;
-		double varianza=0;
 
 		DataBase mioDataBase = new DataBase("Database_Previsioni.json");
 		
@@ -252,36 +147,7 @@ public class FiltersNuvole {
 			}
 		}
 
-		//calcola somma e valori max e min dei dati di nuvolosità su quelli di tutto il database
-		int somma=0;
-		double sommaScartiQuadrati=0;
-		
-		int conta=0;
-		for(MeteoCitta analizza : ArrayDatiMeteoRisultato ) {
-			if(analizza.getNuvolosita()>=max)
-				max=analizza.getNuvolosita();
-			if(analizza.getNuvolosita()<=min)
-				min=analizza.getNuvolosita();
-
-			somma+=analizza.getNuvolosita();
-			conta++;
-		}
-
-		media=((double)somma)/conta;
-		for(MeteoCitta analizza : ArrayDatiMeteoRisultato ) {
-			sommaScartiQuadrati+=Math.pow((analizza.getNuvolosita()-media),2);
-		}
-		
-		varianza = ((double)sommaScartiQuadrati)/(conta-1);
-		
-		//costruisco il jsonObject i cui campi sono media varianza max min di nuvolosità tra i dati su database 
-		JSONObject jsonStatsTotali = new JSONObject();
-		jsonStatsTotali.put("max_nuvolosita",max);
-		jsonStatsTotali.put("min_nuvolosita",min);
-		jsonStatsTotali.put("media_nuvolosita",media);
-		jsonStatsTotali.put("varianza_nuvolosita",varianza);
-		jsonStatsTotali.put("citta",mioNomeCitta);
-		
-		return jsonStatsTotali;
+		Calcola calcolaFilters = new Calcola ();
+		return calcolaFilters.calcolaFilters(ArrayDatiMeteoRisultato, mioNomeCitta);
 	}
 }

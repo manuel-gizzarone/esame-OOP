@@ -100,7 +100,7 @@ public class DataMeteo {
 
 	public boolean confrontaData(DataMeteo data2) {
 		boolean flag=false;
-		if(data2.getAnno()==this.getAnno()&& data2.getMese()==this.getMese()&&data2.getGiorno()==this.getGiorno())
+		if(data2.getAnno()==anno&& data2.getMese()==mese&&data2.getGiorno()==giorno)
 			flag=true;
 		return flag;
 	}
