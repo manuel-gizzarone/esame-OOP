@@ -18,10 +18,8 @@ import com.OOPDekGiz.progettoDekGiz.service.*;
 
 /**
  *
- * Questa classe ha il compito di gestire tutte le possibili chiamate al server che l'utente (client) può fare.
- *
- * @author Emanuele De Caro
- * @author Manuel Gizzarone
+ * Questa classe rappresenta il controller del programma. Essa permette di gestire tutte le possibili chiamate al server
+ * che l'utente (client) può fare.
  *
  */
 
@@ -31,21 +29,22 @@ public class Controller {
 	@Autowired
 	private ServiceNuvole serviceNuvole;
 
-	//INIZIO ROTTA
-
 	/**
 	 *
 	 * La seguente rotta permette di ottenere le previsioni sulla nuvolosità di una o più città.
 	 *
 	 * @param bodyNomiCitta JSONObject contenente i nomi delle città di cui sono richieste le previsioni
 	 * @return JSONArray contenente gli oggetti di tipo MeteoCitta della risposta (ognuno castato in JSONObject)
-	 * @throws ParseException
-	 * @throws IOException
+	 * @throws ParseException errori durante il parsing
+	 * @throws IOException errori di input/output su file
 	 * @throws InserimentoException eccezione che viene lanciata se l'utente dimentica di inserire i nomi delle città
-	 * nel body della richiesta.
-	 * @throws NomeCittaException
-	 * @throws GestisciStringaException
-	 * @throws DataMeteoException
+	 * nel body della richiesta
+	 * @throws NomeCittaException eccezione che viene lanciata se l'utente inserisce il nome di una città inesistente
+	 * o errato
+	 * @throws GestisciStringaException eccezione che viene lanciata se l'utente inserisce una stringa non valida
+	 * @throws DataMeteoException eccezione che viene lanciata in caso di errori con la data inserita
+	 * @throws ConfigFileException eccezione che viene lanciata nel caso in cui siano presenti errori nel file di
+	 * configurazione
 	 *
 	 */
 
@@ -54,47 +53,46 @@ public class Controller {
 	public JSONArray nuvole5giorni(@RequestBody JSONObject bodyNomiCitta)
 			throws ParseException, IOException, InserimentoException, NomeCittaException, GestisciStringaException, DataMeteoException, ConfigFileException {
 		return serviceNuvole.serviceNuvole5giorni(bodyNomiCitta);
-		//ATTENZIONE!!! il JSONObject deve contenere 1 campo "nomiCitta"
+		//ATTENZIONE! Il JSONObject deve contenere un campo "nomiCitta"
 	}
-	
-	//FINE ROTTA
-
-
-	//INIZIO ROTTA
 
 	/**
 	 *
 	 * La seguente rotta permette di salvare ogni ora i dati meteo sulla nuvolosità di una certa città.
 	 *
 	 * @param nomeCitta nome della città di cui si vogliono raccogliere i dati meteo sulla nuvolosità
-	 * @return
-	 * @throws ParseException
+	 * @return stringa contenente il path in cui è stato salvato il database
+	 * @throws ParseException errori durente il parsing
 	 * @throws InserimentoException eccezione che viene lanciata se l'utente dimentica di inserire il nome della città
 	 * di cui si vogliono raccogliere i dati meteo
-	 * @throws NomeCittaException
+	 * @throws NomeCittaException eccezione che viene lanciata se l'utente inserisce il nome di una città inesistente
+	 * o errato
+	 * @throws IOException errori di input/output su file
+	 * @throws ConfigFileException eccezione che viene lanciata nel caso in cui siano presenti errori nel file di
+	 * configurazione
 	 *
 	 */
 	
 	@RequestMapping(value = "/salvaOgniOra", method = RequestMethod.GET)
-	@ResponseBody
 	public String salvaDati(@RequestParam String nomeCitta)
-			throws ParseException, InserimentoException, NomeCittaException, IOException, ConfigFileException, DataMeteoException {
+			throws ParseException, InserimentoException, NomeCittaException, IOException, ConfigFileException {
 		return serviceNuvole.salvaOgniOra(nomeCitta);
+		//ATTENZIONE! La rotta richiede un parametro "nomeCitta"
 	}
-	
-	//FINE ROTTA
-
-
-	//INIZIO ROTTA
 
 	/**
 	 *
 	 * La seguente rotta permette di calcolare e visualizzare le statistiche sulla nuvolosità tra i dati presenti nel
-	 * "Database_Previsioni" al giorno della data inserita dall'utente. Le statistiche riguardano valori massimi, minimi
+	 * "Database_Previsioni" al giorno della data inserita dall'utente. Le statistiche riguardano valori massimi, minimi,
 	 * media e varianza della nuvolosità.
 	 *
-	 * @param data data sulla quale si vogliono visualizzare le statistiche
+	 * @param data data nel formato dd/mm/yyyy sulla quale si vogliono visualizzare le statistiche (giornaliere)
 	 * @return JSONObject contenente i valori delle statistiche calcolate
+	 * @throws ParseException errori durante il parsing
+	 * @throws IOException errori di input/output su file
+	 * @throws DataMeteoException eccezione che viene lanciata in caso di errori con la data inserita
+	 * @throws java.text.ParseException errori durante il parsing
+	 * @throws InserimentoException eccezione che viene lanciata se l'utente dimentica di inserire il nome della città
 	 *
 	 */
 
@@ -102,22 +100,22 @@ public class Controller {
 	public JSONObject statsGiornaliere (@RequestParam String data)
 			throws ParseException, IOException, DataMeteoException, java.text.ParseException, InserimentoException {
 		return serviceNuvole.statsGiornaliere(data);
-		//ATTENZIONE!!! la rotta richiede l'inserimento di un parametro "data"
+		//ATTENZIONE! La rotta richiede l'inserimento di un parametro "data" nel formato dd/mm/yyyy
 	}
-	
-	//FINE ROTTA
-
-
-	//INIZIO ROTTA
 
 	/**
 	 *
 	 * La seguente rotta permette di calcolare e visualizzare le statistiche sulla nuvolosità tra i dati presenti nel
-	 * "Database_Previsioni" nella settimana della data inserita dall'utente. Le statistiche riguardano valori massimi, minimi
-	 * media e varianza della nuvolosità.
+	 * "Database_Previsioni" nella settimana della data inserita dall'utente. Le statistiche riguardano valori massimi,
+	 *  minimi, media e varianza della nuvolosità.
 	 *
-	 * @param data data sulla quale si vogliono visualizzare le statistiche (settimanali)
+	 * @param data data nel formato dd/mm/yyyy sulla quale si vogliono visualizzare le statistiche (settimanali)
 	 * @return JSONObject contenente i valori delle statistiche calcolate
+	 * @throws ParseException errori durante il parsing
+	 * @throws IOException errori di input/output su file
+	 * @throws DataMeteoException eccezione che viene lanciata in caso di errori con la data inserita
+	 * @throws java.text.ParseException errori durante il parsing
+	 * @throws InserimentoException eccezione che viene lanciata se l'utente dimentica di inserire il nome della città
 	 *
 	 */
 
@@ -125,13 +123,8 @@ public class Controller {
 	public JSONObject statsSettimanali (@RequestParam String data)
 			throws ParseException, IOException, DataMeteoException, java.text.ParseException, InserimentoException {
 		return serviceNuvole.statsSettimanali(data);
-		//ATTENZIONE!!! la rotta richiede l'inserimento di un parametro "data"
+		//ATTENZIONE! La rotta richiede l'inserimento di un parametro "data" nel formato dd/mm/yyyy
 	}
-		
-    //Fine ROTTA
-
-
-	//INIZIO ROTTA
 
 	/**
 	 *
@@ -139,29 +132,33 @@ public class Controller {
 	 * "Database_Previsioni" nel mese della data inserita dall'utente. Le statistiche riguardano valori massimi, minimi
 	 * media e varianza della nuvolosità.
 	 *
-	 * @param data nel formato mm/AAAA
+	 * @param data data nel formato mm/AAAA sulla quale si vogliono visualizzare le statistiche (mensili)
 	 * @return JSONObject contenente i valori delle statistiche calcolate
+	 * @throws ParseException errori durante il parsing
+	 * @throws IOException errori di input/output su file
+	 * @throws DataMeteoException eccezione che viene lanciata in caso di errori con la data inserita
+	 * @throws java.text.ParseException errori durante il parsing
+	 * @throws InserimentoException eccezione che viene lanciata se l'utente dimentica di inserire il nome della città
 	 *
 	 */
 
 	@RequestMapping(value = "/statsMensili", method = RequestMethod.GET)
 	public JSONObject statsMensili(@RequestParam String data)
-			throws DataMeteoException, java.text.ParseException, ParseException, IOException, InserimentoException {
+			throws ParseException, IOException, DataMeteoException, java.text.ParseException, InserimentoException {
 		return serviceNuvole.statsMensili(data);
-		//ATTENZIONE!!! la rotta richiede l'inserimento di un parametro "data" nel formato mm/AA
+		//ATTENZIONE! la rotta richiede l'inserimento di un parametro "data" nel formato mm/yyyy
 	}
-		
-	//FINE ROTTA
 
-		
-	//INIZIO ROTTA
 
 	/**
 	 *
 	 * La seguente rotta permette di calcolare e visualizzare le statistiche sulla nuvolosità tra tutti i dati presenti
-	 * nel "Database_Previsioni". Le statistiche riguardano valori massimi, minimi media e varianza della nuvolosità.
+	 * nel "Database_Previsioni". Le statistiche riguardano valori massimi, minimi, media e varianza della nuvolosità.
 	 *
 	 * @return JSONObject contenente i valori delle statistiche calcolate
+	 * @throws ParseException errori durante il parsing
+	 * @throws IOException errori di input/output su file
+	 * @throws DataMeteoException eccezione che viene lanciata in caso di errori con la data inserita
 	 *
 	 */
 
@@ -170,16 +167,22 @@ public class Controller {
 			throws ParseException, IOException, DataMeteoException {
 		return serviceNuvole.statsTotali();
 	}
-			
-	//FINE ROTTA
-
-
-	//INIZIO ROTTA
 
 	/**
 	 *
-	 * @param bodyNomiCittaData
-	 * @return
+	 * La seguente rotta permette di filtrare le statistiche giornaliere per nome della città e per data. E' possibile
+	 * inserire contemporaneamente più nomi.
+	 *
+	 * @param bodyNomiCittaData JSONObject contenente due campi "nomiCitta" e "data" nel formato dd/mm/yyyy
+	 * @return JSONArray contente i valori della statistiche filtrate
+	 * @throws GestisciStringaException eccezione che viene lanciata se l'utente inserisce una stringa non valida
+	 * @throws java.text.ParseException errori durante il parsing
+	 * @throws DataMeteoException eccezione che viene lanciata in caso di errori con la data inserita
+	 * @throws IOException errori di input/output su file
+	 * @throws ParseException errori durante il parsing
+	 * @throws NomeCittaException eccezione che viene lanciata se l'utente inserisce il nome di una città inesistente
+	 * o errato
+	 * @throws InserimentoException eccezione che viene lanciata se l'utente dimentica di inserire il nome della città
 	 *
 	 */
 
@@ -188,20 +191,22 @@ public class Controller {
 	public JSONArray filtraStatsGiornaliero(@RequestBody JSONObject bodyNomiCittaData)
 			throws GestisciStringaException, java.text.ParseException, DataMeteoException, IOException, ParseException, NomeCittaException, InserimentoException {
 		return serviceNuvole.filtraStatsGiornaliere(bodyNomiCittaData);
-		//ATTENZIONE!!! il JSONObject deve contenere 2 campi "nomiCitta" e "data"
-		//ATTENZIONE!!! la key associata alla stringa contenente i nomi delle città separate dalla virgola deve essere "nomiCitta"
-		//ATTENZIONE!!! la key associata alla data deve essere "data" e il value deve essere scritto come gg/mm/AAAA
+		//ATTENZIONE! Il JSONObject deve contenere 2 campi "nomiCitta" e "data"
 	}
-		
-	//FINE ROTTA
-
-	
-	//INIZIO ROTTA
 
 	/**
 	 *
-	 * @param bodyNomiCittaData
-	 * @return
+	 * La seguente rotta permette di filtrare le statistiche settimanali per nome della città e per data. E' possibile
+	 * inserire contemporaneamente più nomi.
+	 *
+	 * @param bodyNomiCittaData JSONObject contenente due campi "nomiCitta" e "data" nel formato dd/mm/yyyy
+	 * @return JSONArray contente i valori della statistiche filtrate
+	 * @throws GestisciStringaException eccezione che viene lanciata se l'utente inserisce una stringa non valida
+	 * @throws DataMeteoException eccezione che viene lanciata in caso di errori con la data inserita
+	 * @throws ParseException errori durante il parsing
+	 * @throws java.text.ParseException errori durante il parsing
+	 * @throws IOException errori di input/output su file
+	 * @throws InserimentoException eccezione che viene lanciata se l'utente dimentica di inserire il nome della città
 	 *
 	 */
 
@@ -210,59 +215,55 @@ public class Controller {
 	public JSONArray filtraStatsSettimanale(@RequestBody JSONObject bodyNomiCittaData)
 			throws GestisciStringaException, DataMeteoException, ParseException, java.text.ParseException, IOException, InserimentoException {
 		return serviceNuvole.filtraStatsSettimanali(bodyNomiCittaData);
-		//ATTENZIONE!!! il JSONObject deve contenere 2 campi "nomiCitta" e "data"
-		//ATTENZIONE!!! la key associata alla stringa contenente i nomi delle città separate dalla virgola deve essere "nomiCitta"
-		//ATTENZIONE!!! la key associata alla data deve essere "data" e il value deve essere scritto come gg/mm/AAAA
+		//ATTENZIONE! Il JSONObject deve contenere 2 campi "nomiCitta" e "data"
 	}
-			
-	//FINE ROTTA
-
-	
-	//INIZIO ROTTA
 
 	/**
 	 *
-	 * @param bodyNomiCittaData
-	 * @return
+	 * La seguente rotta permette di filtrare le statistiche mensili per nome della città e per data. E' possibile
+	 * inserire contemporaneamente più nomi.
+	 *
+	 * @param bodyNomiCittaData JSONObject contenente due campi "nomiCitta" e "data" nel formato mm/yyyy
+	 * @return JSONArray contente i valori della statistiche filtrate
+	 * @throws GestisciStringaException eccezione che viene lanciata se l'utente inserisce una stringa non valida
+	 * @throws DataMeteoException eccezione che viene lanciata in caso di errori con la data inserita
+	 * @throws ParseException errori durante il parsing
+	 * @throws java.text.ParseException errori durante il parsing
+	 * @throws IOException errori di input/output su file
+	 * @throws InserimentoException eccezione che viene lanciata se l'utente dimentica di inserire il nome della città
 	 *
 	 */
 
 	@RequestMapping(value = "/filtraStatsMensile", method = RequestMethod.POST)
 	@ResponseBody
 	public JSONArray filtraStatsMensile(@RequestBody JSONObject bodyNomiCittaData)
-			throws DataMeteoException, GestisciStringaException, ParseException, java.text.ParseException, IOException, InserimentoException {
+			throws GestisciStringaException, DataMeteoException, ParseException, java.text.ParseException, IOException, InserimentoException {
 		return serviceNuvole.filtraStatsMensili(bodyNomiCittaData);
-		//ATTENZIONE!!! il JSONObject deve contenere 2 campi "nomiCitta" e "data"
-		//ATTENZIONE!!! la key associata alla stringa contenente i nomi delle città separate dalla virgola deve essere "nomiCitta"
-		//ATTENZIONE!!! la key associata alla data deve essere "data" e il value deve essere scritto come mm/AAAA
+		//ATTENZIONE! Il JSONObject deve contenere 2 campi "nomiCitta" e "data"
 	}
-				
-	//FINE ROTTA
-
-	
-	//INIZIO ROTTA
 
 	/**
 	 *
-	 * @param bodyNomiCittaData
-	 * @return
+	 * La seguente rotta permette di filtrare le statistiche totali per nome della città. E' possibile
+	 * inserire contemporaneamente più nomi.
+	 *
+	 * @param bodyNomiCittaData JSONObject contenente un campo "nomiCitta"
+	 * @return JSONArray contente i valori della statistiche filtrate
+	 * @throws GestisciStringaException eccezione che viene lanciata se l'utente inserisce una stringa non valida
+	 * @throws DataMeteoException eccezione che viene lanciata in caso di errori con la data inserita
+	 * @throws ParseException errori durante il parsing
+	 * @throws IOException errori di input/output su file
+	 * @throws InserimentoException eccezione che viene lanciata se l'utente dimentica di inserire il nome della città
 	 *
 	 */
 
 	@RequestMapping(value = "/filtraStatsTotale", method = RequestMethod.POST)
 	@ResponseBody
 	public JSONArray filtraStatsTotale(@RequestBody JSONObject bodyNomiCittaData)
-			throws DataMeteoException, ParseException, GestisciStringaException, IOException, InserimentoException {
+			throws GestisciStringaException, DataMeteoException, ParseException, IOException, InserimentoException {
 		return serviceNuvole.filtraStatsTotali(bodyNomiCittaData);
-		//ATTENZIONE!!! il JSONObject deve contenere 1 campo "nomiCitta"
-		//ATTENZIONE!!! la key associata alla stringa contenente i nomi delle città separate dalla virgola deve essere "nomiCitta"
-		//visto che bisogna immettere una sola città sarebbe meglio inserirla come parametro?
+		//ATTENZIONE! Il JSONObject deve contenere 1 campo "nomiCitta"
 	}
-					
-	//FINE ROTTA
-
-	
-	//INIZIO ROTTA
 
 	/**
 	 *
@@ -270,60 +271,64 @@ public class Controller {
 	 *
 	 * @param nomeDatabase nome del database da formattare
 	 * @return Stringa contenente un messaggio di avvenuta eliminazione del database
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws IOException errori di input/output su file
+	 * @throws ParseException errori durante il parsing
 	 * @throws InserimentoException eccezione che viene lanciata se l'utente dimentica di inserire il nome del database
 	 * da formattare
 	 * @throws DatabaseNotFoundException eccezione che viene lanciata se l'utente tenta di formattare un database
-	 * inesistente.
+	 * inesistente
 	 *
 	 */
 
 	@RequestMapping(value = "/deleteDatabase", method = RequestMethod.DELETE)
-	@ResponseBody
 	public String eliminaDatabase(@RequestParam String nomeDatabase)
 			throws IOException, ParseException, InserimentoException, DatabaseNotFoundException {
 		return serviceNuvole.eliminaDatabase(nomeDatabase);
-		//La key del parametro deve essere "nomeDatabase"
+		//La rotta richiede l'inserimento di un parametro "nomeDatabase"
 	}
-
-	//FINE ROTTA
-
-	
-	//INIZIO ROTTA
 
 	/**
 	 *
 	 * La seguente rotta permette all'utente di visualizzare il contenuto di un database.
 	 *
-	 * @param nomeDatabase nome del database che si desidera visualizzare
-	 * @return Il JSONArray contenente i dati meteo presenti nel database indicato
-	 * @throws IOException
-	 * @throws ParseException
+	 * @param nomeDatabase nome del database da visualizzare
+	 * @return JSONArray contenente i dati meteo presenti nel database indicato
+	 * @throws IOException errori di input/output su file
+	 * @throws ParseException errori durante il parsing
 	 * @throws InserimentoException eccezione che viene lanciata nel caso in cui l'utente non inserisce il nome del
 	 * database da visualizzare
 	 * @throws DatabaseNotFoundException eccezione che viene lanciata se l'utente tenta di visualizzare un database
-	 * inesistente.
+	 * inesistente
 	 *
 	 */
 
 	@RequestMapping(value = "/getDatabase", method = RequestMethod.GET)
-	@ResponseBody
 	public JSONArray getDatabase(@RequestParam String nomeDatabase)
 			throws IOException, ParseException, InserimentoException, DatabaseNotFoundException {
 		return serviceNuvole.getDatabase(nomeDatabase);
-		//La key del parametro deve essere "nomeDatabase"
+		//La rotta richiede l'inserimento di un parametro "nomeDatabase"
 	}
 
-	//FINE ROTTA
-
-
-	//INIZIO ROTTA
-
 	/**
-	 * 
-	 * @param bodyInizioFineCittaSoglia
-	 * @return
+	 *
+	 * La seguente rotta permette di generare statistiche sulle previsioni azzeccate riguardo una città, in un dato
+	 * periodo tra una data iniziale e finale e data una soglia di errore. In particolare richiede l'inserimento di un
+	 * body contenente 4 campi: "nomeCitta" (uno solo) , "dataInizio" (formato dd/mm/yyyy) , "dataFine" formato dd/mm/yyyy)
+	 * , "sogliaErrore" (numero compreso tra 1 e 99).
+	 *
+	 * @param bodyInizioFineCittaSoglia JSONObject contenente contenente 4 campi: "nomeCitta","dataInizio","dataFine",
+	 * "sogliaErrore"
+	 * @return JSONObject contenente i valori delle statistiche calcolate
+	 * @throws PeriodNotValidException eccezione che viene lanciata se l'utente inserisce una periodo non valido
+	 * @throws DataMeteoException eccezione che viene lanciata in caso di errori con la data inserita
+	 * @throws ParseException errori durante il parsing
+	 * @throws SogliaErroreNotValidException eccezione che viene lanciata se l'utente inserisce una soglia di errore
+	 * non valida
+	 * @throws java.text.ParseException errori durante il parsing
+	 * @throws IOException errori di input/output su file
+	 * @throws InserimentoException eccezione che viene lanciata nel caso in cui l'utente non inserisce uno tra i 4
+	 * campi richiesti
+	 *
 	 */
 
 	@RequestMapping(value = "/previsioniSoglia", method = RequestMethod.POST)
@@ -331,12 +336,6 @@ public class Controller {
 	public JSONObject controllaPrevisioniSoglia(@RequestBody JSONObject bodyInizioFineCittaSoglia)
 			throws PeriodNotValidException, DataMeteoException, ParseException, SogliaErroreNotValidException, java.text.ParseException, IOException, InserimentoException {
 		return serviceNuvole.controllaPrevisioniSoglia(bodyInizioFineCittaSoglia);
-		//ATTENZIONE!!! il JSONObject deve contenere 4 campi "nomeCitta", "dataInizio" ,"dataFine" ,"sogliaErrore"
-		//ATTENZIONE!!! il value associato alle date deve essere scritto come gg/mm/AAAA
-		//ATTENZIONE!!! la sogliaErrore deve essere un valore compreso tra 1 e 99
-		//ATTENZIONE!!! il nome della citta deve essere uno solo
+		//ATTENZIONE! Il JSONObject deve contenere 4 campi "nomeCitta","dataInizio","dataFine","sogliaErrore"
 	}
-	
-	//FINE ROTTA
-
 }

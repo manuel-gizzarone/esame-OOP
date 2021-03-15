@@ -10,18 +10,18 @@ public class SogliaErroreNotValidException extends Exception {
 
 	/**
 	 *
-	 * Costruttore della classe che fa visualizzare il messaggio di errore relativo.
+	 * Costruttore della classe che fa visualizzare il messaggio di errore.
 	 *
 	 */
 
 	public SogliaErroreNotValidException() {
 
-		super("La soglia di errore inserita non è valida! Inserire un numero tra 1 e 99.");
+		super("La soglia di errore inserita non è valida! Inserire un numero compreso tra 1 e 99.");
 	}
 
 	/**
 	 *
-	 * Metodo getter per ottenere il messaggio di errore.
+	 * Metodo get per ottenere il messaggio di errore.
 	 *
 	 * @return messaggio di errore
 	 *

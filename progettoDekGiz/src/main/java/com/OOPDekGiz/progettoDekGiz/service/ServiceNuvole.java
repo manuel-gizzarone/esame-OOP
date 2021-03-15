@@ -96,15 +96,16 @@ public class ServiceNuvole implements ConfigInterface {
 	 */
 
 	public String salvaOgniOra(String nomeCitta)
-			throws ParseException, InserimentoException, NomeCittaException, ConfigFileException, IOException, DataMeteoException {
+			throws ParseException, InserimentoException, NomeCittaException, ConfigFileException, IOException {
 
 		if(nomeCitta.isEmpty()) {
 			throw new InserimentoException("nomeCitta");
 		} else {
-			OpenWeatherCurrentMeteo openWeatherCurrentMeteo = new OpenWeatherCurrentMeteo(this.estraiApiKey(), nomeCitta);
-			MeteoCitta meteoCitta = openWeatherCurrentMeteo.estraiDatiMeteo();
+			//eseguo una chiamata di prova per controllare se effettivamente la richiesta vada a buon fine
+			//se la richiesta fallisce significa che è stato inserito un nome citta non valido e quindi viene lanciata l'eccezione
+			OpenWeatherCurrentMeteo prova = new OpenWeatherCurrentMeteo(this.estraiApiKey(), nomeCitta);
 			DataBase dataBase = new DataBase(nomeCitta + ".json");
-			dataBase.salvaSulDatabaseOgniOra(meteoCitta);
+			dataBase.salvaSulDatabaseOgniOra(nomeCitta);
 			return "Path database:  " + System.getProperty("user.dir") + "/" + dataBase.getNomeDatabase();
 		}
 	}

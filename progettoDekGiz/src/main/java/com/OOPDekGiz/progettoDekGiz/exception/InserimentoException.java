@@ -18,12 +18,12 @@ public class InserimentoException extends Exception {
 
     public InserimentoException(String campo){
 
-        super("ERRORE! Il campo '" + campo + "' è vuoto. Riprovare!");
+        super("ERRORE! Il campo '" + campo + "' è vuoto. Riprovare.");
     }
 
     /**
      *
-     * Metodo getter per ottenere il messaggio di errore.
+     * Metodo get per ottenere il messaggio di errore.
      *
      * @return messaggio di errore
      *

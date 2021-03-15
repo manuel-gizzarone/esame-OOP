@@ -2,49 +2,74 @@ package com.OOPDekGiz.progettoDekGiz.util;
 
 /**
  *
- * Superclasse che contiene l'URL comune alle chiamate ApiCurrent ed Api5Giorni, l'apiKey e il nome della città di cui
- * si sono richiesti i dati meteo.
+ * Superclasse che contiene l'URL comune alle chiamate Api Current Weather ed Api 5Day/3Hours Forecast, l'apiKey e il
+ * nome della città di cui si sono richiesti i dati meteo.
  *
  */
 
 public class OpenWeatherApiUrlGen {
 
-		private String apiKey;
+	private String apiKey;
 
-		private String nomeCitta;
+	private String nomeCitta;
 
-		protected String UrlBase = "http://api.openweathermap.org/data/2.5/";
+	protected String UrlBase = "http://api.openweathermap.org/data/2.5/"; //URL comune ad entrambe le chiamate API
 
-		/**
-		 *
-		 * Costruttore della superclasse che contiene il valore dell'apiKey e il nome della citta inserita dall'utente.
-		 *
-		 * @param apiKey apiKey necessaria per la costruzione dell'URL
-		 * @param nomeCitta nome della città di cui si sono richiesti i dati meteo
-		 *
-		 */
+	/**
+	 *
+	 * Costruttore della superclasse che contiene il valore dell'apiKey e il nome della citta inserita dall'utente.
+	 *
+	 * @param apiKey apiKey necessaria per la costruzione dell'URL
+	 * @param nomeCitta nome della città di cui si sono richiesti i dati meteo
+	 *
+	 */
 
-		public OpenWeatherApiUrlGen(String apiKey, String nomeCitta) {
-			this.apiKey = apiKey;
-			this.nomeCitta = nomeCitta;
-		}
-		
-		public String getNomeCitta() {
-			return nomeCitta;
-		}
+	public OpenWeatherApiUrlGen(String apiKey, String nomeCitta) {
+		this.apiKey = apiKey;
+		this.nomeCitta = nomeCitta;
+	}
 
-		public void setNomeCitta(String nomeCitta) {
-			this.nomeCitta = nomeCitta;
-		}
+	/**
+	 *
+	 * Metodo get per la variabile d'istanza nomeCitta.
+	 *
+	 * @return nome della città
+	 *
+	 */
 
-		public String getApiKey() {
-			return apiKey;
-		}
+	public String getNomeCitta() {
+		return this.nomeCitta;
+	}
 
-		public void setApiKey(String apiKey) {
-			this.apiKey = apiKey;
-		}
-		
-	
+	/**
+	 *
+	 * Metodo set per la variabile d'istanza nomeCitta.
+	 *
+	 */
 
+	public void setNomeCitta(String nomeCitta) {
+		this.nomeCitta = nomeCitta;
+	}
+
+	/**
+	 *
+	 * Metodo get per la variabile d'istanza apiKey.
+	 *
+	 * @return stringa contenente l'apiKey
+	 *
+	 */
+
+	public String getApiKey() {
+		return this.apiKey;
+	}
+
+	/**
+	 *
+	 * Metodo set per la variabile d'istanza apiKey.
+	 *
+	 */
+
+	public void setApiKey(String apiKey) {
+		this.apiKey = apiKey;
+	}
 }

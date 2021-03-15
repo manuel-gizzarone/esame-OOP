@@ -2,7 +2,8 @@ package com.OOPDekGiz.progettoDekGiz.exception;
 
 /**
  *
- * Questa classe segnale l'eccezione generata dall'inserimento di un periodo errato.
+ * Questa classe segnale l'eccezione generata dall'inserimento di un periodo errato. In particolare verrà lanciata
+ * se la data di inizio del periodo risulta successiva alla data di fine.
  *
  */
 
@@ -21,7 +22,7 @@ public class PeriodNotValidException extends Exception {
 
     /**
      *
-     * Metodo getter per ottenere il messaggio di errore.
+     * Metodo get per ottenere il messaggio di errore.
      *
      * @return messaggio di errore
      *

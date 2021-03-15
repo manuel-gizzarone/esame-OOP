@@ -19,7 +19,7 @@ import org.json.simple.parser.ParseException;
 public class FiltersNuvole {
 
 	@SuppressWarnings("unchecked")
-	public JSONObject filtraStatisticheGiornaliere (DataMeteo filtraData,String mioNomeCitta) throws DataMeteoException, ParseException, IOException {
+	public JSONObject filtraStatisticheGiornaliere (DataMeteo filtraData,String mioNomeCitta) throws DataMeteoException, ParseException, IOException, NomeCittaException {
 		
 		//statistiche disponibili sulla nuvolosità
 		long min=1000;

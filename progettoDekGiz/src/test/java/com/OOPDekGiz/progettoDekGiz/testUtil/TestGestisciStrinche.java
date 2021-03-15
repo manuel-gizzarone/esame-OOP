@@ -9,14 +9,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Date;
 import java.util.Vector;
 
 /**
  *
  * Questa classe ha lo scopo di effettuare dei test automatici su alcuni metodi della classe GestisciStringhe.
- *
- * @author Manuel Gizzarone
- * @author Emanuele De Caro
  *
  */
 
@@ -78,6 +76,6 @@ public class TestGestisciStrinche {
     @DisplayName("Lancio corretto dell'eccezione GestisciStringaException.")
     void testGestisciStringaException(){
         GestisciStringaException e = assertThrows(GestisciStringaException.class, ()->this.gestisciStringheErrata.estraiConVirgola());
-        assertEquals("Errore formato stringa! Inserire le citta senza lasciare spazi tra le virgole.", e.getMessage());
+        assertEquals("Errore formato stringa! Inserire le città senza lasciare spazi tra le virgole.", e.getMessage());
     }
 }

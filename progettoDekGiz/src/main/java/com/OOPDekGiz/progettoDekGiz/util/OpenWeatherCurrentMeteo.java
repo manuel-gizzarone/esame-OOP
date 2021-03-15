@@ -3,7 +3,6 @@ package com.OOPDekGiz.progettoDekGiz.util;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -15,17 +14,12 @@ import org.json.simple.parser.ParseException;
 import com.OOPDekGiz.progettoDekGiz.exception.DataMeteoException;
 import com.OOPDekGiz.progettoDekGiz.model.MeteoCitta;
 
-
 /**
  *
- * Questa classe estende la superclasse OpenWeatherApiUrlGen e si occupa di gestire le chiamate alle ApiCurrent
- * per il salvataggio dei dati meteo attuali sulla nuvolosità.
- *
- * @author Manuel Gizzarone
- * @author Emanuele De Caro
+ * Questa classe estende la superclasse OpenWeatherApiUrlGen e si occupa di gestire le chiamate alle Api Current
+ * Weather per il salvataggio dei dati meteo istantanei sulla nuvolosità.
  *
  */
-
 
 public class OpenWeatherCurrentMeteo extends OpenWeatherApiUrlGen {
 
@@ -35,17 +29,18 @@ public class OpenWeatherCurrentMeteo extends OpenWeatherApiUrlGen {
 
 	/**
 	 *
-	 * Costruttore della classe che ha il compito di costruire l'URL completo per la chiamata alle ApiCurrent. Dopo aver
-	 * ottenuto il nome della città e l'apiKey, apre il flusso di input BufferedReader per leggere la risposta.
+	 * Costruttore della classe che ha il compito di costruire l'URL completo per la chiamata alle API. Dopo aver
+	 * ottenuto l'apiKey ed il nome della città, apre il flusso di input BufferedReader per leggere la risposta.
 	 *
 	 * @param apiKey apiKey necessaria per la costruzione dell'URL
 	 * @param nomeCitta nome della citta di cui si vogliono ottenere i dati meteo istantanei
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws NomeCittaException errore generato dall'inserimento di una città inesistente
 	 *
 	 */
 
-	public OpenWeatherCurrentMeteo (String apiKey, String nomeCitta) throws NomeCittaException {
+	public OpenWeatherCurrentMeteo (String apiKey, String nomeCitta)
+			throws NomeCittaException {
+
 		super(apiKey, nomeCitta);
 		try {
 			URLConnection ApiOpenWeatherC = new URL(this.costruisciUrlCurrent()).openConnection();
@@ -57,31 +52,31 @@ public class OpenWeatherCurrentMeteo extends OpenWeatherApiUrlGen {
 
 	/**
 	 *
-	 * Questo metodo costruisce l'URL corrispondente alla chiamata alle ApiCurrent.
+	 * Questo metodo costruisce l'URL corrispondente per la chiamata alle Api Current Weather.
 	 *
-	 * @return URL completo per la chiamata alle ApiCurrent
+	 * @return URL completo per la chiamata alle API
 	 *
 	 */
 
 	public String costruisciUrlCurrent() {
-		return (UrlCurrent + "q=" + super.getNomeCitta() + "&appid=" + super.getApiKey());
+		return (this.UrlCurrent + "q=" + super.getNomeCitta() + "&appid=" + super.getApiKey());
 	}
 	
 	/**
 	 *
-	 * Questo metodo estrae i dati meteo attuali sulla nuvolosità della città inserita dall'utente.
-	 * 
-	 * @return l'oggetto MeteoCitta costruito dai dati estratti dalla chiamata all'ApiCurrent
-	 * @throws ParseException
-	 * @throws MalformedURLException
-	 * @throws IOException
-	 * @throws DataMeteoException
+	 * Questo metodo estrae i dati meteo istantanei sulla nuvolosità della città a cui fa riferimento la chiamata API.
+	 *
+	 * @return oggetto MeteoCitta costruito dai dati estratti dalla chiamata API
+	 * @throws ParseException errori durente il parsing
+	 * @throws IOException errori di input/output su file
+	 * @throws DataMeteoException eccezzione lanciata nel caso si verifichino problemi con la data inserita dall'utente
 	 *
 	 */
 
-	public MeteoCitta estraiDatiMeteo () throws ParseException, MalformedURLException, IOException, DataMeteoException {
-		String StringRisultatoApi = leggiApiC.readLine();
+	public MeteoCitta estraiDatiMeteo()
+			throws ParseException, IOException, DataMeteoException {
 
+		String StringRisultatoApi = leggiApiC.readLine();
 		JSONParser parser = new JSONParser();
 		JSONObject JsonObjectRisultatoApi = (JSONObject) parser.parse(StringRisultatoApi);
 		String nomeCitta = (String) JsonObjectRisultatoApi.get("name");
@@ -91,13 +86,25 @@ public class OpenWeatherCurrentMeteo extends OpenWeatherApiUrlGen {
 		return new MeteoCitta(nuvolosita, nomeCitta, UnixTime);
     }
 
-    //metodi setter e getter per ottenere l'URL
+	/**
+	 *
+	 * Metodo get per la variabile d'istanza UrlCurrent.
+	 *
+	 * @return URL completo
+	 *
+	 */
 
 	public String getUrlCurrent() {
-		return UrlCurrent;
+		return this.UrlCurrent;
 	}
 
+	/**
+	 *
+	 * Metodo set per la variabile d'istanza UrlCurrent.
+	 *
+	 */
+
 	public void setUrlCurrent(String urlCurrent) {
-		UrlCurrent = urlCurrent;
+		this.UrlCurrent = urlCurrent;
 	}
 }

@@ -1,5 +1,6 @@
 package com.OOPDekGiz.progettoDekGiz.util;
 
+import com.OOPDekGiz.progettoDekGiz.exception.ConfigFileException;
 import com.OOPDekGiz.progettoDekGiz.model.MeteoCitta;
 
 import org.json.simple.JSONArray;
@@ -16,71 +17,64 @@ import java.util.concurrent.TimeUnit;
 
 /**
  *
- * Classe che si occupa di gestire il salvataggio su un Database dei dati forniti dalle chiamate alle API OpenWeather.
- *
- * @author Manuel Gizzarone
- * @author Emanuele De Caro
+ * Questa classe si occupa di gestire il salvataggio su un Database dei dati provenienti dalle chiamate alle
+ * API di OpenWeather. Iplementa l'interfaccia ConfigInterface per l'acquisizione dell'apiKey.
  *
  */
 
-public class DataBase{
+public class DataBase implements ConfigInterface {
 
     private String nomeDatabase;
 
-    private JSONArray jsonArray; //potrebbe essere final
+    private JSONArray jsonArray;
 
     private final File file;
 
     FileWriter fileWriter;
 
-
     /**
+     * Costruttore della classe che assegna alla variabile d'istanza nomeDatabase il nome dell'oggetto DataBase
+     * appena creato. Se il database è già esistente leggerà i dati contenuti e li salverà su un JSONArray
+     * momentaneo. Se invece è insesistente crea il nuovo database, inizializzando al suo interno un JSONArray vuoto.
      *
-     * Costruttore della classe DataBase che crea un file json ed istanzia un JSONArray in cui verranno inseriti tutti
-     * i dati.
-     *
-     * @throws IOException
-     *
+     * @param nomeDatabase nome del database
+     * @throws IOException    errori di input/output su file
+     * @throws ParseException errori durante il parsing
      */
-
-    //Nomi dei database
-    //Database previsioni 5 giorni: "Database_Previsioni"
-    //Database dati ogni ora: "Database_Raccolta"
 
     public DataBase(String nomeDatabase)
             throws IOException, ParseException {
+
         this.nomeDatabase = nomeDatabase;
-        file = new File(System.getProperty("user.dir") + "/" + this.nomeDatabase);
-        if(!file.exists()) {
+        this.file = new File(System.getProperty("user.dir") + "/" + this.nomeDatabase);
+        if (!this.file.exists()) {
             file.createNewFile();
-            jsonArray = new JSONArray();
+            this.jsonArray = new JSONArray();
             FileWriter fileWriter = new FileWriter(file);
-            fileWriter.write(jsonArray.toJSONString());
-            fileWriter.flush();
+            fileWriter.write(this.jsonArray.toJSONString());
+            fileWriter.flush(); //pulisce lo stream di output
             fileWriter.close();
         } else {
-            jsonArray = this.getDatabase();
+            this.jsonArray = this.getDatabase();
         }
     }
 
     /**
+     * Questo metodo salva sul database relativo i dati meteo forniti dalle chiamate Api Current Weather.
      *
-     * Questo metodo salva sul database i dati meteo forniti dalle chiamate ApiCurrent.
-     *
-     * @param meteoCitta oggetto di tipo meteo citta contenente i dati meteo istantanei relativi ad una citta
-     * @throws IOException
-     * @throws UnsupportedOperationException
-     * @throws ClassCastException
-     * @throws NullPointerException
-     * @throws IllegalArgumentException
-     *
+     * @param meteoCitta oggetto di tipo MeteoCitta contenente i dati meteo istantanei relativi ad una città
+     * @throws IOException          errori di input/output su file
+     * @throws ClassCastException   errore lanciato per indicare che il codice ha tentato di eseguire il cast di un
+     *                              oggetto in una sottoclasse di cui non è un'istanza
+     * @throws NullPointerException errore lanciato quando si tenta di utilizzare null in un caso in cui è richiesto
+     *                              un oggetto
      */
 
     public void salvaSulDatabase(MeteoCitta meteoCitta)
-            throws IOException, UnsupportedOperationException, ClassCastException, NullPointerException, IllegalArgumentException {
-        JSONObject nuovoDatoMeteo = meteoCitta.castToJsonObject();
-        jsonArray.add(nuovoDatoMeteo);
+            throws IOException, ClassCastException, NullPointerException {
 
+        JSONObject nuovoDatoMeteo = meteoCitta.castToJsonObject();
+        this.jsonArray.add(nuovoDatoMeteo);
         fileWriter = new FileWriter(file);
         fileWriter.write(jsonArray.toJSONString());
         fileWriter.flush();
@@ -88,88 +82,118 @@ public class DataBase{
     }
 
     /**
-     *
-     * Overloading del metodo SalvaSulDatabase che salva sul database i dati forniti dalle chiamate Api5Giorni.
+     * Overloading del metodo SalvaSulDatabase che salva sul database i dati forniti dalle chiamate Api 5Day/3Hour
+     * Forecast.
      *
      * @param datiMeteo vettore contenente oggetti di tipo MeteoCitta
-     * @throws IOException
-     * @throws UnsupportedOperationException
-     * @throws ClassCastException
-     * @throws NullPointerException
-     * @throws IllegalArgumentException
-     *
+     * @throws IOException          errori di input/output su file
+     * @throws ClassCastException   errore lanciato per indicare che il codice ha tentato di eseguire il cast di un
+     *                              oggetto in una sottoclasse di cui non è un'istanza
+     * @throws NullPointerException errore lanciato quando si tenta di utilizzare null in un caso in cui è richiesto
+     *                              un oggetto
      */
 
     public void salvaSulDatabase(Vector<MeteoCitta> datiMeteo)
-            throws IOException, UnsupportedOperationException, ClassCastException, NullPointerException, IllegalArgumentException {
+            throws IOException, ClassCastException, NullPointerException {
+
         fileWriter = new FileWriter(file);
         for (MeteoCitta meteoCitta : datiMeteo) {
             JSONObject nuovoDatoMeteo = meteoCitta.castToJsonObject();
-            jsonArray.add(nuovoDatoMeteo);
+            this.jsonArray.add(nuovoDatoMeteo);
         }
-
         fileWriter.write(jsonArray.toJSONString());
         fileWriter.flush();
         fileWriter.close();
     }
 
     /**
+     * Questo metodo salva ogni ora sul database relativo i dati meteo forniti dalle chiamate Api Current Weather.
      *
-     * Metodo che salva ogni ora i dati meteo istantanei (nuvolosita) di una citta.
-     *
-     * @param meteoCitta
-     *
+     * @param nomeCitta nome della città a cui fanno riferimento i dati meteo
      */
 
-    public void salvaSulDatabaseOgniOra(MeteoCitta meteoCitta) {
+    public void salvaSulDatabaseOgniOra(String nomeCitta) {
         ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
         scheduler.scheduleAtFixedRate(() -> {
             try {
-                salvaSulDatabase(meteoCitta);
-            } catch (IOException e) {
-                System.out.println("Errore rilevato nell'inserimento della città! Riprovare.");
+                OpenWeatherCurrentMeteo openWeatherCurrentMeteo = new OpenWeatherCurrentMeteo(this.estraiApiKey(), nomeCitta);
+                salvaSulDatabase(openWeatherCurrentMeteo.estraiDatiMeteo());
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }, 0, 1, TimeUnit.HOURS);
     }
 
     /**
+     * Metodo per visualizzare il contenuto del relativo database formattato in JSONArray.
      *
-     * Metodo per visualizzare il contenuto del database formattato in JSONArray.
-     *
-     * @return JSONArray contenente tutti i dati meteo raccolti
-     * @throws FileNotFoundException
-     * @throws FileNotFoundException
-     * @throws ParseException
-     *
+     * @return JSONArray contenente tutti i dati meteo presenti sul database
+     * @throws FileNotFoundException errore che verrà generato dal FileInputStream quando un file con il percorso
+     *                               specificato non esiste.
+     * @throws ParseException        errori durante il parsing
      */
 
     public JSONArray getDatabase()
             throws FileNotFoundException, ParseException {
+
         Scanner in = new Scanner(new BufferedReader(new FileReader(this.nomeDatabase)));
         JSONParser parser = new JSONParser();
         return (JSONArray) parser.parse(in.nextLine());
     }
 
-   
     /**
-    *
-    * Metodo per formattare il database.
-    *
-    */
-
-   public void svuotaDatabase()
-           throws IOException {
-       this.jsonArray.clear();
-       FileWriter fileWriter = new FileWriter(file);
-       fileWriter.write(jsonArray.toJSONString());
-       fileWriter.flush();
-       fileWriter.close();
-   }
-
-
-    /**
+     * Metodo per formattare il database. Una volta invocato, cancellerà tutti i dati presenti al suo interno ma senza
+     * eliminare il relativo file.
      *
-     * Metodo per settare il nome del database.
+     * @throws IOException errori di input/output su file
+     */
+
+    public void svuotaDatabase()
+            throws IOException {
+
+        this.jsonArray.clear();
+        FileWriter fileWriter = new FileWriter(file);
+        fileWriter.write(this.jsonArray.toJSONString());
+        fileWriter.flush();
+        fileWriter.close();
+    }
+
+    /**
+     * Implementazione del metodo estraiApiKey dell'interfaccia ConfigInterface. Esso permette l'estrazione dell'apiKey
+     * dal file di configurazione.
+     *
+     * @throws ConfigFileException errori presenti nel file di configurazione (se non rispetta il formato JSON)
+     */
+
+    public String estraiApiKey()
+            throws ConfigFileException {
+
+        try {
+            File file = new File(System.getProperty("user.dir") + "/config.json");
+            Scanner in = new Scanner(new BufferedReader(new FileReader(file)));
+            String inputLine = in.nextLine();
+            in.close();
+            JSONParser parser = new JSONParser();
+            JSONObject jsonObject = (JSONObject) parser.parse(inputLine);
+            return (String) jsonObject.get("apiKey");
+        } catch (Exception e) {
+            throw new ConfigFileException();
+        }
+    }
+
+    /**
+     * Metodo get per ottenere il nome del database.
+     *
+     * @return nome del database
+     *
+     */
+
+    public String getNomeDatabase() {
+        return this.nomeDatabase;
+    }
+
+    /**
+     * Metodo set per la variabile d'istanza nomeDatabase.
      *
      * @param nomeDatabase nuovo nome del database
      *
@@ -178,16 +202,5 @@ public class DataBase{
     public void setNomeDatabase(String nomeDatabase) {
         this.nomeDatabase = nomeDatabase;
     }
-
-    /**
-     *
-     * Metodo per ottenere il nome del database.
-     *
-     * @return nome del database
-     *
-     */
-
-    public String getNomeDatabase(){
-        return this.nomeDatabase;
-    }
 }
+

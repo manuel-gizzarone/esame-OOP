@@ -15,9 +15,6 @@ import java.io.IOException;
  *
  * Questa classe ha lo scopo di effettuare dei test automatici su alcuni metodi della classe ServiceNuvole.
  *
- * @author Manuel Gizzarone
- * @author Emanuele De Caro
- *
  */
 
 class TestServiceNuvole {
@@ -57,7 +54,7 @@ class TestServiceNuvole {
     void testInserimentoException() {
         String campoVuoto = "nomeCitta";
         InserimentoException e = assertThrows(InserimentoException.class, ()->this.serviceNuvole.salvaOgniOra(""));
-        assertEquals("ERRORE! Il campo '" + campoVuoto + "' è vuoto. Riprovare!", e.getMessage());
+        assertEquals("ERRORE! Il campo '" + campoVuoto + "' è vuoto. Riprovare.", e.getMessage());
     }
 
     /**

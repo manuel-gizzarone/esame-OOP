@@ -17,12 +17,12 @@ public class GestisciStringaException extends Exception {
 
 	public GestisciStringaException() {
 
-		super("Errore formato stringa! Inserire le citta senza lasciare spazi tra le virgole.");
+		super("Errore formato stringa! Inserire le città senza lasciare spazi tra le virgole.");
 	}
 
 	/**
 	 *
-	 * Metodo getter per ottenere il messaggio di errore.
+	 * Metodo get per ottenere il messaggio di errore.
 	 *
 	 * @return messaggio di errore
 	 *
