@@ -189,7 +189,7 @@ public class Controller {
 	@RequestMapping(value = "/filtraStatsGiornaliero", method = RequestMethod.POST)
 	@ResponseBody
 	public JSONArray filtraStatsGiornaliero(@RequestBody JSONObject bodyNomiCittaData)
-			throws GestisciStringaException, java.text.ParseException, DataMeteoException, IOException, ParseException, NomeCittaException, InserimentoException {
+			throws GestisciStringaException, java.text.ParseException, DataMeteoException, IOException, ParseException, NomeCittaException, InserimentoException, FiltersException {
 		return serviceNuvole.filtraStatsGiornaliere(bodyNomiCittaData);
 		//ATTENZIONE! Il JSONObject deve contenere 2 campi "nomiCitta" e "data"
 	}
@@ -213,7 +213,7 @@ public class Controller {
 	@RequestMapping(value = "/filtraStatsSettimanale", method = RequestMethod.POST)
 	@ResponseBody
 	public JSONArray filtraStatsSettimanale(@RequestBody JSONObject bodyNomiCittaData)
-			throws GestisciStringaException, DataMeteoException, ParseException, java.text.ParseException, IOException, InserimentoException {
+			throws GestisciStringaException, DataMeteoException, ParseException, java.text.ParseException, IOException, InserimentoException, FiltersException {
 		return serviceNuvole.filtraStatsSettimanali(bodyNomiCittaData);
 		//ATTENZIONE! Il JSONObject deve contenere 2 campi "nomiCitta" e "data"
 	}
@@ -237,7 +237,7 @@ public class Controller {
 	@RequestMapping(value = "/filtraStatsMensile", method = RequestMethod.POST)
 	@ResponseBody
 	public JSONArray filtraStatsMensile(@RequestBody JSONObject bodyNomiCittaData)
-			throws GestisciStringaException, DataMeteoException, ParseException, java.text.ParseException, IOException, InserimentoException {
+			throws GestisciStringaException, DataMeteoException, ParseException, java.text.ParseException, IOException, InserimentoException, FiltersException {
 		return serviceNuvole.filtraStatsMensili(bodyNomiCittaData);
 		//ATTENZIONE! Il JSONObject deve contenere 2 campi "nomiCitta" e "data"
 	}
@@ -260,7 +260,7 @@ public class Controller {
 	@RequestMapping(value = "/filtraStatsTotale", method = RequestMethod.POST)
 	@ResponseBody
 	public JSONArray filtraStatsTotale(@RequestBody JSONObject bodyNomiCittaData)
-			throws GestisciStringaException, DataMeteoException, ParseException, IOException, InserimentoException {
+			throws GestisciStringaException, DataMeteoException, ParseException, IOException, InserimentoException, FiltersException {
 		return serviceNuvole.filtraStatsTotali(bodyNomiCittaData);
 		//ATTENZIONE! Il JSONObject deve contenere 1 campo "nomiCitta"
 	}
@@ -313,7 +313,7 @@ public class Controller {
 	 *
 	 * La seguente rotta permette di generare statistiche sulle previsioni azzeccate riguardo una città, in un dato
 	 * periodo tra una data iniziale e finale e data una soglia di errore. In particolare richiede l'inserimento di un
-	 * body contenente 4 campi: "nomeCitta" (uno solo) , "dataInizio" (formato dd/mm/yyyy) , "dataFine" formato dd/mm/yyyy)
+	 * body contenente 4 campi: "nomeCitta" (uno solo) , "dataInizio" (formato dd/mm/yyyy) , "dataFine" (formato dd/mm/yyyy)
 	 * , "sogliaErrore" (numero compreso tra 1 e 99).
 	 *
 	 * @param bodyInizioFineCittaSoglia JSONObject contenente contenente 4 campi: "nomeCitta","dataInizio","dataFine",

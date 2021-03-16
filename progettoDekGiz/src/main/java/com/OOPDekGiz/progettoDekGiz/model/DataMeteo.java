@@ -4,8 +4,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import com.OOPDekGiz.progettoDekGiz.exception.*;
-
 /**
  *
  * Questa classe contiene i metodi per la gestione di una certa data.
@@ -31,15 +29,12 @@ public class DataMeteo {
 	 * Costruttore della classe
 	 *
 	 * @param unixData contiene i secondi trascorsi tra la data ed il 01/01/1970
-	 * @throws DataMeteoException eccezzione lanciata nel caso si verifichino problemi con la data inserita dall'utente
 	 *
 	 */
 
-	public DataMeteo(long unixData)
-			throws DataMeteoException {
-
+	public DataMeteo(long unixData) {
 		this.unixData = unixData;
-		long unixDataMillis = (this.unixData * 1000);
+		long unixDataMillis = (this.unixData * 1000); //millisecondi dal 01/01/1970
 		this.data = new Date(unixDataMillis);
 		Calendar calendario = new GregorianCalendar();
 		calendario.setTimeInMillis(unixDataMillis);
@@ -77,8 +72,7 @@ public class DataMeteo {
 			return 0;
 		}
 	}
-
-
+/*
 	public boolean confrontaData (Date data2) {
 	
 		if (this.data.compareTo(data2)==0)
@@ -97,14 +91,24 @@ public class DataMeteo {
 		else
 			return false;
 	}
+*/
+	/**
+	 *
+	 * Questo metodo consente di controllare se due oggetti di tipo DataMeteo sono uguali. Quindi in altre parole,
+	 * controlla se due date sono uguali.
+	 *
+	 * @param data2 oggetto DataMeteo contenente la data da confrontare
+	 * @return true o false a seconda se le due date coincidano o meno
+	 *
+	 */
 
 	public boolean confrontaData(DataMeteo data2) {
-		boolean flag=false;
-		if(data2.getAnno()==anno&& data2.getMese()==mese&&data2.getGiorno()==giorno)
-			flag=true;
+		boolean flag = false;
+		if(data2.getAnno() == this.anno && data2.getMese() == this.mese && data2.getGiorno() == this.giorno) {
+			flag = true;
+		}
 		return flag;
 	}
-
 
 	/**
 	 *
