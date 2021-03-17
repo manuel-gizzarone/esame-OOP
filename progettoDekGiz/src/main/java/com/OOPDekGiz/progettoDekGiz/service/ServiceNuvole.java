@@ -477,6 +477,7 @@ public class ServiceNuvole implements ConfigInterface {
 	 * Implementazione del metodo estraiApiKey dell'interfaccia ConfigInterface. Esso permette l'estrazione dell'apiKey
 	 * dal file di configurazione.
 	 *
+	 * @return stringa contenente l'apiKey
 	 * @throws ConfigFileException errori presenti nel file di configurazione (se non rispetta il formato JSON)
 	 */
 

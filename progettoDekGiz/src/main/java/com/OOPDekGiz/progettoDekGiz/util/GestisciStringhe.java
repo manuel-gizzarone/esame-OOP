@@ -58,7 +58,7 @@ public class GestisciStringhe {
 	 * @throws ParseException errori durante il parsing
 	 */
 
-	public static Date StringToData (String dataDaEstrarre)
+	public static Date StringToData(String dataDaEstrarre)
 			throws ParseException {
 
 	    return new SimpleDateFormat("dd/MM/yyyy", Locale.ITALY).parse(dataDaEstrarre);
@@ -76,6 +76,8 @@ public class GestisciStringhe {
 
 	/**
 	 * Metodo set per la variabile d'istanza daLavorare.
+	 *
+	 * @param daLavorare stringa da lavorare
 	 */
 
 	public void setDaLavorare(String daLavorare) {

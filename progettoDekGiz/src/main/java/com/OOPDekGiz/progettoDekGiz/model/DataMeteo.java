@@ -20,7 +20,7 @@ public class DataMeteo {
 
 	private int settimana;
 	
-	private long unixData;  //secondi dal 01/01/1970
+	private long unixData;
 
 	/**
 	 * Costruttore della classe.
@@ -139,11 +139,13 @@ public class DataMeteo {
 	 */
 
 	public long getGiorno() {
-		return giorno;
+		return this.giorno;
 	}
 
 	/**
 	 * Metodo set per la variabile d'istanza giorno.
+	 *
+	 * @param giorno numero del giorno
 	 */
 
 	public void setGiorno(long giorno) {
@@ -157,11 +159,13 @@ public class DataMeteo {
 	 */
 
 	public int getSettimana() {
-		return settimana;
+		return this.settimana;
 	}
 
 	/**
 	 * Metodo set per la variabile d'istanza settimana.
+	 *
+	 * @param settimana indice settimana del mese
 	 */
 
 	public void setSettimana(int settimana) {
@@ -175,11 +179,13 @@ public class DataMeteo {
 	 */
 
 	public long getMese() {
-		return mese;
+		return this.mese;
 	}
 
 	/**
 	 * Metodo set per la variabile d'istanza mese.
+	 *
+	 * @param mese numero del mese
 	 */
 
 	public void setMese(long mese) {
@@ -193,11 +199,13 @@ public class DataMeteo {
 	 */
 
 	public long getAnno() {
-		return anno;
+		return this.anno;
 	}
 
 	/**
 	 * Metodo set per la variabile d'istanza anno.
+	 *
+	 * @param anno anno
 	 */
 
 	public void setAnno(long anno) {
@@ -211,11 +219,13 @@ public class DataMeteo {
 	 */
 
 	public long getUnixData() {
-		return unixData;
+		return this.unixData;
 	}
 
 	/**
 	 * Metodo set per la variabile d'istanza unixData.
+	 *
+	 * @param unixData data in formato Unix
 	 */
 
 	public void setUnixData(long unixData) {
@@ -229,11 +239,13 @@ public class DataMeteo {
 	 */
 
 	public Date getData() {
-		return data;
+		return this.data;
 	}
 
 	/**
 	 * Metodo set per la variabile d'istanza data.
+	 *
+	 * @param data data come oggetto Date
 	 */
 
 	public void setData(Date data) {

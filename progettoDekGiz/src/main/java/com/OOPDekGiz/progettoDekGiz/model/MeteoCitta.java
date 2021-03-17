@@ -66,6 +66,8 @@ public class MeteoCitta implements InterfaceToJsonObject {
 
 	/**
 	 * Metodo set per la variabile d'istanza nuvolosita.
+	 *
+	 * @param nuvolosita nuvolosita percentuale
 	 */
 
 	public void setNuvolosita(int nuvolosita) {
@@ -83,7 +85,9 @@ public class MeteoCitta implements InterfaceToJsonObject {
 	}
 
 	/**
-	 * Metodo set per la variabile d'istanza nomeCitta.à
+	 * Metodo set per la variabile d'istanza nomeCitta.
+	 *
+	 * @param nomeCitta nome della citta
 	 */
 
 	public void setNomeCitta(String nomeCitta) {
@@ -102,6 +106,8 @@ public class MeteoCitta implements InterfaceToJsonObject {
 
 	/**
 	 * Metodo set per la variabile d'istanza unixData.
+	 *
+	 * @param unixData data in formato Unix
 	 */
 
 	public void setUnixData(long unixData) {
@@ -120,6 +126,8 @@ public class MeteoCitta implements InterfaceToJsonObject {
 
 	/**
 	 * Metodo set per la variabile d'istanza dataMeteo.
+	 *
+	 * @param dataMeteo data come oggetto DataMeteo
 	 */
 
 	public void setDataMeteo(DataMeteo dataMeteo) {

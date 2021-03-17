@@ -164,6 +164,7 @@ public class Controller {
 	 * @throws ParseException errori durante il parsing
 	 * @throws InserimentoException eccezione che viene lanciata se l'utente dimentica di inserire i nomi delle città
 	 * 		   o la data
+	 * @throws FiltersException eccezione lanciata in caso di errori con i filtri inseriti
 	 */
 
 	@RequestMapping(value = "/filtraStatsGiornaliero", method = RequestMethod.POST)
@@ -187,6 +188,7 @@ public class Controller {
 	 * @throws IOException errori di input/output su file
 	 * @throws InserimentoException eccezione che viene lanciata se l'utente dimentica di inserire i nomi delle città
 	 * 		   o la data
+	 * @throws FiltersException eccezione lanciata in caso di errori con i filtri inseriti
 	 */
 
 	@RequestMapping(value = "/filtraStatsSettimanale", method = RequestMethod.POST)
@@ -210,6 +212,7 @@ public class Controller {
 	 * @throws IOException errori di input/output su file
 	 * @throws InserimentoException eccezione che viene lanciata se l'utente dimentica di inserire i nomi delle città
 	 *         o la data
+	 * @throws FiltersException eccezione lanciata in caso di errori con i filtri inseriti
 	 */
 
 	@RequestMapping(value = "/filtraStatsMensile", method = RequestMethod.POST)
@@ -230,6 +233,7 @@ public class Controller {
 	 * @throws ParseException errori durante il parsing
 	 * @throws IOException errori di input/output su file
 	 * @throws InserimentoException eccezione che viene lanciata se l'utente dimentica di inserire i nomi delle città
+	 * @throws FiltersException eccezione lanciata in caso di errori con i filtri inseriti
 	 */
 
 	@RequestMapping(value = "/filtraStatsTotale", method = RequestMethod.POST)

@@ -39,7 +39,7 @@ public class OpenWeather5giorni extends OpenWeatherApiUrlGen {
 	 * @throws NomeCittaException errore generato dall'inserimento di una città inesistente
 	 */
 
-	public OpenWeather5giorni (String apiKey, String nomeCitta)
+	public OpenWeather5giorni(String apiKey, String nomeCitta)
 			throws NomeCittaException {
 
 		super(apiKey, nomeCitta);
@@ -54,7 +54,7 @@ public class OpenWeather5giorni extends OpenWeatherApiUrlGen {
 	/**
 	 * Questo metodo ausiliario costruisce l'URL corrispondente per la chiamata alle Api 5Day/3Hour Forecast.
 	 *
-	 * @return URL completo per la chiamata alle API
+	 * @return stringa contenente l'URL completo per la chiamata alle API
 	 */
 
 	private String costruisciUrl5giorni() {
@@ -71,7 +71,7 @@ public class OpenWeather5giorni extends OpenWeatherApiUrlGen {
 	 * @throws DataMeteoException errori relativi alla data
 	 */
 
-	public Vector<MeteoCitta> estraiDatiMeteo ()
+	public Vector<MeteoCitta> estraiDatiMeteo()
 			throws ParseException, IOException, DataMeteoException {
 
 		String StringRisultatoApi = this.leggiApi5.readLine();
@@ -105,6 +105,8 @@ public class OpenWeather5giorni extends OpenWeatherApiUrlGen {
 
 	/**
 	 * Metodo set per la variabile d'istanza Url5giorni.
+	 *
+	 * @param url5giorni URL chiamata API
 	 */
 
 	public void setUrl5giorni(String url5giorni) {

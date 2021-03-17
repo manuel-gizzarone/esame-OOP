@@ -11,7 +11,10 @@ public class OpenWeatherApiUrlGen {
 
 	private String nomeCitta;
 
-	protected String UrlBase = "http://api.openweathermap.org/data/2.5/"; //URL comune ad entrambe le chiamate API
+	/**
+	 * URL comune ad entrambe le chiamate API
+	 */
+	protected String UrlBase = "http://api.openweathermap.org/data/2.5/";
 
 	/**
 	 * Costruttore della superclasse che inizializza il valore dell'apiKey e il nome della citta inserita dall'utente.
@@ -37,6 +40,8 @@ public class OpenWeatherApiUrlGen {
 
 	/**
 	 * Metodo set per la variabile d'istanza nomeCitta.
+	 *
+	 * @param nomeCitta nome della citta
 	 */
 
 	public void setNomeCitta(String nomeCitta) {
@@ -55,6 +60,8 @@ public class OpenWeatherApiUrlGen {
 
 	/**
 	 * Metodo set per la variabile d'istanza apiKey.
+	 *
+	 * @param apiKey valore apiKey
 	 */
 
 	public void setApiKey(String apiKey) {

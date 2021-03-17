@@ -66,6 +66,7 @@ public class StatsNuvole {
 	 * Questo metodo consente di calcolare statistiche settimanali sulla base dei dati meteo presenti nel database.
 	 *
 	 * @param filtraData data in cui si vogliono calcolare le statistiche (settimanali)
+	 * @return JSONObject contenente i valori delle statistiche calcolate
 	 * @throws IOException errori di input/output su file
 	 * @throws ParseException errori durante il parsing
 	 * @throws DataMeteoException eccezione che viene lanciata in caso di errori con la data
@@ -149,6 +150,7 @@ public class StatsNuvole {
 	/**
 	 * Questo metodo consente di calcolare statistiche totali cioè su tutti i dati presenti nel database.
 	 *
+	 * @return JSONObject contenente i valori delle statistiche calcolate
 	 * @throws IOException errori di input/output su file
 	 * @throws ParseException errori durante il parsing
 	 * @throws DataMeteoException eccezione che viene lanciata in caso di errori con la data

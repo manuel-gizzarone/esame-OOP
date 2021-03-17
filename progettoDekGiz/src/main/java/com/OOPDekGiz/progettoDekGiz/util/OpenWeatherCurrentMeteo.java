@@ -49,7 +49,7 @@ public class OpenWeatherCurrentMeteo extends OpenWeatherApiUrlGen {
 	/**
 	 * Questo metodo ausiliario costruisce l'URL corrispondente per la chiamata alle Api Current Weather.
 	 *
-	 * @return URL completo per la chiamata alle API
+	 * @return stringa contenente l'URL completo per la chiamata alle API
 	 */
 
 	private String costruisciUrlCurrent() {
@@ -90,6 +90,8 @@ public class OpenWeatherCurrentMeteo extends OpenWeatherApiUrlGen {
 
 	/**
 	 * Metodo set per la variabile d'istanza UrlCurrent.
+	 *
+	 * @param urlCurrent URL chaiama API
 	 */
 
 	public void setUrlCurrent(String urlCurrent) {
