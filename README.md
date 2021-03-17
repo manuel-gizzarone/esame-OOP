@@ -208,6 +208,7 @@ Se non avete eseguito chiamate alla rotta “nuvole5giorni” il database ha i d
 <li>Per problemi di parsing verso/da JSONObject viene lanciata l’eccezione ParseException.</li>
 <li>Per problemi di I/O viene lanciata l’eccezione IOException.</li>
 </ul>
+<hr>
 <h2 id="rotta-statsmensili">Rotta “/statsMensili”</h2>
 <p>Il suo fine è quello di calcolare e restituire le statistiche di varianza,media,max,min della nuvolosità percentuale nel mese inserito usando i dati sul database “Database_Previsioni.json”.<br>
 Se non avete eseguito chiamate alla rotta “nuvole5giorni” il database ha i dati predefiniti sulle città Naples,Milan e Rome relativi alla nuvolosità del mese di marzo dal 8/03/2021 al 17/03/2021.</p>
@@ -225,6 +226,7 @@ Se non avete eseguito chiamate alla rotta “nuvole5giorni” il database ha i d
 <li>Per problemi di parsing verso/da JSONObject viene lanciata l’eccezione ParseException.</li>
 <li>Per problemi di I/O viene lanciata l’eccezione IOException.</li>
 </ul>
+<hr>
 <h2 id="rotta-statstotali">Rotta “/statsTotali”</h2>
 <p>Il suo fine è quello di calcolare e restituire le statistiche di varianza,media,max,min della nuvolosità percentuale usando i dati sul database “Database_Previsioni.json”.<br>
 Se non avete eseguito chiamate alla rotta “nuvole5giorni” il database ha i dati predefiniti sulle città Naples,Milan e Rome relativi alla nuvolosità del mese di marzo dal 8/03/2021 al 17/03/2021.</p>
