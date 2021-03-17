@@ -31,18 +31,22 @@
 <ul>
 <li>
 <p>USE CASE DIAGRAM<br>
+<br><br>
 <img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/UML/UmlFinal/ControllerUseCase.png" alt="USECASEdiagramFinal"></p>
 </li>
 <li>
 <p>SEQUENCE DIAGRAM ROTTA “/nuvoleCitta5giorni”<br>
+<br><br>
 <img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/UML/UmlFinal/SequenceApi5giorni.png" alt="sequence diagram 1"></p>
 </li>
 <li>
 <p>SEQUENCE DIAGRAM ROTTA “/statsGiornaliere”<br>
+<br><br>
 <img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/UML/UmlFinal/SequenceStatsGiornaliere.png" alt="sequence diagram 2"></p>
 </li>
 <li>
 <p>CLASS DIAGRAM<br>
+<br><br>
 <img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/UML/UmlFinal/ClassDiagram.png" alt="Class diagram"></p>
 </li>
 </ul>
