@@ -7,10 +7,8 @@ import org.json.simple.JSONObject;
 import com.OOPDekGiz.progettoDekGiz.model.MeteoCitta;
 
 /**
- *
  * Questa classe contiene i metodi utili al calcolo delle statistiche per le classi StatsNuvole e FiltersNuvole.
  * Per statistiche si intendono valori massimi e minimi di nuvolosità, media e varianza.
- *
  */
 
 public class Calcola {
@@ -24,10 +22,8 @@ public class Calcola {
 	private double varianza;
 
 	/**
-	 *
 	 * Costruttore della classe che assegna dei valori di default alle variabili d'istanza che rappresentano le
 	 * statistiche disponibili sulla nuvolosità.
-	 *
 	 */
 
 	public Calcola() {
@@ -38,12 +34,10 @@ public class Calcola {
 	}
 
 	/**
-	 *
 	 * Questo metodo verrà richiamato dalla classe StatsNuvole per il calcolo delle statistiche.
 	 *
 	 * @param ArrayDatiMeteoRisultato vettore contenente i dati meteo su cui calcolare le statistiche
 	 * @return JSONObject contenente le statistiche calcolate
-	 *
 	 */
 	
 	public JSONObject calcolaStats(Vector<MeteoCitta> ArrayDatiMeteoRisultato) {
@@ -80,14 +74,12 @@ public class Calcola {
 	}
 
 	/**
-	 *
 	 * Questo metodo verrà richiamato dalla classe FiltersNuvole per il calcolo delle statistiche. Nel risultato
 	 * verrà inserito anche il nome della città a cui tali statistiche fanno riferimento.
 	 *
 	 * @param ArrayDatiMeteoRisultato vettore contenente i dati meteo su cui calcolare le statistiche
 	 * @param mioNomeCitta nome della città a cui tali statistiche si riferiscono
 	 * @return JSONObject contenente i valori delle statistiche calcolate e la città relativa a cui esse si riferiscono
-	 *
 	 */
 		
     public JSONObject calcolaFilters(Vector<MeteoCitta> ArrayDatiMeteoRisultato, String mioNomeCitta) {

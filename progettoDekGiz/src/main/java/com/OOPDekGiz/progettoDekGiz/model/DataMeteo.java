@@ -5,9 +5,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
- *
  * Questa classe contiene i metodi per la gestione di una certa data.
- *
  */
 
 public class DataMeteo {
@@ -25,11 +23,9 @@ public class DataMeteo {
 	private long unixData;  //secondi dal 01/01/1970
 
 	/**
-	 *
-	 * Costruttore della classe
+	 * Costruttore della classe.
 	 *
 	 * @param unixData contiene i secondi trascorsi tra la data ed il 01/01/1970
-	 *
 	 */
 
 	public DataMeteo(long unixData) {
@@ -45,12 +41,10 @@ public class DataMeteo {
     }
 
 	/**
-	 *
 	 * Questo metodo consente di calcolare l'indice della settimana in cui appartiene un dato giorno di un mese.
 	 *
 	 * @param giorno indice giorno nel mese
 	 * @return indice settimana nel mese. In caso di un indice del giorno superiore a 31 ritorna un valore di default
-	 *
 	 */
 
 	public int calcolaSettimana(long giorno) {
@@ -72,34 +66,13 @@ public class DataMeteo {
 			return 0;
 		}
 	}
-/*
-	public boolean confrontaData (Date data2) {
-	
-		if (this.data.compareTo(data2)==0)
-			return true;
-		else
-			return false;
-	}
 
-	public boolean confrontaData (long unixData2) {
-		
-		long unixData2Millis = (long)(unixData2*1000);
-		Date data2 = new Date(unixData2Millis);
-		
-		if (this.data.compareTo(data2)==0)
-			return true;
-		else
-			return false;
-	}
-*/
 	/**
-	 *
 	 * Questo metodo consente di controllare se due oggetti di tipo DataMeteo sono uguali. Quindi in altre parole,
 	 * controlla se due date sono uguali.
 	 *
 	 * @param data2 oggetto DataMeteo contenente la data da confrontare
 	 * @return true o false a seconda se le due date coincidano o meno
-	 *
 	 */
 
 	public boolean confrontaData(DataMeteo data2) {
@@ -111,12 +84,10 @@ public class DataMeteo {
 	}
 
 	/**
-	 *
 	 * Questo metodo consente di calcolare il numero di giorni presenti in un mese.
 	 *
 	 * @param mese indice del mese
 	 * @return numero di giorni presenti nel mese
-	 *
 	 */
 
 	public long calcolaLimiteMese(long mese) {
@@ -151,12 +122,10 @@ public class DataMeteo {
 	}
 
 	/**
-	 *
 	 * Override del metodo toString che consente di convertire un oggetto di tipo Date in una stringa contenente la
 	 * data della relativa istanza della classe.
 	 *
 	 * @return istanza di Date sotto forma di stringa
-	 *
 	 */
 
 	public String toString () {
@@ -164,11 +133,9 @@ public class DataMeteo {
 	}
 
 	/**
-	 *
 	 * Metodo get per la variabile d'istanza giorno.
 	 *
 	 * @return indice del giorno
-	 *
 	 */
 
 	public long getGiorno() {
@@ -176,9 +143,7 @@ public class DataMeteo {
 	}
 
 	/**
-	 *
 	 * Metodo set per la variabile d'istanza giorno.
-	 *
 	 */
 
 	public void setGiorno(long giorno) {
@@ -186,11 +151,9 @@ public class DataMeteo {
 	}
 
 	/**
-	 *
 	 * Metodo get per la variabile d'istanza settimana.
 	 *
 	 * @return indice della settimana
-	 *
 	 */
 
 	public int getSettimana() {
@@ -198,9 +161,7 @@ public class DataMeteo {
 	}
 
 	/**
-	 *
 	 * Metodo set per la variabile d'istanza settimana.
-	 *
 	 */
 
 	public void setSettimana(int settimana) {
@@ -208,11 +169,9 @@ public class DataMeteo {
 	}
 
 	/**
-	 *
 	 * Metodo get per la variabile d'istanza mese.
 	 *
 	 * @return indice del mese
-	 *
 	 */
 
 	public long getMese() {
@@ -220,9 +179,7 @@ public class DataMeteo {
 	}
 
 	/**
-	 *
 	 * Metodo set per la variabile d'istanza mese.
-	 *
 	 */
 
 	public void setMese(long mese) {
@@ -230,11 +187,9 @@ public class DataMeteo {
 	}
 
 	/**
-	 *
 	 * Metodo get per la variabile d'istanza anno.
 	 *
 	 * @return indice dell'anno
-	 *
 	 */
 
 	public long getAnno() {
@@ -242,9 +197,7 @@ public class DataMeteo {
 	}
 
 	/**
-	 *
 	 * Metodo set per la variabile d'istanza anno.
-	 *
 	 */
 
 	public void setAnno(long anno) {
@@ -252,11 +205,9 @@ public class DataMeteo {
 	}
 
 	/**
-	 *
 	 * Metodo get per la variabile d'istanza unixData.
 	 *
 	 * @return data in formato Unix
-	 *
 	 */
 
 	public long getUnixData() {
@@ -264,9 +215,7 @@ public class DataMeteo {
 	}
 
 	/**
-	 *
 	 * Metodo set per la variabile d'istanza unixData.
-	 *
 	 */
 
 	public void setUnixData(long unixData) {
@@ -274,11 +223,9 @@ public class DataMeteo {
 	}
 
 	/**
-	 *
 	 * Metodo get per la variabile d'istanza data.
 	 *
 	 * @return oggetto di tipo Date contenente la relativa data
-	 *
 	 */
 
 	public Date getData() {
@@ -286,9 +233,7 @@ public class DataMeteo {
 	}
 
 	/**
-	 *
 	 * Metodo set per la variabile d'istanza data.
-	 *
 	 */
 
 	public void setData(Date data) {

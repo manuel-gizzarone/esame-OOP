@@ -15,17 +15,14 @@ import com.OOPDekGiz.progettoDekGiz.util.DataBase;
 import org.json.simple.parser.ParseException;
 
 /**
- *
  * Questa classe contiene i metodi richiamati dalla classe ServiceNuvole per il calcolo delle statistiche filtrate per
  * periodo e città. Tali statistiche si basano su uno storico di dati meteo contenuti all'interno del
  * "Database_Previsioni".
- *
  */
 
 public class FiltersNuvole {
 
 	/**
-	 *
 	 * Questo metodo consente di calcolare statistiche giornaliere filtrate per data e città.
 	 *
 	 * @param filtraData data in cui si vogliono calcolare le statistiche (giornaliere)
@@ -35,7 +32,6 @@ public class FiltersNuvole {
 	 * @throws ParseException errori durante il parsing
 	 * @throws IOException errori di input/output su file
 	 * @throws FiltersException eccezione che viene lanciata in caso di errori con i filtri
-	 *
 	 */
 
 	@SuppressWarnings("unchecked")
@@ -71,7 +67,6 @@ public class FiltersNuvole {
 	}
 
 	/**
-	 *
 	 * Questo metodo consente di calcolare statistiche settimanali filtrate per data (in base alla quale verrà calcolato
 	 * l'indice della settimana nel mese) e città.
 	 *
@@ -82,7 +77,6 @@ public class FiltersNuvole {
 	 * @throws ParseException errori durante il parsing
 	 * @throws IOException errori di input/output su file
 	 * @throws FiltersException eccezione che viene lanciata in caso di errori con i filtri
-	 *
 	 */
 
 	@SuppressWarnings("unchecked")
@@ -118,7 +112,6 @@ public class FiltersNuvole {
 	}
 
 	/**
-	 *
 	 * Questo metodo consente di calcolare statistiche mensili filtrate per mese dell'anno e città.
 	 *
 	 * @param filtraData mese in cui si vogliono calcolare le statistiche (formato mm/yyyy)
@@ -128,7 +121,6 @@ public class FiltersNuvole {
 	 * @throws ParseException errori durante il parsing
 	 * @throws IOException errori di input/output su file
 	 * @throws FiltersException eccezione che viene lanciata in caso di errori con i filtri
-	 *
 	 */
 	
 	@SuppressWarnings("unchecked")
@@ -164,7 +156,6 @@ public class FiltersNuvole {
 	}
 
 	/**
-	 *
 	 * Questo metodo consente di calcolare statistiche totali (su tutti i dati meteo presenti nel database) filtrate
 	 * per città.
 	 *
@@ -174,7 +165,6 @@ public class FiltersNuvole {
 	 * @throws ParseException errori durante il parsing
 	 * @throws IOException errori di input/output su file
 	 * @throws FiltersException eccezione che viene lanciata in caso di errori con i filtri
-	 *
 	 */
 	
 	@SuppressWarnings("unchecked")

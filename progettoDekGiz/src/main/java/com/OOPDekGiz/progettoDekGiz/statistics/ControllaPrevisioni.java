@@ -17,19 +17,16 @@ import com.OOPDekGiz.progettoDekGiz.model.MeteoCitta;
 import com.OOPDekGiz.progettoDekGiz.util.DataBase;
 
 /**
- *
- * Questa classe contiene il metodo che permette il calcolo delle statistiche riguardati la quantità di previsioni
+ * Questa classe contiene il metodo che permette il calcolo delle statistiche sulla la quantità di previsioni
  * azzeccate riguardo una città, in un dato periodo tra una data iniziale e finale e data una soglia di errore. Per
  * calcolare tali statistiche verranno sfruttati i dati meteo presenti su due database: "Database_Previsioni" contenente
  * le previsioni meteo sulla nuvolosità e "Database_Raccolta" contenente una raccolta di dati meteo attuali sulla
  * nuvolosità.
- *
  */
 
 public class ControllaPrevisioni {
 
 	/**
-	 *
 	 * Questo metodo consente il calcolo delle statistiche sulla quantità di previsioni azzeccate riguardo una città
 	 * in un dato periodo e data una soglia di errore.
 	 *
@@ -43,7 +40,6 @@ public class ControllaPrevisioni {
 	 * @throws SogliaErroreNotValidException eccezione che viene lanciata se l'utente inserisce una soglia non valida
 	 * @throws ParseException errori durante il parsing
 	 * @throws IOException errori di input/output su file
-	 *
 	 */
 
 	@SuppressWarnings("unchecked")

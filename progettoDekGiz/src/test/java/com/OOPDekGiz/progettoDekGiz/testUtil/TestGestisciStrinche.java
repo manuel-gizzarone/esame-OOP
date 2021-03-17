@@ -13,9 +13,7 @@ import java.util.Date;
 import java.util.Vector;
 
 /**
- *
  * Questa classe ha lo scopo di effettuare dei test automatici su alcuni metodi della classe GestisciStringhe.
- *
  */
 
 public class TestGestisciStrinche {
@@ -25,9 +23,7 @@ public class TestGestisciStrinche {
     private Vector<String> temp;
 
     /**
-     *
      * Inizializza l'occorrente necessario per effettuare i test automatici.
-     *
      */
 
     @BeforeEach
@@ -41,9 +37,7 @@ public class TestGestisciStrinche {
     }
 
     /**
-     *
      * Serve per distruggere tutto quello che è stato inizializzato dal metodo setUp.
-     *
      */
 
     @AfterEach
@@ -52,11 +46,9 @@ public class TestGestisciStrinche {
     }
 
     /**
-     *
      * Test per verificare la corretta estrazione delle parole da una stringa.
      *
-     * @throws GestisciStringaException
-     *
+     * @throws GestisciStringaException eccezione lanciata in caso di errori nell'inserimento della stringa
      */
 
     @Test
@@ -67,9 +59,7 @@ public class TestGestisciStrinche {
     }
 
     /**
-     *
      * Test corretto lancio dell'eccezione GestisciStringheException.
-     *
      */
 
     @Test

@@ -12,9 +12,7 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 
 /**
- *
  * Questa classe ha lo scopo di effettuare dei test automatici su alcuni metodi della classe ServiceNuvole.
- *
  */
 
 class TestServiceNuvole {
@@ -22,9 +20,7 @@ class TestServiceNuvole {
     private ServiceNuvole serviceNuvole;
 
     /**
-     *
      * Inizializza un oggetto di tipo ServiceNuvole che servirà per effetture i test dei metodi.
-     *
      */
 
     @BeforeEach
@@ -33,9 +29,7 @@ class TestServiceNuvole {
     }
 
     /**
-     *
      * Serve per distruggere tutto quello che è stato inizializzato dal metodo setUp.
-     *
      */
 
     @AfterEach
@@ -44,9 +38,7 @@ class TestServiceNuvole {
     }
 
     /**
-     *
      * Test corretto lancio dell'eccezione InserimentoException.
-     *
      */
 
     @Test
@@ -58,9 +50,7 @@ class TestServiceNuvole {
     }
 
     /**
-     *
      * Test corretto lancio dell'eccezione NomeCittaException.
-     *
      */
 
     @Test
@@ -72,9 +62,7 @@ class TestServiceNuvole {
     }
 
     /**
-     *
      * Test corretto lancio dell'eccezione DatabaseNotFoundException.
-     *
      */
 
     @Test
@@ -86,7 +74,6 @@ class TestServiceNuvole {
     }
 
     /**
-     *
      * Test di verifica per il Path del file contenente i database creati dal metodo salvaOgniOra.
      *
      * @throws NomeCittaException
@@ -95,7 +82,6 @@ class TestServiceNuvole {
      * @throws ConfigFileException
      * @throws org.json.simple.parser.ParseException
      * @throws IOException
-     *
      */
 
     @Test

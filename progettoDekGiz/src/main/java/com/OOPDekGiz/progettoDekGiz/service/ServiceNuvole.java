@@ -16,9 +16,8 @@ import com.OOPDekGiz.progettoDekGiz.util.*;
 import com.OOPDekGiz.progettoDekGiz.statistics.*;
 
 /**
- *
  * Questa classe contiene i metodi richiamati dal Controller e rappresenta il servizio su cui si basa l'applicativo.
- *
+ * Iplementa l'interfaccia ConfigInterface per l'acquisizione dell'apiKey.
  */
 
 
@@ -26,24 +25,23 @@ import com.OOPDekGiz.progettoDekGiz.statistics.*;
 public class ServiceNuvole implements ConfigInterface {
 
 	/**
-	 *
 	 * Questo metodo restituisce i dati meteo relativi alla nuvolosità attuali e per i 5 giorni successivi alla chiamata
 	 * per una o più città. L'intervallo tra un dato meteo e il successivo è di 3 ore. I dati meteo verranno salvati
 	 * all'interno del "Database_Previsioni" che contiene lo storico di tutte le richieste effettuate.
 	 *
-	 * @param bodyNomiCitta JSONObject contenente i nomi delle città di cui si vogliono visualizzare le previsioni
+	 * @param bodyNomiCitta JSONObject contenente i nomi delle città, separati da una virgola, di cui si vogliono
+	 *        visualizzare le previsioni
 	 * @return JSONArray contenente le previsioni meteo relative alla nuvolosità delle città inserite
 	 * @throws ParseException errori durante il parsing
 	 * @throws IOException errori di input/output su file
 	 * @throws InserimentoException eccezione che viene lanciata se l'utente dimentica di inserire i nomi delle città
-	 * nel body della richiesta
+	 *         nel body della richiesta
 	 * @throws NomeCittaException eccezione che viene lanciata se l'utente inserisce il nome di una città inesistente
-	 * o errato
+	 *         o errato
 	 * @throws GestisciStringaException eccezione che viene lanciata se l'utente inserisce una stringa non valida
 	 * @throws DataMeteoException eccezione che viene lanciata in caso di errori con la data
 	 * @throws ConfigFileException eccezione che viene lanciata nel caso in cui siano presenti errori nel file di
-	 * configurazione
-	 *
+	 * 		   configurazione
 	 */
 
 	public JSONArray serviceNuvole5giorni(JSONObject bodyNomiCitta)
@@ -74,7 +72,6 @@ public class ServiceNuvole implements ConfigInterface {
 	}
 
 	/**
-	 *
 	 * Questo metodo salva su un database i dati meteo attuali sulla nuvolosità di una città aggiornati ogni ora.
 	 * Il file, contenente il database, prenderà il nome della città inserita dall'utente.
 	 *
@@ -83,11 +80,10 @@ public class ServiceNuvole implements ConfigInterface {
 	 * @throws ParseException errori durante il parsing
 	 * @throws InserimentoException eccezione che viene lanciata se l'utente non iserisce il nome della città
 	 * @throws NomeCittaException eccezione che viene lanciata se l'utente inserisce il nome di una città inesistente
-	 * o errato
+	 *         o errato
 	 * @throws ConfigFileException eccezione che viene lanciata nel caso in cui siano presenti errori nel file di
-	 * configurazione
+	 *         configurazione
 	 * @throws IOException errori di input/output su file
-	 *
 	 */
 
 	public String salvaOgniOra(String nomeCitta)
@@ -106,19 +102,17 @@ public class ServiceNuvole implements ConfigInterface {
 	}
 
 	/**
-	 *
 	 * Questo metodo consente di formattare un database indicato dall'utente. In particolare, verranno eliminati
 	 * tutti i dati presenti al suo interno ma senza eliminare definitivamente il file che lo contiene.
 	 *
-	 * @param nomeDatabase nome del database che l'utente intende formattare.
+	 * @param nomeDatabase nome del database che l'utente intende formattare
 	 * @return Stringa contenente un messaggio di conferma riguardo l'eliminazione dei dati dal database inserito
 	 * @throws IOException errori di input/output su file
 	 * @throws ParseException errori durante il parsing
 	 * @throws InserimentoException eccezione che viene lanciata se l'utente non inserisce il nome del database
-	 * da formattare
+	 *         da formattare
 	 * @throws DatabaseNotFoundException eccezione che viene lanciata se l'utente tenta di formattare un database
-	 * inesistente
-	 *
+	 *         inesistente
 	 */
 
 	public String eliminaDatabase(String nomeDatabase)
@@ -139,7 +133,6 @@ public class ServiceNuvole implements ConfigInterface {
 	}
 
 	/**
-	 *
 	 * Questo metodo consente di visualizzare i dati meteo presenti all'interno di un database indicato dall'utente.
 	 *
 	 * @param nomeDatabase nome del database per il quale si vuole visualizzare il contenuto
@@ -147,10 +140,9 @@ public class ServiceNuvole implements ConfigInterface {
 	 * @throws IOException errori di input/output su file
 	 * @throws ParseException errori durante il parsing
 	 * @throws InserimentoException eccezione che viene lanciata se l'utente non inserisce il nome del database
-	 * di cui si vogliono visualizzare i dati contenuti
+	 *         di cui si vogliono visualizzare i dati contenuti
 	 * @throws DatabaseNotFoundException eccezione che viene lanciata se l'utente tenta di visualizzare un database
-	 * inesistente
-	 *
+	 *         inesistente
 	 */
 
 	public JSONArray getDatabase(String nomeDatabase)
@@ -169,10 +161,9 @@ public class ServiceNuvole implements ConfigInterface {
 		}
 	}
 
-	//METODI STATS
+	//METODI STATS PER OTTENERE STATISTICHE SULLO STORICO DI DATI PRESENTI NEL "Database_Previsioni"
 
 	/**
-	 *
 	 * Questo metodo consente di calcolare statistiche giornaliere in base ad uno storico di dati presenti sul
 	 * "Database_Previsioni".
 	 *
@@ -183,7 +174,6 @@ public class ServiceNuvole implements ConfigInterface {
 	 * @throws DataMeteoException eccezione che viene lanciata in caso di errori con la data
 	 * @throws java.text.ParseException errori durante il parsing
 	 * @throws InserimentoException eccezione che viene lanciata se l'utente non inserisce la data
-	 *
 	 */
 	
 	public JSONObject statsGiornaliere(String data)
@@ -199,10 +189,9 @@ public class ServiceNuvole implements ConfigInterface {
 	}
 
 	/**
-	 *
 	 * Questo metodo consente di calcolare statistiche settimanali  in base ad uno storico di dati presenti sul
-	 * "Database_Previsioni". In particolare inserita una data, calcolerà le statistiche della settimana a cui tale
-	 * data appartiene.
+	 * "Database_Previsioni". In particolare inserita una data, calcolerà le statistiche della settimana del mese
+	 * a cui tale data appartiene.
 	 *
 	 * @param data data in formato dd/mm/yyyy di cui si vogliono calcolare le statistiche (settimanali)
 	 * @return JSONObject contenente le statistiche calcolate
@@ -211,7 +200,6 @@ public class ServiceNuvole implements ConfigInterface {
 	 * @throws DataMeteoException eccezione che viene lanciata in caso di errori con la data
 	 * @throws java.text.ParseException errori durante il parsing
 	 * @throws InserimentoException eccezione che viene lanciata se l'utente non inserisce la data
-	 *
 	 */
 	
     public JSONObject statsSettimanali(String data)
@@ -227,7 +215,6 @@ public class ServiceNuvole implements ConfigInterface {
 	}
 
 	/**
-	 *
 	 * Questo metodo consente di calcolare statistiche mensili in base ad uno storico di dati presenti sul
 	 * "Database_Previsioni".
 
@@ -238,7 +225,6 @@ public class ServiceNuvole implements ConfigInterface {
 	 * @throws DataMeteoException eccezione che viene lanciata in caso di errori con la data
 	 * @throws java.text.ParseException errori durante il parsing
 	 * @throws InserimentoException eccezione che viene lanciata se l'utente non inserisce la data
-	 *
 	 */
 
     public JSONObject statsMensili(String data)
@@ -255,7 +241,6 @@ public class ServiceNuvole implements ConfigInterface {
     }
 
 	/**
-	 *
 	 * Questo metodo consente di calcolare statistiche totali su uno storico di dati presenti sul "Database_Previsioni".
 	 * Non richiede l'inserimento di alcun patametro o body.
 	 *
@@ -263,23 +248,22 @@ public class ServiceNuvole implements ConfigInterface {
 	 * @throws ParseException errori durante il parsing
 	 * @throws IOException errori di input/output su file
 	 * @throws DataMeteoException eccezione che viene lanciata in caso di errori con la data
-	 *
 	 */
 
-	public JSONObject statsTotali ()
+	public JSONObject statsTotali()
 			throws ParseException, IOException, DataMeteoException {
 
 		StatsNuvole stats = new StatsNuvole();
 		return stats.statisticheTotali();
     }
 
-	//METODI FILTERS PER FILTRARE LE STATISTICHE
+	//METODI FILTERS PER FILTRARE LE STATISTICHE IN BASE ALLE CITTA' E ALLA PERIODICITA'
 
 	/**
-	 *
 	 * Questo metodo consente di filtrare le statistiche giornaliere in base ai nomi delle città inserite e alla data.
 	 *
-	 * @param bodyNomiCittaData JSONObject contenente due campi: "nomiCitta" e "data" formato dd/mm/yyyy
+	 * @param bodyNomiCittaData JSONObject contenente due campi: "nomiCitta" separati da una virgola e "data" formato
+	 *        dd/mm/yyyy
 	 * @return JSONArray contenente i valori delle statistiche filtrate
 	 * @throws GestisciStringaException eccezione che viene lanciata se l'utente inserisce una stringa non valida
 	 * @throws java.text.ParseException errori durante il parsing
@@ -288,10 +272,9 @@ public class ServiceNuvole implements ConfigInterface {
 	 * @throws ParseException errori durante il parsing
 	 * @throws FiltersException eccezione che viene lanciata in caso di errori con i filtri
 	 * @throws InserimentoException eccezione che viene lanciata se l'utente non inserisce i nomi delle città o la data
-	 *
 	 */
 	
-  	public JSONArray filtraStatsGiornaliere (JSONObject bodyNomiCittaData)
+  	public JSONArray filtraStatsGiornaliere(JSONObject bodyNomiCittaData)
 			throws GestisciStringaException, java.text.ParseException, DataMeteoException, IOException, ParseException,  InserimentoException, FiltersException {
 
 		if(bodyNomiCittaData.get("nomiCitta").toString().isEmpty()) {
@@ -321,12 +304,12 @@ public class ServiceNuvole implements ConfigInterface {
   	}
 
 	/**
-	 *
 	 * Questo metodo consente di filtrare le statistiche settimanali in base ai nomi delle città inserite e alla data.
-	 * In particolare inseriti i nomi delle città e una data, calcolerà le statistiche della settimana a cui tale
-	 * data appartiene.
+	 * In particolare inseriti i nomi delle città e una data, calcolerà le statistiche della settimana del mese a cui
+	 * tale data appartiene.
 	 *
-	 * @param bodyNomiCittaData JSONObject contenente due campi: "nomiCitta" e "data" formato dd/mm/yyyy
+	 * @param bodyNomiCittaData JSONObject contenente due campi: "nomiCitta" separati da una virgola e "data" formato
+	 *        dd/mm/yyyy
 	 * @return JSONArray contenente i valori delle statistiche filtrate
 	 * @throws GestisciStringaException eccezione che viene lanciata se l'utente inserisce una stringa non valida
 	 * @throws java.text.ParseException errori durante il parsing
@@ -335,10 +318,9 @@ public class ServiceNuvole implements ConfigInterface {
 	 * @throws ParseException errori durante il parsing
 	 * @throws InserimentoException eccezione che viene lanciata se l'utente non inserisce i nomi delle città o la data
 	 * @throws FiltersException eccezione che viene lanciata in caso di errori con i filtri
-	 *
 	 */
   	
-  	public JSONArray filtraStatsSettimanali (JSONObject bodyNomiCittaData)
+  	public JSONArray filtraStatsSettimanali(JSONObject bodyNomiCittaData)
 			throws java.text.ParseException, GestisciStringaException, ParseException, IOException, DataMeteoException, InserimentoException, FiltersException {
 
 		if(bodyNomiCittaData.get("nomiCitta").toString().isEmpty()) {
@@ -367,10 +349,10 @@ public class ServiceNuvole implements ConfigInterface {
   	}
 
 	/**
-	 *
 	 * Questo metodo consente di filtrare le statistiche mensili in base ai nomi delle città inserite e alla data.
 	 *
-	 * @param bodyNomiCittaData JSONObject contenente due campi: "nomiCitta" e "data" formato mm/yyyy
+	 * @param bodyNomiCittaData JSONObject contenente due campi: "nomiCitta" separati da una virgola e "data" formato
+	 *        mm/yyyy
 	 * @return JSONArray contenente i valori delle statistiche filtrate
 	 * @throws java.text.ParseException errori dutante il parsing
 	 * @throws DataMeteoException eccezione che viene lanciata in caso di errori con la data
@@ -379,10 +361,9 @@ public class ServiceNuvole implements ConfigInterface {
 	 * @throws ParseException errori durante il parsing
 	 * @throws InserimentoException eccezione che viene lanciata se l'utente non inserisce i nomi delle città o la data
 	 * @throws FiltersException eccezione che viene lanciata in caso di errori con i filtri
-	 *
 	 */
 
-  	public JSONArray filtraStatsMensili (JSONObject bodyNomiCittaData)
+  	public JSONArray filtraStatsMensili(JSONObject bodyNomiCittaData)
 			throws java.text.ParseException, DataMeteoException, GestisciStringaException, IOException, ParseException, InserimentoException, FiltersException {
 
 		if(bodyNomiCittaData.get("nomiCitta").toString().isEmpty()) {
@@ -414,7 +395,7 @@ public class ServiceNuvole implements ConfigInterface {
 	/**
 	 * Questo metodo consente di filtrare le statistiche totali in base ai nomi delle città inserite.
 	 *
-	 * @param bodyNomiCitta JSONObject contenente in campo "nomiCitta"
+	 * @param bodyNomiCitta JSONObject contenente un campo "nomiCitta" separati da una virgola
 	 * @return JSONArray contenente i valori delle statistiche filtrate
 	 * @throws DataMeteoException eccezione che viene lanciata in caso di errori con la data
 	 * @throws GestisciStringaException eccezione che viene lanciata se l'utente inserisce una stringa non valida
@@ -422,10 +403,9 @@ public class ServiceNuvole implements ConfigInterface {
 	 * @throws ParseException errori durante il parsing
 	 * @throws InserimentoException eccezione che viene lanciata se l'utente non inserisce i nomi delle città
 	 * @throws FiltersException eccezione che viene lanciata in caso di errori con i filtri
-	 *
 	 */
 
-	public JSONArray filtraStatsTotali (JSONObject bodyNomiCitta)
+	public JSONArray filtraStatsTotali(JSONObject bodyNomiCitta)
 			throws GestisciStringaException, ParseException, IOException, DataMeteoException, InserimentoException, FiltersException {
 
   		if(bodyNomiCitta.get("nomiCitta").toString().isEmpty()) {
@@ -448,17 +428,16 @@ public class ServiceNuvole implements ConfigInterface {
 		return risultato;
   	}
 
-	//METODO STATISTICHE PREVISIONI AZZECCATE
+	//METODO PER OTTENERE STATISTICHE SULLA QUANTITA' DI PREVISIONI AZZECCATE DI UNA CITTA'
 
 	/**
-	 *
 	 * Questo metodo consente di ottenere statistiche sulla quantità di previsioni azzeccate di una città in un certo
 	 * periodo. L'utente dovrà inserire un body contenente 4 campi: "nomeCitta","dataInizio" cioè l'inizio del
 	 * periodo,"dataFine" cioè la fine del periodo e "sogliaErrore" cioè l'errore massimo ammissibile tra il dato meteo
 	 * reale e quello previsto.
 	 *
 	 * @param bodyInizioFineCittaSoglia JSONObject contenente quattro campi: "nomeCitta","dataInizio","dataFine"
-	 * e "sogliaErrore"
+	 * 		  e "sogliaErrore"
 	 * @return JSONObject contenente le statistiche calcolate
 	 * @throws DataMeteoException eccezione che viene lanciata in caso di errori con la data
 	 * @throws PeriodNotValidException eccezione che viene lanciata se l'utente inserisce un perido non valido
@@ -467,7 +446,6 @@ public class ServiceNuvole implements ConfigInterface {
 	 * @throws IOException errori di input/output su file
 	 * @throws java.text.ParseException errori durante il parsing
 	 * @throws InserimentoException eccezione che viene lanciata se l'utente non inserisce uno tra i 4 campi richiesti
-	 *
 	 */
       
 	public JSONObject controllaPrevisioniSoglia(JSONObject bodyInizioFineCittaSoglia)
@@ -496,12 +474,10 @@ public class ServiceNuvole implements ConfigInterface {
   	}
 
 	/**
-	 *
 	 * Implementazione del metodo estraiApiKey dell'interfaccia ConfigInterface. Esso permette l'estrazione dell'apiKey
 	 * dal file di configurazione.
 	 *
 	 * @throws ConfigFileException errori presenti nel file di configurazione (se non rispetta il formato JSON)
-	 *
 	 */
 
 	public String estraiApiKey()

@@ -16,10 +16,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
- *
  * Questa classe si occupa di gestire il salvataggio su un Database dei dati provenienti dalle chiamate alle
  * API di OpenWeather. Iplementa l'interfaccia ConfigInterface per l'acquisizione dell'apiKey.
- *
  */
 
 public class DataBase implements ConfigInterface {
@@ -38,7 +36,7 @@ public class DataBase implements ConfigInterface {
      * momentaneo. Se invece è insesistente crea il nuovo database, inizializzando al suo interno un JSONArray vuoto.
      *
      * @param nomeDatabase nome del database
-     * @throws IOException    errori di input/output su file
+     * @throws IOException errori di input/output su file
      * @throws ParseException errori durante il parsing
      */
 
@@ -50,7 +48,7 @@ public class DataBase implements ConfigInterface {
         if (!this.file.exists()) {
             file.createNewFile();
             this.jsonArray = new JSONArray();
-            FileWriter fileWriter = new FileWriter(file);
+            FileWriter fileWriter = new FileWriter(this.file);
             fileWriter.write(this.jsonArray.toJSONString());
             fileWriter.flush(); //pulisce lo stream di output
             fileWriter.close();
@@ -63,11 +61,11 @@ public class DataBase implements ConfigInterface {
      * Questo metodo salva sul database relativo i dati meteo forniti dalle chiamate Api Current Weather.
      *
      * @param meteoCitta oggetto di tipo MeteoCitta contenente i dati meteo istantanei relativi ad una città
-     * @throws IOException          errori di input/output su file
+     * @throws IOException errori di input/output su file
      * @throws ClassCastException   errore lanciato per indicare che il codice ha tentato di eseguire il cast di un
-     *                              oggetto in una sottoclasse di cui non è un'istanza
+     *         oggetto in una sottoclasse di cui non è un'istanza
      * @throws NullPointerException errore lanciato quando si tenta di utilizzare null in un caso in cui è richiesto
-     *                              un oggetto
+     *         un oggetto
      */
 
     public void salvaSulDatabase(MeteoCitta meteoCitta)
@@ -75,8 +73,8 @@ public class DataBase implements ConfigInterface {
 
         JSONObject nuovoDatoMeteo = meteoCitta.castToJsonObject();
         this.jsonArray.add(nuovoDatoMeteo);
-        fileWriter = new FileWriter(file);
-        fileWriter.write(jsonArray.toJSONString());
+        fileWriter = new FileWriter(this.file);
+        fileWriter.write(this.jsonArray.toJSONString());
         fileWriter.flush();
         fileWriter.close();
     }
@@ -86,22 +84,22 @@ public class DataBase implements ConfigInterface {
      * Forecast.
      *
      * @param datiMeteo vettore contenente oggetti di tipo MeteoCitta
-     * @throws IOException          errori di input/output su file
+     * @throws IOException errori di input/output su file
      * @throws ClassCastException   errore lanciato per indicare che il codice ha tentato di eseguire il cast di un
-     *                              oggetto in una sottoclasse di cui non è un'istanza
+     *         oggetto in una sottoclasse di cui non è un'istanza
      * @throws NullPointerException errore lanciato quando si tenta di utilizzare null in un caso in cui è richiesto
-     *                              un oggetto
+     *         un oggetto
      */
 
     public void salvaSulDatabase(Vector<MeteoCitta> datiMeteo)
             throws IOException, ClassCastException, NullPointerException {
 
-        fileWriter = new FileWriter(file);
+        fileWriter = new FileWriter(this.file);
         for (MeteoCitta meteoCitta : datiMeteo) {
             JSONObject nuovoDatoMeteo = meteoCitta.castToJsonObject();
             this.jsonArray.add(nuovoDatoMeteo);
         }
-        fileWriter.write(jsonArray.toJSONString());
+        fileWriter.write(this.jsonArray.toJSONString());
         fileWriter.flush();
         fileWriter.close();
     }
@@ -129,8 +127,8 @@ public class DataBase implements ConfigInterface {
      *
      * @return JSONArray contenente tutti i dati meteo presenti sul database
      * @throws FileNotFoundException errore che verrà generato dal FileInputStream quando un file con il percorso
-     *                               specificato non esiste.
-     * @throws ParseException        errori durante il parsing
+     *         specificato non esiste.
+     * @throws ParseException errori durante il parsing
      */
 
     public JSONArray getDatabase()
@@ -152,7 +150,7 @@ public class DataBase implements ConfigInterface {
             throws IOException {
 
         this.jsonArray.clear();
-        FileWriter fileWriter = new FileWriter(file);
+        FileWriter fileWriter = new FileWriter(this.file);
         fileWriter.write(this.jsonArray.toJSONString());
         fileWriter.flush();
         fileWriter.close();
@@ -185,7 +183,6 @@ public class DataBase implements ConfigInterface {
      * Metodo get per ottenere il nome del database.
      *
      * @return nome del database
-     *
      */
 
     public String getNomeDatabase() {
@@ -194,9 +191,6 @@ public class DataBase implements ConfigInterface {
 
     /**
      * Metodo set per la variabile d'istanza nomeDatabase.
-     *
-     * @param nomeDatabase nuovo nome del database
-     *
      */
 
     public void setNomeDatabase(String nomeDatabase) {

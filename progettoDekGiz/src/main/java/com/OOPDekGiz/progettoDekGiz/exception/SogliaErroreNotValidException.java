@@ -1,17 +1,13 @@
 package com.OOPDekGiz.progettoDekGiz.exception;
 
 /**
- *
  * Questa classe segnala l'eccezione generata dall'inserimento di una soglia di errore non valida.
- *
  */
 
 public class SogliaErroreNotValidException extends Exception {
 
 	/**
-	 *
 	 * Costruttore della classe che fa visualizzare il messaggio di errore.
-	 *
 	 */
 
 	public SogliaErroreNotValidException() {
@@ -20,11 +16,9 @@ public class SogliaErroreNotValidException extends Exception {
 	}
 
 	/**
-	 *
 	 * Metodo get per ottenere il messaggio di errore.
 	 *
 	 * @return messaggio di errore
-	 *
 	 */
 
 	@Override

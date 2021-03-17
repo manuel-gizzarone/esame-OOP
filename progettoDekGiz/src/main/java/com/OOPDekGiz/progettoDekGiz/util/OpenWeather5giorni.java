@@ -20,10 +20,8 @@ import java.io.IOException;
 import org.json.simple.parser.ParseException;
 
 /**
- *
  * Questa classe estende la superclasse OpenWeatherApiUrlGen e si occupa di gestire le chiamate alle Api 5Day/3Hour
- * Forecast per il salvataggio dei dati meteo sulla nuvolosità ogni 3 ore fino a 5 giorni successivi alla chiamata.
- *
+ * Forecast per l'acquisizione dei dati meteo sulla nuvolosità ogni 3 ore fino a 5 giorni successivi alla chiamata.
  */
 
 public class OpenWeather5giorni extends OpenWeatherApiUrlGen {
@@ -33,14 +31,12 @@ public class OpenWeather5giorni extends OpenWeatherApiUrlGen {
 	BufferedReader leggiApi5;
 
 	/**
-	 *
-	 * Costruttore della classe che ha il compito di costruire l'URL completo per la chiamata alle API. Dopo aver
-	 * ottenuto il nome della città e l'apiKey, apre il flusso di input BufferedReader per leggere la risposta.
+	 * Costruttore della classe che ha il compito di effettuare la chiamata alle API. Dopo aver ottenuto il nome della
+	 * città e l'apiKey, apre il flusso di input BufferedReader per leggere la risposta.
 	 *
 	 * @param apiKey apiKey necessaria per la costruzione dell'URL
 	 * @param nomeCitta nome della citta di cui si vogliono ottenere previsioni sulla nuvolosità
 	 * @throws NomeCittaException errore generato dall'inserimento di una città inesistente
-	 *
 	 */
 
 	public OpenWeather5giorni (String apiKey, String nomeCitta)
@@ -49,26 +45,23 @@ public class OpenWeather5giorni extends OpenWeatherApiUrlGen {
 		super(apiKey, nomeCitta);
 		try{
 			URLConnection ApiOpenWeather5 = new URL(this.costruisciUrl5giorni()).openConnection();
-			leggiApi5 = new BufferedReader(new InputStreamReader(ApiOpenWeather5.getInputStream()));
+			this.leggiApi5 = new BufferedReader(new InputStreamReader(ApiOpenWeather5.getInputStream()));
 		} catch (IOException e) {
 			throw new NomeCittaException(super.getNomeCitta());
 		}
 	}
 
 	/**
-	 *
-	 * Questo metodo costruisce l'URL corrispondente per la chiamata alle Api 5Day/3Hour Forecast.
+	 * Questo metodo ausiliario costruisce l'URL corrispondente per la chiamata alle Api 5Day/3Hour Forecast.
 	 *
 	 * @return URL completo per la chiamata alle API
-	 *
 	 */
 
-	public String costruisciUrl5giorni() {
+	private String costruisciUrl5giorni() {
 		return (this.Url5giorni + "q=" + super.getNomeCitta() + "&appid=" + super.getApiKey());
 	}
 	
 	/**
-	 *
 	 * Questo metodo estrae i dati meteo sulla nuvolosità (ogni 3 ore fino a 5 giorni successivi la chiamata)
 	 * della città a cui fa riferimento la chiamata API.
 	 * 
@@ -76,7 +69,6 @@ public class OpenWeather5giorni extends OpenWeatherApiUrlGen {
 	 * @throws ParseException errori durante il parsing
 	 * @throws IOException errori di input/output su file
 	 * @throws DataMeteoException errori relativi alla data
-	 *
 	 */
 
 	public Vector<MeteoCitta> estraiDatiMeteo ()
@@ -102,24 +94,20 @@ public class OpenWeather5giorni extends OpenWeatherApiUrlGen {
     }
 
 	/**
-	 *
 	 * Metodo get per la variabile d'istanza Url5giorni.
 	 *
 	 * @return URL completo
-	 *
 	 */
 
 	public String getUrl5giorni() {
-		return Url5giorni;
+		return this.Url5giorni;
 	}
 
 	/**
-	 *
 	 * Metodo set per la variabile d'istanza Url5giorni.
-	 *
 	 */
 
 	public void setUrl5giorni(String url5giorni) {
-		Url5giorni = url5giorni;
+		this.Url5giorni = url5giorni;
 	}
 }
