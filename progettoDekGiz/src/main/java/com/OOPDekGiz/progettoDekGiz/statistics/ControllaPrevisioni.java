@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import java.util.Vector;
 
-import com.OOPDekGiz.progettoDekGiz.exception.InserimentoException;
 import com.OOPDekGiz.progettoDekGiz.exception.PeriodNotValidException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

@@ -78,7 +78,6 @@ class TestServiceNuvole {
      *
      * @throws NomeCittaException
      * @throws InserimentoException
-     * @throws DataMeteoException
      * @throws ConfigFileException
      * @throws org.json.simple.parser.ParseException
      * @throws IOException
@@ -87,7 +86,7 @@ class TestServiceNuvole {
     @Test
     @DisplayName("Path salvataggio file corretto.")
     void testCorrectPathFile()
-            throws NomeCittaException, InserimentoException, DataMeteoException, ConfigFileException, org.json.simple.parser.ParseException, IOException {
+            throws NomeCittaException, InserimentoException, ConfigFileException, org.json.simple.parser.ParseException, IOException {
         String nomeCitta = "Campobasso";
         String path ="Path database:  " + System.getProperty("user.dir") + "/" + nomeCitta + ".json";
         assertEquals(path, this.serviceNuvole.salvaOgniOra(nomeCitta));

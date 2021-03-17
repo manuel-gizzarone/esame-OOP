@@ -46,10 +46,10 @@ public class MeteoCitta implements InterfaceToJsonObject {
 
 	public JSONObject castToJsonObject() {
 		JSONObject meteoCittaJsonObj = new JSONObject();
-		meteoCittaJsonObj.put("citta", nomeCitta);
-		meteoCittaJsonObj.put("nuvolosita", nuvolosita);
-		meteoCittaJsonObj.put("unixData", unixData);
-		meteoCittaJsonObj.put("Data", dataMeteo.toString());
+		meteoCittaJsonObj.put("citta", this.nomeCitta);
+		meteoCittaJsonObj.put("nuvolosita", this.nuvolosita);
+		meteoCittaJsonObj.put("unixData", this.unixData);
+		meteoCittaJsonObj.put("Data", this.dataMeteo.toString());
 
 		return meteoCittaJsonObj;
 	}
@@ -61,7 +61,7 @@ public class MeteoCitta implements InterfaceToJsonObject {
 	 */
 	
 	public int getNuvolosita() {
-		return nuvolosita;
+		return this.nuvolosita;
 	}
 
 	/**
@@ -79,7 +79,7 @@ public class MeteoCitta implements InterfaceToJsonObject {
 	 */
 	
 	public String getNomeCitta() {
-		return nomeCitta;
+		return this.nomeCitta;
 	}
 
 	/**
@@ -97,7 +97,7 @@ public class MeteoCitta implements InterfaceToJsonObject {
 	 */
 
 	public long getUnixData() {
-		return unixData;
+		return this.unixData;
 	}
 
 	/**
@@ -115,7 +115,7 @@ public class MeteoCitta implements InterfaceToJsonObject {
 	 */
 	
 	public DataMeteo getDataMeteo() {
-		return dataMeteo;
+		return this.dataMeteo;
 	}
 
 	/**
