@@ -47,6 +47,84 @@ Se ci sono problemi con l’estrazione delle date dei dati di previsione viene l
 Per problemi di parsing verso/da JSONObject viene lanciata l’eccezione ParseException, per problemi di I/O l’eccezione IOException.</p>
 <p>ESEMPIO</p>
 <p><img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/Immagini/forecast5giorni3Citt%C3%A0.png" alt=""></p>
+<p>Il JSONArray  di risposta è:</p>
+<p>[<br>
+{<br>
+“nuvolosita”: 92,<br>
+“Data”: “Thu Mar 18 01:00:00 CET 2021”,<br>
+“unixData”: 1616025600,<br>
+“citta”: “Ripalimosani”<br>
+},<br>
+{<br>
+“nuvolosita”: 96,<br>
+“Data”: “Thu Mar 18 04:00:00 CET 2021”,<br>
+“unixData”: 1616036400,<br>
+“citta”: “Ripalimosani”<br>
+},<br>
+{<br>
+“nuvolosita”: 98,<br>
+“Data”: “Thu Mar 18 07:00:00 CET 2021”,<br>
+“unixData”: 1616047200,<br>
+“citta”: “Ripalimosani”<br>
+},<br>
+{<br>
+“nuvolosita”: 100,<br>
+“Data”: “Thu Mar 18 10:00:00 CET 2021”,<br>
+“unixData”: 1616058000,<br>
+“citta”: “Ripalimosani”<br>
+},<br>
+…</p>
+<p>{<br>
+“nuvolosita”: 12,<br>
+“Data”: “Mon Mar 22 19:00:00 CET 2021”,<br>
+“unixData”: 1616436000,<br>
+“citta”: “Ripalimosani”<br>
+},<br>
+{<br>
+“nuvolosita”: 28,<br>
+“Data”: “Mon Mar 22 22:00:00 CET 2021”,<br>
+“unixData”: 1616446800,<br>
+“citta”: “Ripalimosani”<br>
+},<br>
+{<br>
+“nuvolosita”: 87,<br>
+“Data”: “Thu Mar 18 01:00:00 CET 2021”,<br>
+“unixData”: 1616025600,<br>
+“citta”: “Mirabello”<br>
+},<br>
+{<br>
+“nuvolosita”: 95,<br>
+“Data”: “Thu Mar 18 04:00:00 CET 2021”,<br>
+“unixData”: 1616036400,<br>
+“citta”: “Mirabello”<br>
+},</p>
+<p>…</p>
+<p>{<br>
+“nuvolosita”: 99,<br>
+“Data”: “Thu Mar 18 01:00:00 CET 2021”,<br>
+“unixData”: 1616025600,<br>
+“citta”: “Vinchiaturo”<br>
+},<br>
+{<br>
+“nuvolosita”: 98,<br>
+“Data”: “Thu Mar 18 04:00:00 CET 2021”,<br>
+“unixData”: 1616036400,<br>
+“citta”: “Vinchiaturo”<br>
+},<br>
+{<br>
+“nuvolosita”: 98,<br>
+“Data”: “Thu Mar 18 07:00:00 CET 2021”,<br>
+“unixData”: 1616047200,<br>
+“citta”: “Vinchiaturo”<br>
+},<br>
+{<br>
+“nuvolosita”: 100,<br>
+“Data”: “Thu Mar 18 10:00:00 CET 2021”,<br>
+“unixData”: 1616058000,<br>
+“citta”: “Vinchiaturo”<br>
+},</p>
+<p>…<br>
+]</p>
 </div>
 </body>
 
