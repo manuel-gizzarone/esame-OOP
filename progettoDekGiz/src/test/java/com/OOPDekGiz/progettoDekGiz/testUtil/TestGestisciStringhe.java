@@ -16,7 +16,7 @@ import java.util.Vector;
  * Questa classe ha lo scopo di effettuare dei test automatici su alcuni metodi della classe GestisciStringhe.
  */
 
-public class TestGestisciStrinche {
+public class TestGestisciStringhe {
 
     private GestisciStringhe gestisciStringheGiusta;
     private GestisciStringhe gestisciStringheErrata;
