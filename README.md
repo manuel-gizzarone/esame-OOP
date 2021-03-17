@@ -166,17 +166,79 @@ Di seguito i diagrammi UML definitivi del progetto. I diagrammi prototipo costru
 <p><img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/Immagini/salvaOgniOra.png" alt="salvaOgniOra"></p>
 <h3 id="eccezioni-1"><em>Eccezioni</em>:</h3>
 <ul>
-<li>Nel caso la lista dei nomi delle città fosse vuota verrà lanciata un eccezione di tipo “InserimentoException”.</li>
-<li>Se una delle città inserite non esiste viene lanciata un eccezione del tipo “NomeCittaException”.</li>
+<li>Se il campo del nome della città fosse vuoto verrà lanciata un eccezione di tipo “InserimentoException”.</li>
+<li>Se la città inserita non esiste viene lanciata un eccezione del tipo “NomeCittaException”.</li>
 <li>Se la lettura dell’apiKey per la chiamata alle api di openweather non viene estratta correttamente dal file config.json nel progetto viene lanciata una “ConfigFileException”.</li>
 <li>Per problemi di parsing verso/da JSONObject viene lanciata l’eccezione ParseException.</li>
 <li>Per problemi di I/O viene lanciata l’eccezione IOException.</li>
 </ul>
 <hr>
 <h2 id="rotta-statsgiornaliere">Rotta “/statsGiornaliere”</h2>
-<p>Il suo fine è quello di restituire le statistiche di varianza,media,max,min della nuvolosità percentuale</p>
+<p>Il suo fine è quello di calcolare e restituire le statistiche di varianza,media,max,min della nuvolosità percentuale al giorno della data inserita usando i dati sul database “Database_Previsioni.json”.<br>
+Se non avete eseguito chiamate alla rotta “nuvole5giorni” il database ha i dati predefiniti sulle città Naples,Milan e Rome relativi alla nuvolosità del mese di marzo dal 8/03/2021 al 17/03/2021.</p>
 <p>Questa rotta è di tipo GET. Per funzionare correttamente la rotta ha bisogno di ricevere un parametro del tipo key : value :</p>
-<p><strong>"nomeCitta" : "nomeDellaCittà"</strong></p>
+<p><strong>"data" : "gg/mm/aaaa"</strong></p>
+<p>*NOTA: la data deve essere necessariamente inserita nel formato gg/mm/aaaa.</p>
+<p>Il risultato della chiamata è un JSONObject con le relative informazioni sulle statistiche.</p>
+<p>ESEMPIO</p>
+<p><img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/Immagini/statsGiorn.png" alt="enter image description here"></p>
+<h3 id="eccezioni-2"><em>Eccezioni</em>:</h3>
+<ul>
+<li>Nel caso il campo data fosse vuoto verrà lanciata un eccezione di tipo “InserimentoException”.</li>
+<li>Se la data è stata inserita ma non correttamente viene lanciata una “text ParseException”.</li>
+<li>Se ci sono problemi con l’estrazione delle date dei dati da database , per esempio se la data inserita non è presente sul database, viene lanciata un’eccezione di tipo “DataMeteoException”.</li>
+<li>Per problemi di parsing verso/da JSONObject viene lanciata l’eccezione ParseException.</li>
+<li>Per problemi di I/O viene lanciata l’eccezione IOException.</li>
+</ul>
+<hr>
+<h2 id="rotta-statssettimanali">Rotta “/statsSettimanali”</h2>
+<p>Il suo fine è quello di calcolare e restituire le statistiche di varianza,media,max,min della nuvolosità percentuale nella settimana della data inserita usando i dati sul database “Database_Previsioni.json”.<br>
+Se non avete eseguito chiamate alla rotta “nuvole5giorni” il database ha i dati predefiniti sulle città Naples,Milan e Rome relativi alla nuvolosità del mese di marzo dal 8/03/2021 al 17/03/2021.</p>
+<p>Questa rotta è di tipo GET. Per funzionare correttamente la rotta ha bisogno di ricevere un parametro del tipo key : value :</p>
+<p><strong>"data" : "gg/mm/aaaa"</strong></p>
+<p>*NOTA: la data deve essere necessariamente inserita nel formato gg/mm/aaaa.</p>
+<p>Il risultato della chiamata è un JSONObject con le relative informazioni sulle statistiche.</p>
+<p>ESEMPIO<br>
+<img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/Immagini/statsSett.png" alt="enter image description here"></p>
+<h3 id="eccezioni-3"><em>Eccezioni</em>:</h3>
+<ul>
+<li>Nel caso il campo data fosse vuoto verrà lanciata un eccezione di tipo “InserimentoException”.</li>
+<li>Se la data è stata inserita ma non correttamente viene lanciata una “text ParseException”.</li>
+<li>Se ci sono problemi con l’estrazione delle date dei dati da database , per esempio se la data inserita non è presente sul database, viene lanciata un’eccezione di tipo “DataMeteoException”.</li>
+<li>Per problemi di parsing verso/da JSONObject viene lanciata l’eccezione ParseException.</li>
+<li>Per problemi di I/O viene lanciata l’eccezione IOException.</li>
+</ul>
+<h2 id="rotta-statsmensili">Rotta “/statsMensili”</h2>
+<p>Il suo fine è quello di calcolare e restituire le statistiche di varianza,media,max,min della nuvolosità percentuale nel mese inserito usando i dati sul database “Database_Previsioni.json”.<br>
+Se non avete eseguito chiamate alla rotta “nuvole5giorni” il database ha i dati predefiniti sulle città Naples,Milan e Rome relativi alla nuvolosità del mese di marzo dal 8/03/2021 al 17/03/2021.</p>
+<p>Questa rotta è di tipo GET. Per funzionare correttamente la rotta ha bisogno di ricevere un parametro del tipo key : value :</p>
+<p><strong>"data" : "mm/aaaa"</strong></p>
+<p>*NOTA: la data deve essere necessariamente inserita nel formato mm/aaaa.</p>
+<p>Il risultato della chiamata è un JSONObject con le relative informazioni sulle statistiche.</p>
+<p>ESEMPIO<br>
+<img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/Immagini/statsMens.png" alt="enter image description here"></p>
+<h3 id="eccezioni-4"><em>Eccezioni</em>:</h3>
+<ul>
+<li>Nel caso il campo data fosse vuoto verrà lanciata un eccezione di tipo “InserimentoException”.</li>
+<li>Se la data è stata inserita ma non correttamente viene lanciata una “text ParseException”.</li>
+<li>Se ci sono problemi con l’estrazione delle date dei dati da database , per esempio se la data inserita non è presente sul database, viene lanciata un’eccezione di tipo “DataMeteoException”.</li>
+<li>Per problemi di parsing verso/da JSONObject viene lanciata l’eccezione ParseException.</li>
+<li>Per problemi di I/O viene lanciata l’eccezione IOException.</li>
+</ul>
+<h2 id="rotta-statstotali">Rotta “/statsTotali”</h2>
+<p>Il suo fine è quello di calcolare e restituire le statistiche di varianza,media,max,min della nuvolosità percentuale usando i dati sul database “Database_Previsioni.json”.<br>
+Se non avete eseguito chiamate alla rotta “nuvole5giorni” il database ha i dati predefiniti sulle città Naples,Milan e Rome relativi alla nuvolosità del mese di marzo dal 8/03/2021 al 17/03/2021.</p>
+<p>Questa rotta è di tipo GET. Per funzionare correttamente la rotta ha bisogno di ricevere non deve ricevere parametri.</p>
+<p>Il risultato della chiamata è un JSONObject con le relative informazioni sulle statistiche.</p>
+<p>ESEMPIO<br>
+<img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/Immagini/statsTotali.png" alt="enter image description here"></p>
+<h3 id="eccezioni-5"><em>Eccezioni</em>:</h3>
+<ul>
+<li>Se ci sono problemi con l’estrazione delle date dei dati da database , per esempio se la data inserita non è presente sul database, viene lanciata un’eccezione di tipo “DataMeteoException”.</li>
+<li>Per problemi di parsing verso/da JSONObject viene lanciata l’eccezione ParseException.</li>
+<li>Per problemi di I/O viene lanciata l’eccezione IOException.</li>
+</ul>
+<hr>
 </div>
 </body>
 
