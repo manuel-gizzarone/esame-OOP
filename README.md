@@ -37,20 +37,23 @@ La rotta per la verifica della qualità delle previsioni con soglia di errore fa
 Di seguito i diagrammi UML definitivi del progetto. I diagrammi prototipo costruiti prima dell’implementazione del codice sono invece visionabili nella cartella del progetto UML\UMLprototype.<br>
 <br></p>
 <ul>
-<li>
-<p>USE CASE DIAGRAM<br>
+<li>USE CASE DIAGRAM<br>
 <br><br>
-<img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/UML/UmlFinal/ControllerUseCase.png" alt="USECASEdiagramFinal"></p>
-</li>
+<img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/UML/UmlFinal/ControllerUseCase.png" alt="USECASEdiagramFinal"></li>
+</ul>
+<br>
+<ul>
 <li>
 <p>SEQUENCE DIAGRAM ROTTA “/nuvoleCitta5giorni”<br>
 <br><br>
-<img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/UML/UmlFinal/SequenceApi5giorni.png" alt="sequence diagram 1"></p>
+<img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/UML/UmlFinal/SequenceApi5giorni.png" alt="sequence diagram 1"><br>
+<br></p>
 </li>
 <li>
 <p>SEQUENCE DIAGRAM ROTTA “/statsGiornaliere”<br>
 <br><br>
-<img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/UML/UmlFinal/SequenceStatsGiornaliere.png" alt="sequence diagram 2"></p>
+<img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/UML/UmlFinal/SequenceStatsGiornaliere.png" alt="sequence diagram 2"><br>
+<br></p>
 </li>
 <li>
 <p>CLASS DIAGRAM<br>
