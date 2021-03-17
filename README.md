@@ -75,27 +75,27 @@ Per problemi di parsing verso/da JSONObject viene lanciata l’eccezione ParseEx
 },<br>
 …</p>
 <p>{<br>
-“nuvolosita”: 12,<br>
-“Data”: “Mon Mar 22 19:00:00 CET 2021”,<br>
-“unixData”: 1616436000,<br>
-“citta”: “Ripalimosani”<br>
-},<br>
-{<br>
-“nuvolosita”: 28,<br>
-“Data”: “Mon Mar 22 22:00:00 CET 2021”,<br>
-“unixData”: 1616446800,<br>
-“citta”: “Ripalimosani”<br>
-},<br>
-{<br>
-“nuvolosita”: 87,<br>
-“Data”: “Thu Mar 18 01:00:00 CET 2021”,<br>
-“unixData”: 1616025600,<br>
-“citta”: “Mirabello”<br>
-},<br>
-{<br>
 “nuvolosita”: 95,<br>
 “Data”: “Thu Mar 18 04:00:00 CET 2021”,<br>
 “unixData”: 1616036400,<br>
+“citta”: “Mirabello”<br>
+},<br>
+{<br>
+“nuvolosita”: 92,<br>
+“Data”: “Thu Mar 18 07:00:00 CET 2021”,<br>
+“unixData”: 1616047200,<br>
+“citta”: “Mirabello”<br>
+},<br>
+{<br>
+“nuvolosita”: 98,<br>
+“Data”: “Thu Mar 18 10:00:00 CET 2021”,<br>
+“unixData”: 1616058000,<br>
+“citta”: “Mirabello”<br>
+},<br>
+{<br>
+“nuvolosita”: 97,<br>
+“Data”: “Thu Mar 18 13:00:00 CET 2021”,<br>
+“unixData”: 1616068800,<br>
 “citta”: “Mirabello”<br>
 },</p>
 <p>…</p>
