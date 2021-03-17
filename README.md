@@ -23,13 +23,32 @@
 -POST  “/filtraStatsSettimanale”<br>
 -POST  “/filtraStatsMensile”<br>
 -POST  “/filtraStatsTotale”<br>
+-DELETE “/deleteDatabase”<br>
 -GET “/getDatabase”<br>
 -POST “/previsioniSoglia”</p>
 <p>La spiegazione dell’utilizzo delle varie rotte con esempi di esecuzione è mostrato in seguito.</p>
 <p><strong>DIAGRAMMI UML FINALI</strong></p>
 <ul>
-<li>USE CASE DIAGRAM<br>
-<img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/UML/UmlFinal/ControllerUseCase.png" alt="USECASEdiagramFinal"></li>
+<li>
+<p>USE CASE DIAGRAM<br>
+<br><br>
+<img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/UML/UmlFinal/ControllerUseCase.png" alt="USECASEdiagramFinal"></p>
+</li>
+<li>
+<p>SEQUENCE DIAGRAM ROTTA “/nuvoleCitta5giorni”<br>
+<br><br>
+<img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/UML/UmlFinal/SequenceApi5giorni.png" alt="sequence diagram 1"></p>
+</li>
+<li>
+<p>SEQUENCE DIAGRAM ROTTA “/statsGiornaliere”<br>
+<br><br>
+<img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/UML/UmlFinal/SequenceStatsGiornaliere.png" alt="sequence diagram 2"></p>
+</li>
+<li>
+<p>CLASS DIAGRAM<br>
+<br><br>
+<img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/UML/UmlFinal/ClassDiagram.png" alt="Class diagram"></p>
+</li>
 </ul>
 <hr>
 <h2 id="rotta-nuvolecitta5giorni">Rotta “/nuvoleCitta5giorni”</h2>
@@ -45,6 +64,85 @@ Se la lettura dell’apiKey per la chiamata alle api di openweather non viene es
 Se ci sono problemi con l’estrazione delle date dei dati di previsione viene lanciata un’eccezione di tipo “DataMeteoException”.<br>
 Per problemi di parsing verso/da JSONObject viene lanciata l’eccezione ParseException, per problemi di I/O l’eccezione IOException.</p>
 <p>ESEMPIO</p>
+<p><img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/Immagini/forecast5giorni3Citt%C3%A0.png" alt=""></p>
+<p>Il JSONArray  di risposta è:</p>
+<p>[<br>
+{<br>
+“nuvolosita”: 92,<br>
+“Data”: “Thu Mar 18 01:00:00 CET 2021”,<br>
+“unixData”: 1616025600,<br>
+“citta”: “Ripalimosani”<br>
+},<br>
+{<br>
+“nuvolosita”: 96,<br>
+“Data”: “Thu Mar 18 04:00:00 CET 2021”,<br>
+“unixData”: 1616036400,<br>
+“citta”: “Ripalimosani”<br>
+},<br>
+{<br>
+“nuvolosita”: 98,<br>
+“Data”: “Thu Mar 18 07:00:00 CET 2021”,<br>
+“unixData”: 1616047200,<br>
+“citta”: “Ripalimosani”<br>
+},<br>
+{<br>
+“nuvolosita”: 100,<br>
+“Data”: “Thu Mar 18 10:00:00 CET 2021”,<br>
+“unixData”: 1616058000,<br>
+“citta”: “Ripalimosani”<br>
+},<br>
+…</p>
+<p>{<br>
+“nuvolosita”: 95,<br>
+“Data”: “Thu Mar 18 04:00:00 CET 2021”,<br>
+“unixData”: 1616036400,<br>
+“citta”: “Mirabello”<br>
+},<br>
+{<br>
+“nuvolosita”: 92,<br>
+“Data”: “Thu Mar 18 07:00:00 CET 2021”,<br>
+“unixData”: 1616047200,<br>
+“citta”: “Mirabello”<br>
+},<br>
+{<br>
+“nuvolosita”: 98,<br>
+“Data”: “Thu Mar 18 10:00:00 CET 2021”,<br>
+“unixData”: 1616058000,<br>
+“citta”: “Mirabello”<br>
+},<br>
+{<br>
+“nuvolosita”: 97,<br>
+“Data”: “Thu Mar 18 13:00:00 CET 2021”,<br>
+“unixData”: 1616068800,<br>
+“citta”: “Mirabello”<br>
+},</p>
+<p>…</p>
+<p>{<br>
+“nuvolosita”: 99,<br>
+“Data”: “Thu Mar 18 01:00:00 CET 2021”,<br>
+“unixData”: 1616025600,<br>
+“citta”: “Vinchiaturo”<br>
+},<br>
+{<br>
+“nuvolosita”: 98,<br>
+“Data”: “Thu Mar 18 04:00:00 CET 2021”,<br>
+“unixData”: 1616036400,<br>
+“citta”: “Vinchiaturo”<br>
+},<br>
+{<br>
+“nuvolosita”: 98,<br>
+“Data”: “Thu Mar 18 07:00:00 CET 2021”,<br>
+“unixData”: 1616047200,<br>
+“citta”: “Vinchiaturo”<br>
+},<br>
+{<br>
+“nuvolosita”: 100,<br>
+“Data”: “Thu Mar 18 10:00:00 CET 2021”,<br>
+“unixData”: 1616058000,<br>
+“citta”: “Vinchiaturo”<br>
+},</p>
+<p>…<br>
+]</p>
 </div>
 </body>
 
