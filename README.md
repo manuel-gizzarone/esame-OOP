@@ -11,6 +11,7 @@
 <body class="stackedit">
   <div class="stackedit__html"><h1 id="progetto-desame-programmazione-ad-oggetti">Progetto d’esame programmazione ad oggetti</h1>
 <p>L’applicazione permette principalmente di ottenere e salvare dati di previsione istantanei sulla nuvolosità di una o più città, calcolare statistiche da database e filtrarle per data o nome della città. Inoltre consente anche di verificare la qualità delle previsioni tramite una soglia di errore opportunamente specificata.</p>
+<p>L’applicazione fa utilizzo delle api openweather “forecast5days3hours” e “current weather”.</p>
 <p>L’interazione con l’applicazione una volta avviata viene gestita tramite protocollo http verso un server creato in maniera automatica sulla porta 8080 localmente perciò per utilizzare le sue funzionalità è necessario un browser oppure un software apposito per l’esecuzione di chiamate GET/POST/DELETE etc. come postman.</p>
 <p>Le rotte di chiamata verso il server dell’applicazione (localhost:8080) disponibili sono:</p>
 <p>-POST  “/nuvoleCitta5giorni”<br>
@@ -27,7 +28,14 @@
 -GET “/getDatabase”<br>
 -POST “/previsioniSoglia”</p>
 <p>La spiegazione dell’utilizzo delle varie rotte con esempi di esecuzione è mostrato in seguito.</p>
-<p><strong>DIAGRAMMI UML FINALI</strong></p>
+<br>
+<p><em>NOTA:<br>
+le statistiche sia filtrate che non fanno tutte riferimento ai dati presenti sul database “Database_Previsioni.json”.<br>
+La rotta per la verifica della qualità delle previsioni con soglia di errore fa utilizzo sia del “Database_Previsioni.json” che del “Database_Raccolta.json” . Entrambi i file sono già riempiti con dati da noi raccolti sulle città Rome,Milan,Naples per consentire il diretto uso di tutte le rotte già al primo avvio dell’applicazione.</em><br>
+<br></p>
+<p><strong>DIAGRAMMI UML FINALI</strong><br>
+Di seguito i diagrammi UML definitivi del progetto. I diagrammi prototipo costruiti prima dell’implementazione del codice sono invece visionabili nella cartella del progetto UML\UMLprototype.<br>
+<br></p>
 <ul>
 <li>
 <p>USE CASE DIAGRAM<br>
@@ -57,12 +65,15 @@
 <p><strong>"nomiCitta" : "listaDeiNomiDelleCittàSeparateDallaVirgola"</strong></p>
 <p>Il risultato della chiamata sarà un JSONArray i cui singoli elementi di tipo JSONObject contengono le informazioni indicate sopra.</p>
 <h3 id="eccezioni"><em>Eccezioni</em>:</h3>
-<p>Nel caso la lista dei nomi delle città fosse vuota verrà lanciata un eccezione di tipo “InserimentoException”.<br>
-Se invece sono inseriti degli spazi prima o dopo il nome di una città allora verrà lanciata un’eccezione di tipo “GestisciStringaException”.<br>
-Se una delle città inserite non esiste viene lanciata un eccezione del tipo “NomeCittaException”.<br>
-Se la lettura dell’apiKey per la chiamata alle api di openweather non viene estratta correttamente dal file config.json nel progetto viene lanciata una “ConfigFileException”.<br>
-Se ci sono problemi con l’estrazione delle date dei dati di previsione viene lanciata un’eccezione di tipo “DataMeteoException”.<br>
-Per problemi di parsing verso/da JSONObject viene lanciata l’eccezione ParseException, per problemi di I/O l’eccezione IOException.</p>
+<ul>
+<li>Nel caso la lista dei nomi delle città fosse vuota verrà lanciata un eccezione di tipo “InserimentoException”.</li>
+<li>Se invece sono inseriti degli spazi prima o dopo il nome di una città allora verrà lanciata un’eccezione di tipo “GestisciStringaException”.</li>
+<li>Se una delle città inserite non esiste viene lanciata un eccezione del tipo “NomeCittaException”.</li>
+<li>Se la lettura dell’apiKey per la chiamata alle api di openweather non viene estratta correttamente dal file config.json nel progetto viene lanciata una “ConfigFileException”.</li>
+<li>Se ci sono problemi con l’estrazione delle date dei dati di previsione viene lanciata un’eccezione di tipo “DataMeteoException”.</li>
+<li>Per problemi di parsing verso/da JSONObject viene lanciata l’eccezione ParseException.</li>
+<li>Per problemi di I/O viene lanciata l’eccezione IOException.</li>
+</ul>
 <p>ESEMPIO</p>
 <p><img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/Immagini/forecast5giorni3Citt%C3%A0.png" alt=""></p>
 <p>Il JSONArray  di risposta è:</p>
@@ -143,6 +154,26 @@ Per problemi di parsing verso/da JSONObject viene lanciata l’eccezione ParseEx
 },</p>
 <p>…<br>
 ]</p>
+<hr>
+<h2 id="rotta-salvaogniora">Rotta “/salvaOgniOra”</h2>
+<p>Il suo fine è quello di salvare ad intervalli regolari di un’ora i dati di nuvolosità di una città a partire dall’istante della chiamata.Nel caso di chiamate multiple i dati di ogni città verrano salvati separatamente in un file apposito nella cartella del progetto col nome “nomeDellaCitta.json”.</p>
+<p>Questa rotta è di tipo GET. Per funzionare correttamente la rotta ha bisogno di ricevere un parametro del tipo key : value :</p>
+<p><strong>"nomeCitta" : "nomeDellaCittà"</strong></p>
+<p>Il risultato della chiamata sarà una stringa col path del database creato per il salvataggio dei dati ogni ora.</p>
+<p><img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/Immagini/salvaOgniOra.png" alt="salvaOgniOra"></p>
+<h3 id="eccezioni-1"><em>Eccezioni</em>:</h3>
+<ul>
+<li>Nel caso la lista dei nomi delle città fosse vuota verrà lanciata un eccezione di tipo “InserimentoException”.</li>
+<li>Se una delle città inserite non esiste viene lanciata un eccezione del tipo “NomeCittaException”.</li>
+<li>Se la lettura dell’apiKey per la chiamata alle api di openweather non viene estratta correttamente dal file config.json nel progetto viene lanciata una “ConfigFileException”.</li>
+<li>Per problemi di parsing verso/da JSONObject viene lanciata l’eccezione ParseException.</li>
+<li>Per problemi di I/O viene lanciata l’eccezione IOException.</li>
+</ul>
+<hr>
+<h2 id="rotta-statsgiornaliere">Rotta “/statsGiornaliere”</h2>
+<p>Il suo fine è quello di restituire le statistiche di varianza,media,max,min della nuvolosità percentuale</p>
+<p>Questa rotta è di tipo GET. Per funzionare correttamente la rotta ha bisogno di ricevere un parametro del tipo key : value :</p>
+<p><strong>"nomeCitta" : "nomeDellaCittà"</strong></p>
 </div>
 </body>
 
