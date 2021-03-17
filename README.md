@@ -23,15 +23,29 @@
 -POST  “/filtraStatsSettimanale”<br>
 -POST  “/filtraStatsMensile”<br>
 -POST  “/filtraStatsTotale”<br>
+-DELETE “/deleteDatabase”<br>
 -GET “/getDatabase”<br>
 -POST “/previsioniSoglia”</p>
 <p>La spiegazione dell’utilizzo delle varie rotte con esempi di esecuzione è mostrato in seguito.</p>
 <p><strong>DIAGRAMMI UML FINALI</strong></p>
 <ul>
-<li>USE CASE DIAGRAM<br>
-<img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/UML/UmlFinal/ControllerUseCase.png" alt="USECASEdiagramFinal"></li>
+<li>
+<p>USE CASE DIAGRAM<br>
+<img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/UML/UmlFinal/ControllerUseCase.png" alt="USECASEdiagramFinal"></p>
+</li>
+<li>
+<p>SEQUENCE DIAGRAM ROTTA “/nuvoleCitta5giorni”<br>
+<img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/UML/UmlFinal/SequenceApi5giorni.png" alt="sequence diagram 1"></p>
+</li>
+<li>
+<p>SEQUENCE DIAGRAM ROTTA “/statsGiornaliere”<br>
+<img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/UML/UmlFinal/SequenceStatsGiornaliere.png" alt="sequence diagram 2"></p>
+</li>
+<li>
+<p>CLASS DIAGRAM<br>
+<img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/UML/UmlFinal/ClassDiagram.png" alt="Class diagram"></p>
+</li>
 </ul>
-<p>-SEQUENCE DIAGRAM</p>
 <hr>
 <h2 id="rotta-nuvolecitta5giorni">Rotta “/nuvoleCitta5giorni”</h2>
 <p>Il suo fine è quello di poter far visualizzare le previsioni meteo della nuvolosità percentuale di una più città dall’istante in cui si esegue la chiamata fino ai prossimi 5 giorni. I dati di previsione sono intervallati di un tempo di 3 ore l’uno all’altro ed inoltre sono automaticamente salvati su un database nella cartella del progetto denominata “Database_Previsioni.json”.</p>
