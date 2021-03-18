@@ -168,7 +168,7 @@ La rotta per la verifica della qualità delle previsioni con soglia di errore fa
 <ul>
 <li><strong>InserimentoException</strong>: se l’utente dimentica di inserire i nomi delle città</li>
 <li><strong>NomeCittaException</strong>: se l’utente inserisce il nome di una città non disponibile o commette errori di digitazione</li>
-<li><strong>GestisciStringaException</strong>: se si commettono errori nell’inserimento delle città (in particolare se vengano lasciati spazi tra le virgole durante l’inserimento)</li>
+<li><strong>GestisciStringaException</strong>: se si commettono errori nell’inserimento delle città (in particolare se vengono lasciati spazi tra le virgole durante l’inserimento)</li>
 <li><strong>ConfigFileException</strong>: se sono presenti errori nel file di configurazione (viene lanciata se non rispetta il formato <code>JSON</code>)</li>
 <li><strong>ParseException</strong>: nel caso in cui si verifichino errori durante il parsing dei dati</li>
 <li><strong>IOException</strong>: nel caso si verifichino errori durante la lettura del file contenente il database<br>
@@ -287,6 +287,124 @@ Se non avete eseguito chiamate alla rotta <code>/nuvole5giorni</code> il databas
 <p>🔴 <strong>ECCEZIONI</strong></p>
 <ul>
 <li><strong>ParseException</strong>: nel caso in cui si verifichino errori durante il parsing dei dati</li>
-<li><strong>IOException</strong>: nel caso si verifichino errori durante la lettura del file contenente il database</li>
+<li><strong>IOException</strong>: nel caso si verifichino errori durante la lettura del file contenente il database<br>
+<br></li>
+</ul>
+<h2 id="rotta-filtrastatsgiornaliero">Rotta “/filtraStatsGiornaliero”</h2>
+<p>Il suo fine è quello di filtrare le statistiche giornaliere sulla percentuale di nuvolosità per data e città. Verranno visualizzate le seguenti informazioni:</p>
+<ul>
+<li><em>Città</em></li>
+<li><em>Valore minimo</em></li>
+<li><em>Valore massimo</em></li>
+<li><em>Media</em></li>
+<li><em>Varianza</em></li>
+</ul>
+<p>Questa rotta è di tipo <code>POST</code>. Per funzionare correttamente richiede l’inserimento di un <strong>body</strong> in formato <code>JSON</code> come indicato:</p>
+<pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">{</span>
+
+<span class="token string">"nomiCitta"</span><span class="token punctuation">:</span> <span class="token string">"listaNomiDelleCittaSeparateDallaVirgola"</span><span class="token punctuation">,</span>
+
+<span class="token string">"data"</span><span class="token punctuation">:</span> <span class="token string">"dd/mm/yyyy"</span>
+
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Il risultato della chiamata sarà un <code>JSONArray</code> i cui singoli elementi di tipo <code>JSONObject</code> contengono le statistiche giornaliere sulla nuvolosità delle città inserite alla data indicata.</p>
+<p>✅<strong>ESEMPIO</strong></p>
+<p><img src="https://github.com/manuel-gizzarone/esame-OOP/blob/master/progettoDekGiz/Immagini/FiltersGiornaliero.png?raw=true" alt="enter image description here"></p>
+<p>🔴 <strong>ECCEZIONI</strong></p>
+<ul>
+<li><strong>InserimentoException</strong>: se l’utente dimentica di inserire le città o la data</li>
+<li><strong>FiltersException</strong>: se le città o la data inseriti non sono presenti nel database</li>
+<li><strong>GestisciStringaException</strong>: se si commettono errori nell’inserimento delle città (in particolare se vengono lasciati spazi tra le virgole durante l’inserimento)</li>
+<li><strong>java.text.ParseException</strong>: nel caso la data viene inserita in un formato errato</li>
+<li><strong>ParseException</strong>: nel caso in cui si verifichino errori durante il parsing dei dati</li>
+<li><strong>IOException</strong>: nel caso si verifichino errori durante la lettura del file contenente il database<br>
+<br></li>
+</ul>
+<h2 id="rotta-filtrastatssettimanale">Rotta “/filtraStatsSettimanale”</h2>
+<p>Il suo fine è quello di filtrare le statistiche settimanali sulla percentuale di nuvolosità per data e città. In particolare a partire dalla data inserita, verrà calcolato il relativo indice della settimana nel mese.  Verranno visualizzate le seguenti informazioni:</p>
+<ul>
+<li><em>Città</em></li>
+<li><em>Valore minimo</em></li>
+<li><em>Valore massimo</em></li>
+<li><em>Media</em></li>
+<li><em>Varianza</em></li>
+</ul>
+<p>Questa rotta è di tipo <code>POST</code>. Per funzionare correttamente richiede l’inserimento di un <strong>body</strong> in formato <code>JSON</code> come indicato:</p>
+<pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">{</span>
+
+<span class="token string">"nomiCitta"</span><span class="token punctuation">:</span> <span class="token string">"listaNomiDelleCittaSeparateDallaVirgola"</span><span class="token punctuation">,</span>
+
+<span class="token string">"data"</span><span class="token punctuation">:</span> <span class="token string">"dd/mm/yyyy"</span>
+
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Il risultato della chiamata sarà un <code>JSONArray</code> i cui singoli elementi di tipo <code>JSONObject</code> contengono le statistiche settimanali sulla nuvolosità delle città inserite nella relativa settimana a cui appartiene la data inserita.</p>
+<p>✅<strong>ESEMPIO</strong></p>
+<p><img src="https://github.com/manuel-gizzarone/esame-OOP/blob/master/progettoDekGiz/Immagini/FiltersSettimanale.png?raw=true" alt="enter image description here"></p>
+<p>🔴 <strong>ECCEZIONI</strong></p>
+<ul>
+<li><strong>InserimentoException</strong>: se l’utente dimentica di inserire le città o la data</li>
+<li><strong>FiltersException</strong>: se le città o la data inseriti non sono presenti nel database</li>
+<li><strong>GestisciStringaException</strong>: se si commettono errori nell’inserimento delle città (in particolare se vengono lasciati spazi tra le virgole durante l’inserimento)</li>
+<li><strong>java.text.ParseException</strong>: nel caso la data viene inserita in un formato errato</li>
+<li><strong>ParseException</strong>: nel caso in cui si verifichino errori durante il parsing dei dati</li>
+<li><strong>IOException</strong>: nel caso si verifichino errori durante la lettura del file contenente il database<br>
+<br></li>
+</ul>
+<h2 id="rotta-filtrastatsmensile">Rotta “/filtraStatsMensile”</h2>
+<p>Il suo fine è quello di filtrare le statistiche mensili sulla percentuale di nuvolosità per numero del mese e città. Verranno visualizzate le seguenti informazioni:</p>
+<ul>
+<li><em>Città</em></li>
+<li><em>Valore minimo</em></li>
+<li><em>Valore massimo</em></li>
+<li><em>Media</em></li>
+<li><em>Varianza</em></li>
+</ul>
+<p>Questa rotta è di tipo <code>POST</code>. Per funzionare correttamente richiede l’inserimento di un <strong>body</strong> in formato <code>JSON</code> come indicato:</p>
+<pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">{</span>
+
+<span class="token string">"nomiCitta"</span><span class="token punctuation">:</span> <span class="token string">"listaNomiDelleCittaSeparateDallaVirgola"</span><span class="token punctuation">,</span>
+
+<span class="token string">"data"</span><span class="token punctuation">:</span> <span class="token string">"mm/yyyy"</span>
+
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Il risultato della chiamata sarà un <code>JSONArray</code> i cui singoli elementi di tipo <code>JSONObject</code> contengono le statistiche mensili sulla nuvolosità delle città inserite nel relativo mese indicato.</p>
+<p>✅<strong>ESEMPIO</strong></p>
+<p><img src="https://github.com/manuel-gizzarone/esame-OOP/blob/master/progettoDekGiz/Immagini/FiltersMensile.png?raw=true" alt="enter image description here"></p>
+<p>🔴 <strong>ECCEZIONI</strong></p>
+<ul>
+<li><strong>InserimentoException</strong>: se l’utente dimentica di inserire le città o la data</li>
+<li><strong>FiltersException</strong>: se le città o la data inseriti non sono presenti nel database</li>
+<li><strong>GestisciStringaException</strong>: se si commettono errori nell’inserimento delle città (in particolare se vengono lasciati spazi tra le virgole durante l’inserimento)</li>
+<li><strong>java.text.ParseException</strong>: nel caso la data viene inserita in un formato errato</li>
+<li><strong>ParseException</strong>: nel caso in cui si verifichino errori durante il parsing dei dati</li>
+<li><strong>IOException</strong>: nel caso si verifichino errori durante la lettura del file contenente il database<br>
+<br></li>
+</ul>
+<h2 id="rotta-filtrastatstotale">Rotta “/filtraStatsTotale”</h2>
+<p>Il suo fine è quello di filtrare le statistiche totali sulla percentuale di nuvolosità per città. Saranno quindi visualizzate statistiche su tutti i dati presenti nel database, relativi alle città inserite. Verranno visualizzate le seguenti informazioni:</p>
+<ul>
+<li><em>Città</em></li>
+<li><em>Valore minimo</em></li>
+<li><em>Valore massimo</em></li>
+<li><em>Media</em></li>
+<li><em>Varianza</em></li>
+</ul>
+<p>Questa rotta è di tipo <code>POST</code>. Per funzionare correttamente richiede l’inserimento di un <strong>body</strong> in formato <code>JSON</code> come indicato:</p>
+<pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">{</span><span class="token string">"nomiCitta"</span><span class="token punctuation">:</span> <span class="token string">"listaNomiDelleCittaSeparateDallaVirgola"</span><span class="token punctuation">}</span>
+</code></pre>
+<p>Il risultato della chiamata sarà un <code>JSONArray</code> i cui singoli elementi di tipo <code>JSONObject</code> contengono le statistiche totali sulla nuvolosità delle città inserite.</p>
+<p>✅<strong>ESEMPIO</strong></p>
+<p><img src="https://github.com/manuel-gizzarone/esame-OOP/blob/master/progettoDekGiz/Immagini/FiltersTotali.png?raw=true" alt="enter image description here"></p>
+<p>🔴 <strong>ECCEZIONI</strong></p>
+<ul>
+<li><strong>InserimentoException</strong>: se l’utente dimentica di inserire le città</li>
+<li><strong>FiltersException</strong>: se una delle città inserite non sono presenti nei dati contenuti dal database</li>
+<li><strong>GestisciStringaException</strong>: se si commettono errori nell’inserimento delle città (in particolare se vengono lasciati spazi tra le virgole durante l’inserimento)</li>
+<li><strong>ParseException</strong>: nel caso in cui si verifichino errori durante il parsing dei dati</li>
+<li><strong>IOException</strong>: nel caso si verifichino errori durante la lettura del file contenente il database<br>
+<br></li>
 </ul>
 
