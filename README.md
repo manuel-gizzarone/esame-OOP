@@ -160,7 +160,8 @@ La rotta per la verifica della qualità delle previsioni con soglia di errore fa
         <span class="token string">"Data"</span><span class="token punctuation">:</span> <span class="token string">"Thu Mar 18 04:00:00 CET 2021"</span><span class="token punctuation">,</span>
         <span class="token string">"unixData"</span><span class="token punctuation">:</span> <span class="token number">1616036400</span><span class="token punctuation">,</span>
         <span class="token string">"citta"</span><span class="token punctuation">:</span> <span class="token string">"Vinchiaturo"</span>
-    <span class="token punctuation">}</span><span class="token operator">...</span>
+    <span class="token punctuation">}</span>
+    <span class="token operator">...</span>
 <span class="token punctuation">]</span> 
 </code></pre>
 <p>🔴 <strong>ECCEZIONI</strong></p>
