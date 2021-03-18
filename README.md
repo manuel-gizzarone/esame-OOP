@@ -1,247 +1,296 @@
-<!DOCTYPE html>
-<html>
+---
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>README</title>
-  <link rel="stylesheet" href="https://stackedit.io/style.css" />
-</head>
 
-<body class="stackedit">
-  <div class="stackedit__html"><h1 id="progetto-desame-programmazione-ad-oggetti">Progetto d’esame programmazione ad oggetti</h1>
-<p>L’applicazione permette principalmente di ottenere e salvare dati di previsione istantanei sulla nuvolosità di una o più città, calcolare statistiche da database e filtrarle per data o nome della città. Inoltre consente anche di verificare la qualità delle previsioni tramite una soglia di errore opportunamente specificata.</p>
-<p>L’applicazione fa utilizzo delle api openweather “forecast5days3hours” e “current weather”.</p>
-<p>L’interazione con l’applicazione una volta avviata viene gestita tramite protocollo http verso un server creato in maniera automatica sulla porta 8080 localmente perciò per utilizzare le sue funzionalità è necessario un browser oppure un software apposito per l’esecuzione di chiamate GET/POST/DELETE etc. come postman.</p>
-<p>Le rotte di chiamata verso il server dell’applicazione (localhost:8080) disponibili sono:</p>
-<p>-POST  “/nuvoleCitta5giorni”<br>
--GET    “/salvaOgniOra”<br>
--GET    “/statsGiornaliere”<br>
--GET    “/statsSettimanali”<br>
--GET    “/statsMensili”<br>
--GET    “/statsTotali”<br>
--POST “/filtraStatsGiornaliero”<br>
--POST  “/filtraStatsSettimanale”<br>
--POST  “/filtraStatsMensile”<br>
--POST  “/filtraStatsTotale”<br>
--DELETE “/deleteDatabase”<br>
--GET “/getDatabase”<br>
--POST “/previsioniSoglia”</p>
-<p>La spiegazione dell’utilizzo delle varie rotte con esempi di esecuzione è mostrato in seguito.</p>
-<br>
+---
+
+<h1 id="progetto-programmazione-ad-oggetti">PROGETTO PROGRAMMAZIONE AD OGGETTI</h1>
+<p>L’applicazione permette principalmente all’ utente di ottenere e salvare dati meteo sulla percentuale di nuvolosità di una o più città.  Sarà inoltre possibile calcolare statistiche in base ai dati raccolti e filtrarle per data e/o nomi delle città. Consente anche di verificare la qualità delle previsioni tramite una soglia di errore opportunamente specificata.</p>
+<h2 id="api-di-riferimento">Api di riferimento</h2>
+<p>L’applicazione sviluppata riceve i dati meteo tramite le Api <a href="https://openweathermap.org/">OpenWeather</a>. Più precisamente fa uso di due Api specifiche:</p>
+<ul>
+<li><a href="https://openweathermap.org/forecast5">5 Day Weather Forecast</a></li>
+<li><a href="https://openweathermap.org/current">Current Weather Data</a></li>
+</ul>
+<p>Visitando i link indicati, troverete tutte le informazioni e la documentazione a riguardo.</p>
+<h2 id="installazione">Installazione</h2>
+<p>Per installare l’applicazione sui propri dispositivi è sufficiente digitare il seguente comando nel proprio Terminale:</p>
+<pre><code>git clone https://github.com/manuel-gizzarone/esame-OOP.git
+</code></pre>
+<p>Nel caso in cui il comando <code>git clone</code> non venga riconosciuto dal vostro sistema operativo, dovrete scaricare ed installare il software <a href="https://git-scm.com/downloads">Git</a>.</p>
+<h2 id="configurazioni-iniziali">Configurazioni iniziali</h2>
+<p>L’interazione con l’applicazione, una volta avviata, viene gestita tramite protocollo <code>http</code> verso un server creato in maniera automatica sulla porta <code>8080</code> del vostro <code>localhost</code>. Perciò per utilizzare le sue funzionalità ed effettuare richieste è necessario un browser, ma consigliamo l’installazione del software <strong>Postman</strong> specifico per effettuare richieste a server Web. Il download è disponibile al seguente <a href="https://www.postman.com/downloads/">link</a>.</p>
+<h2 id="diagrammi-uml-finali">DIAGRAMMI UML FINALI</h2>
+<p>Di seguito sono illustrati i diagrammi UML definitivi del progetto. I diagrammi prototipo costruiti prima dell’implementazione del codice sono invece visionabili <a href="https://github.com/manuel-gizzarone/esame-OOP/tree/master/progettoDekGiz/UML/UmlPrototype">qui</a>.</p>
+<ul>
+<li><strong>USE CASE DIAGRAM</strong><br>
+<br><br>
+<img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/UML/UmlFinal/ControllerUseCase.png" alt="USECASEdiagramFinal"><br>
+<br></li>
+<li><strong>CLASS DIAGRAM</strong><br>
+<br><br>
+<img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/UML/UmlFinal/ClassDiagram.png" alt="Class diagram"><br>
+<br></li>
+<li><strong>SEQUENCE DIAGRAM ROTTA "/nuvoleCitta5giorni"</strong><br>
+<br></li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/UML/UmlFinal/SequenceApi5giorni.png" alt="sequence diagram 1"><br>
+<br></p>
+<ul>
+<li><strong>SEQUENCE DIAGRAM ROTTA "/statsGiornaliere"</strong><br>
+<br></li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/UML/UmlFinal/SequenceStatsGiornaliere.png" alt="sequence diagram 2"></p>
+<h1 id="rotte-disponibili">Rotte disponibili</h1>
+<p>Le richieste devono essere effettuate al seguente indirizzo:</p>
+<pre><code>localhost:8080
+</code></pre>
+<p>Le rotte disponibili sono riportate nella seguente tabella:</p>
+
+<table>
+<thead>
+<tr>
+<th>TIPO</th>
+<th>ROTTA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>POST</code></td>
+<td>/nuvoleCitta5giorni</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td>/salvaOgniOra</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td>/statsGiornaliere</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td>/statsSettimanali</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td>/statsMensili</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td>/statsTotali</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td>/filtraStatsGiornaliero</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td>/filtraStatsSettimanale</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td>/filtraStatsMensile</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td>/filtraStatsTotale</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td>/deleteDatabase</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td>/getDatabase</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td>/previsioniSoglia</td>
+</tr>
+</tbody>
+</table><p><strong>La spiegazione dell’utilizzo delle varie rotte, con relativi esempi di esecuzione, è mostrata di seguito</strong>.<br>
+<br></p>
 <p><em>NOTA:<br>
-le statistiche sia filtrate che non fanno tutte riferimento ai dati presenti sul database “Database_Previsioni.json”.<br>
-La rotta per la verifica della qualità delle previsioni con soglia di errore fa utilizzo sia del “Database_Previsioni.json” che del “Database_Raccolta.json” . Entrambi i file sono già riempiti con dati da noi raccolti sulle città Rome,Milan,Naples per consentire il diretto uso di tutte le rotte già al primo avvio dell’applicazione.</em><br>
+Le statistiche sia filtrate che non fanno tutte riferimento ai dati presenti sul database <code>Database_Previsioni.json</code>.<br>
+La rotta per la verifica della qualità delle previsioni con soglia di errore fa utilizzo sia del <code>Database_Previsioni.json</code> che del <code>Database_Raccolta.json</code> . Entrambi i file sono già riempiti con dati da noi raccolti sulle città Rome, Milan, Naples per consentire il diretto uso di tutte le rotte già al primo avvio dell’applicazione.</em><br>
 <br></p>
-<p><strong>DIAGRAMMI UML FINALI</strong><br>
-Di seguito i diagrammi UML definitivi del progetto. I diagrammi prototipo costruiti prima dell’implementazione del codice sono invece visionabili nella cartella del progetto UML\UMLprototype.<br>
-<br></p>
-<ul>
-<li>USE CASE DIAGRAM<br>
-<br><br>
-<img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/UML/UmlFinal/ControllerUseCase.png" alt="USECASEdiagramFinal"></li>
-</ul>
-<br>
-<ul>
-<li>
-<p>SEQUENCE DIAGRAM ROTTA “/nuvoleCitta5giorni”<br>
-<br><br>
-<img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/UML/UmlFinal/SequenceApi5giorni.png" alt="sequence diagram 1"><br>
-<br></p>
-</li>
-<li>
-<p>SEQUENCE DIAGRAM ROTTA “/statsGiornaliere”<br>
-<br><br>
-<img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/UML/UmlFinal/SequenceStatsGiornaliere.png" alt="sequence diagram 2"><br>
-<br></p>
-</li>
-<li>
-<p>CLASS DIAGRAM<br>
-<br><br>
-<img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/UML/UmlFinal/ClassDiagram.png" alt="Class diagram"></p>
-</li>
-</ul>
-<hr>
 <h2 id="rotta-nuvolecitta5giorni">Rotta “/nuvoleCitta5giorni”</h2>
-<p>Il suo fine è quello di poter far visualizzare le previsioni meteo della nuvolosità percentuale di una più città dall’istante in cui si esegue la chiamata fino ai prossimi 5 giorni. I dati di previsione sono intervallati di un tempo di 3 ore l’uno all’altro ed inoltre sono automaticamente salvati su un database nella cartella del progetto denominata “Database_Previsioni.json”.</p>
-<p>Questa rotta è di tipo POST. Per funzionare correttamente la rotta ha bisogno di ricevere un body di tipo JSONObject composto da un sola coppia (key : value):</p>
-<p><strong>"nomiCitta" : "listaDeiNomiDelleCittàSeparateDallaVirgola"</strong></p>
-<p>Il risultato della chiamata sarà un JSONArray i cui singoli elementi di tipo JSONObject contengono le informazioni indicate sopra.</p>
-<h3 id="eccezioni"><em>Eccezioni</em>:</h3>
-<ul>
-<li>Nel caso la lista dei nomi delle città fosse vuota verrà lanciata un eccezione di tipo “InserimentoException”.</li>
-<li>Se invece sono inseriti degli spazi prima o dopo il nome di una città allora verrà lanciata un’eccezione di tipo “GestisciStringaException”.</li>
-<li>Se una delle città inserite non esiste viene lanciata un eccezione del tipo “NomeCittaException”.</li>
-<li>Se la lettura dell’apiKey per la chiamata alle api di openweather non viene estratta correttamente dal file config.json nel progetto viene lanciata una “ConfigFileException”.</li>
-<li>Se ci sono problemi con l’estrazione delle date dei dati di previsione viene lanciata un’eccezione di tipo “DataMeteoException”.</li>
-<li>Per problemi di parsing verso/da JSONObject viene lanciata l’eccezione ParseException.</li>
-<li>Per problemi di I/O viene lanciata l’eccezione IOException.</li>
-</ul>
-<p>ESEMPIO</p>
+<p>Il suo fine è quello di far visualizzare le previsioni meteo sulla nuvolosità percentuale di una o più città dall’istante in cui si esegue la chiamata fino 5 giorni successivi. I dati di previsione sono intervallati di un tempo pari a 3 ore l’uno all’altro ed inoltre sono automaticamente salvati su un database nella cartella del progetto denominata <code>Database_Previsioni.json</code>.</p>
+<p>Questa rotta è di tipo <code>POST</code>. Per funzionare correttamente ha bisogno di ricevere un <strong>body</strong> in formato <code>JSON</code> come indicato:</p>
+<pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">{</span><span class="token string">"nomiCitta"</span> <span class="token punctuation">:</span> <span class="token string">"listaNomiDelleCittaSeparateDallaVirgola"</span><span class="token punctuation">}</span>
+</code></pre>
+<p>Il risultato della chiamata sarà un <code>JSONArray</code> i cui singoli elementi di tipo <code>JSONObject</code> contengono le informazioni sulla nuvolosità delle città inserite.</p>
+<p>✅<strong>ESEMPIO</strong></p>
 <p><img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/Immagini/forecast5giorni3Citt%C3%A0.png" alt=""></p>
-<p>Il JSONArray  di risposta è:</p>
-<p>[<br>
-{<br>
-“nuvolosita”: 92,<br>
-“Data”: “Thu Mar 18 01:00:00 CET 2021”,<br>
-“unixData”: 1616025600,<br>
-“citta”: “Ripalimosani”<br>
-},<br>
-{<br>
-“nuvolosita”: 96,<br>
-“Data”: “Thu Mar 18 04:00:00 CET 2021”,<br>
-“unixData”: 1616036400,<br>
-“citta”: “Ripalimosani”<br>
-},<br>
-{<br>
-“nuvolosita”: 98,<br>
-“Data”: “Thu Mar 18 07:00:00 CET 2021”,<br>
-“unixData”: 1616047200,<br>
-“citta”: “Ripalimosani”<br>
-},<br>
-{<br>
-“nuvolosita”: 100,<br>
-“Data”: “Thu Mar 18 10:00:00 CET 2021”,<br>
-“unixData”: 1616058000,<br>
-“citta”: “Ripalimosani”<br>
-},<br>
-…</p>
-<p>{<br>
-“nuvolosita”: 95,<br>
-“Data”: “Thu Mar 18 04:00:00 CET 2021”,<br>
-“unixData”: 1616036400,<br>
-“citta”: “Mirabello”<br>
-},<br>
-{<br>
-“nuvolosita”: 92,<br>
-“Data”: “Thu Mar 18 07:00:00 CET 2021”,<br>
-“unixData”: 1616047200,<br>
-“citta”: “Mirabello”<br>
-},<br>
-{<br>
-“nuvolosita”: 98,<br>
-“Data”: “Thu Mar 18 10:00:00 CET 2021”,<br>
-“unixData”: 1616058000,<br>
-“citta”: “Mirabello”<br>
-},<br>
-{<br>
-“nuvolosita”: 97,<br>
-“Data”: “Thu Mar 18 13:00:00 CET 2021”,<br>
-“unixData”: 1616068800,<br>
-“citta”: “Mirabello”<br>
-},</p>
-<p>…</p>
-<p>{<br>
-“nuvolosita”: 99,<br>
-“Data”: “Thu Mar 18 01:00:00 CET 2021”,<br>
-“unixData”: 1616025600,<br>
-“citta”: “Vinchiaturo”<br>
-},<br>
-{<br>
-“nuvolosita”: 98,<br>
-“Data”: “Thu Mar 18 04:00:00 CET 2021”,<br>
-“unixData”: 1616036400,<br>
-“citta”: “Vinchiaturo”<br>
-},<br>
-{<br>
-“nuvolosita”: 98,<br>
-“Data”: “Thu Mar 18 07:00:00 CET 2021”,<br>
-“unixData”: 1616047200,<br>
-“citta”: “Vinchiaturo”<br>
-},<br>
-{<br>
-“nuvolosita”: 100,<br>
-“Data”: “Thu Mar 18 10:00:00 CET 2021”,<br>
-“unixData”: 1616058000,<br>
-“citta”: “Vinchiaturo”<br>
-},</p>
-<p>…<br>
-]</p>
-<hr>
-<h2 id="rotta-salvaogniora">Rotta “/salvaOgniOra”</h2>
-<p>Il suo fine è quello di salvare ad intervalli regolari di un’ora i dati di nuvolosità di una città a partire dall’istante della chiamata.Nel caso di chiamate multiple i dati di ogni città verrano salvati separatamente in un file apposito nella cartella del progetto col nome “nomeDellaCitta.json”.</p>
-<p>Questa rotta è di tipo GET. Per funzionare correttamente la rotta ha bisogno di ricevere un parametro del tipo key : value :</p>
-<p><strong>"nomeCitta" : "nomeDellaCittà"</strong></p>
-<p>Il risultato della chiamata sarà una stringa col path del database creato per il salvataggio dei dati ogni ora.</p>
-<p><img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/Immagini/salvaOgniOra.png" alt="salvaOgniOra"></p>
-<h3 id="eccezioni-1"><em>Eccezioni</em>:</h3>
-<ul>
-<li>Se il campo del nome della città fosse vuoto verrà lanciata un eccezione di tipo “InserimentoException”.</li>
-<li>Se la città inserita non esiste viene lanciata un eccezione del tipo “NomeCittaException”.</li>
-<li>Se la lettura dell’apiKey per la chiamata alle api di openweather non viene estratta correttamente dal file config.json nel progetto viene lanciata una “ConfigFileException”.</li>
-<li>Per problemi di parsing verso/da JSONObject viene lanciata l’eccezione ParseException.</li>
-<li>Per problemi di I/O viene lanciata l’eccezione IOException.</li>
-</ul>
-<hr>
-<h2 id="rotta-statsgiornaliere">Rotta “/statsGiornaliere”</h2>
-<p>Il suo fine è quello di calcolare e restituire le statistiche di varianza,media,max,min della nuvolosità percentuale al giorno della data inserita usando i dati sul database “Database_Previsioni.json”.<br>
-Se non avete eseguito chiamate alla rotta “nuvole5giorni” il database ha i dati predefiniti sulle città Naples,Milan e Rome relativi alla nuvolosità del mese di marzo dal 8/03/2021 al 17/03/2021.</p>
-<p>Questa rotta è di tipo GET. Per funzionare correttamente la rotta ha bisogno di ricevere un parametro del tipo key : value :</p>
-<p><strong>"data" : "gg/mm/aaaa"</strong></p>
-<p>*NOTA: la data deve essere necessariamente inserita nel formato gg/mm/aaaa.</p>
-<p>Il risultato della chiamata è un JSONObject con le relative informazioni sulle statistiche.</p>
-<p>ESEMPIO</p>
-<p><img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/Immagini/statsGiorn.png" alt="enter image description here"></p>
-<h3 id="eccezioni-2"><em>Eccezioni</em>:</h3>
-<ul>
-<li>Nel caso il campo data fosse vuoto verrà lanciata un eccezione di tipo “InserimentoException”.</li>
-<li>Se la data è stata inserita ma non correttamente viene lanciata una “text ParseException”.</li>
-<li>Se ci sono problemi con l’estrazione delle date dei dati da database , per esempio se la data inserita non è presente sul database, viene lanciata un’eccezione di tipo “DataMeteoException”.</li>
-<li>Per problemi di parsing verso/da JSONObject viene lanciata l’eccezione ParseException.</li>
-<li>Per problemi di I/O viene lanciata l’eccezione IOException.</li>
-</ul>
-<hr>
-<h2 id="rotta-statssettimanali">Rotta “/statsSettimanali”</h2>
-<p>Il suo fine è quello di calcolare e restituire le statistiche di varianza,media,max,min della nuvolosità percentuale nella settimana della data inserita usando i dati sul database “Database_Previsioni.json”.<br>
-Se non avete eseguito chiamate alla rotta “nuvole5giorni” il database ha i dati predefiniti sulle città Naples,Milan e Rome relativi alla nuvolosità del mese di marzo dal 8/03/2021 al 17/03/2021.</p>
-<p>Questa rotta è di tipo GET. Per funzionare correttamente la rotta ha bisogno di ricevere un parametro del tipo key : value :</p>
-<p><strong>"data" : "gg/mm/aaaa"</strong></p>
-<p>*NOTA: la data deve essere necessariamente inserita nel formato gg/mm/aaaa.</p>
-<p>Il risultato della chiamata è un JSONObject con le relative informazioni sulle statistiche.</p>
-<p>ESEMPIO<br>
-<img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/Immagini/statsSett.png" alt="enter image description here"></p>
-<h3 id="eccezioni-3"><em>Eccezioni</em>:</h3>
-<ul>
-<li>Nel caso il campo data fosse vuoto verrà lanciata un eccezione di tipo “InserimentoException”.</li>
-<li>Se la data è stata inserita ma non correttamente viene lanciata una “text ParseException”.</li>
-<li>Se ci sono problemi con l’estrazione delle date dei dati da database , per esempio se la data inserita non è presente sul database, viene lanciata un’eccezione di tipo “DataMeteoException”.</li>
-<li>Per problemi di parsing verso/da JSONObject viene lanciata l’eccezione ParseException.</li>
-<li>Per problemi di I/O viene lanciata l’eccezione IOException.</li>
-</ul>
-<hr>
-<h2 id="rotta-statsmensili">Rotta “/statsMensili”</h2>
-<p>Il suo fine è quello di calcolare e restituire le statistiche di varianza,media,max,min della nuvolosità percentuale nel mese inserito usando i dati sul database “Database_Previsioni.json”.<br>
-Se non avete eseguito chiamate alla rotta “nuvole5giorni” il database ha i dati predefiniti sulle città Naples,Milan e Rome relativi alla nuvolosità del mese di marzo dal 8/03/2021 al 17/03/2021.</p>
-<p>Questa rotta è di tipo GET. Per funzionare correttamente la rotta ha bisogno di ricevere un parametro del tipo key : value :</p>
-<p><strong>"data" : "mm/aaaa"</strong></p>
-<p>*NOTA: la data deve essere necessariamente inserita nel formato mm/aaaa.</p>
-<p>Il risultato della chiamata è un JSONObject con le relative informazioni sulle statistiche.</p>
-<p>ESEMPIO<br>
-<img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/Immagini/statsMens.png" alt="enter image description here"></p>
-<h3 id="eccezioni-4"><em>Eccezioni</em>:</h3>
-<ul>
-<li>Nel caso il campo data fosse vuoto verrà lanciata un eccezione di tipo “InserimentoException”.</li>
-<li>Se la data è stata inserita ma non correttamente viene lanciata una “text ParseException”.</li>
-<li>Se ci sono problemi con l’estrazione delle date dei dati da database , per esempio se la data inserita non è presente sul database, viene lanciata un’eccezione di tipo “DataMeteoException”.</li>
-<li>Per problemi di parsing verso/da JSONObject viene lanciata l’eccezione ParseException.</li>
-<li>Per problemi di I/O viene lanciata l’eccezione IOException.</li>
-</ul>
-<hr>
-<h2 id="rotta-statstotali">Rotta “/statsTotali”</h2>
-<p>Il suo fine è quello di calcolare e restituire le statistiche di varianza,media,max,min della nuvolosità percentuale usando i dati sul database “Database_Previsioni.json”.<br>
-Se non avete eseguito chiamate alla rotta “nuvole5giorni” il database ha i dati predefiniti sulle città Naples,Milan e Rome relativi alla nuvolosità del mese di marzo dal 8/03/2021 al 17/03/2021.</p>
-<p>Questa rotta è di tipo GET. Per funzionare correttamente la rotta ha bisogno di ricevere non deve ricevere parametri.</p>
-<p>Il risultato della chiamata è un JSONObject con le relative informazioni sulle statistiche.</p>
-<p>ESEMPIO<br>
-<img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/Immagini/statsTotali.png" alt="enter image description here"></p>
-<h3 id="eccezioni-5"><em>Eccezioni</em>:</h3>
-<ul>
-<li>Se ci sono problemi con l’estrazione delle date dei dati da database , per esempio se la data inserita non è presente sul database, viene lanciata un’eccezione di tipo “DataMeteoException”.</li>
-<li>Per problemi di parsing verso/da JSONObject viene lanciata l’eccezione ParseException.</li>
-<li>Per problemi di I/O viene lanciata l’eccezione IOException.</li>
-</ul>
-<hr>
-</div>
-</body>
+<p>Il <code>JSONArray</code> di risposta ottenuto è di seguito illustrato:</p>
+<pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+        <span class="token string">"nuvolosita"</span><span class="token punctuation">:</span> <span class="token number">92</span><span class="token punctuation">,</span>
+        <span class="token string">"Data"</span><span class="token punctuation">:</span> <span class="token string">"Thu Mar 18 01:00:00 CET 2021"</span><span class="token punctuation">,</span>
+        <span class="token string">"unixData"</span><span class="token punctuation">:</span> <span class="token number">1616025600</span><span class="token punctuation">,</span>
+        <span class="token string">"citta"</span><span class="token punctuation">:</span> <span class="token string">"Ripalimosani"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
+        <span class="token string">"nuvolosita"</span><span class="token punctuation">:</span> <span class="token number">96</span><span class="token punctuation">,</span>
+        <span class="token string">"Data"</span><span class="token punctuation">:</span> <span class="token string">"Thu Mar 18 04:00:00 CET 2021"</span><span class="token punctuation">,</span>
+        <span class="token string">"unixData"</span><span class="token punctuation">:</span> <span class="token number">1616036400</span><span class="token punctuation">,</span>
+        <span class="token string">"citta"</span><span class="token punctuation">:</span> <span class="token string">"Ripalimosani"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+   
+<span class="token operator">...</span>
 
-</html>
+	<span class="token punctuation">{</span>
+        <span class="token string">"nuvolosita"</span><span class="token punctuation">:</span> <span class="token number">95</span><span class="token punctuation">,</span>
+        <span class="token string">"Data"</span><span class="token punctuation">:</span> <span class="token string">"Thu Mar 18 04:00:00 CET 2021"</span><span class="token punctuation">,</span>
+        <span class="token string">"unixData"</span><span class="token punctuation">:</span> <span class="token number">1616036400</span><span class="token punctuation">,</span>
+        <span class="token string">"citta"</span><span class="token punctuation">:</span> <span class="token string">"Mirabello"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
+        <span class="token string">"nuvolosita"</span><span class="token punctuation">:</span> <span class="token number">92</span><span class="token punctuation">,</span>
+        <span class="token string">"Data"</span><span class="token punctuation">:</span> <span class="token string">"Thu Mar 18 07:00:00 CET 2021"</span><span class="token punctuation">,</span>
+        <span class="token string">"unixData"</span><span class="token punctuation">:</span> <span class="token number">1616047200</span><span class="token punctuation">,</span>
+        <span class="token string">"citta"</span><span class="token punctuation">:</span> <span class="token string">"Mirabello"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    
+<span class="token operator">...</span>
+
+ <span class="token punctuation">{</span>
+        <span class="token string">"nuvolosita"</span><span class="token punctuation">:</span> <span class="token number">99</span><span class="token punctuation">,</span>
+        <span class="token string">"Data"</span><span class="token punctuation">:</span> <span class="token string">"Thu Mar 18 01:00:00 CET 2021"</span><span class="token punctuation">,</span>
+        <span class="token string">"unixData"</span><span class="token punctuation">:</span> <span class="token number">1616025600</span><span class="token punctuation">,</span>
+        <span class="token string">"citta"</span><span class="token punctuation">:</span> <span class="token string">"Vinchiaturo"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
+        <span class="token string">"nuvolosita"</span><span class="token punctuation">:</span> <span class="token number">98</span><span class="token punctuation">,</span>
+        <span class="token string">"Data"</span><span class="token punctuation">:</span> <span class="token string">"Thu Mar 18 04:00:00 CET 2021"</span><span class="token punctuation">,</span>
+        <span class="token string">"unixData"</span><span class="token punctuation">:</span> <span class="token number">1616036400</span><span class="token punctuation">,</span>
+        <span class="token string">"citta"</span><span class="token punctuation">:</span> <span class="token string">"Vinchiaturo"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token operator">...</span>
+<span class="token punctuation">]</span>
+</code></pre>
+<p>🔴 <strong>ECCEZIONI</strong></p>
+<ul>
+<li><strong>InserimentoException</strong>: se l’utente dimentica di inserire i nomi delle città</li>
+<li><strong>NomeCittaException</strong>: se l’utente inserisce il nome di una città non disponibile o commette errori di digitazione</li>
+<li><strong>GestisciStringaException</strong>: se si commettono errori nell’inserimento delle città (in particolare se vengano lasciati spazi tra le virgole durante l’inserimento)</li>
+<li><strong>ConfigFileException</strong>: se sono presenti errori nel file di configurazione (viene lanciata se non rispetta il formato <code>JSON</code>)</li>
+<li><strong>ParseException</strong>: nel caso in cui si verifichino errori durante il parsing dei dati</li>
+<li><strong>IOException</strong>: nel caso si verifichino errori durante la lettura del file contenente il database<br>
+<br></li>
+</ul>
+<h2 id="rotta-salvaogniora">Rotta “/salvaOgniOra”</h2>
+<p>Il suo fine è quello di salvare ad intervalli regolari di un’ora i dati meteo sulla nuvolosità di una città a partire dall’istante della chiamata. Tali dati verranno salvati su un apposito database. Nel caso di chiamate multiple i dati di ogni città verranno salvati separatamente in un file apposito nella cartella del progetto col nome <code>"nomeCitta.json"</code>.</p>
+<p>Questa rotta è di tipo <code>GET</code>. Per funzionare correttamente ha bisogno di ricevere un <strong>parametro</strong> del tipo<br>
+<code>key:value</code><br>
+<strong>"nomeCitta" : "nomeDellaCittà"</strong></p>
+<p>Il risultato della chiamata sarà una stringa contenente il <code>path</code> del database creato per il salvataggio dei dati.</p>
+<p>✅<strong>ESEMPIO</strong></p>
+<p><img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/Immagini/salvaOgniOra.png" alt="salvaOgniOra"></p>
+<p>Un esempio di messaggio ricevuto è di seguito indicato:</p>
+<pre><code>Path database:  C:\Users\manue\IdeaProjects\esame-OOP\progettoDekGiz\Ripalimosani.json
+</code></pre>
+<p>🔴 <strong>ECCEZIONI</strong></p>
+<ul>
+<li><strong>InserimentoException</strong>: se l’utente dimentica di inserire il nome della città</li>
+<li><strong>NomeCittaException</strong>: se l’utente inserisce il nome di una città non disponibile o commette errori di digitazione</li>
+<li><strong>ConfigFileException</strong>: se sono presenti errori nel file di configurazione (viene lanciata se non rispetta il formato <code>JSON</code>)</li>
+<li><strong>ParseException</strong>: nel caso in cui si verifichino errori durante il parsing dei dati</li>
+<li><strong>IOException</strong>: nel caso si verifichino errori durante la lettura del file contenente il database<br>
+<br></li>
+</ul>
+<h2 id="rotta-statsgiornaliere">Rotta “/statsGiornaliere”</h2>
+<p>Il suo fine è quello di calcolare e restituire le statistiche sulla nuvolosità percentuale al giorno della data inserita. Verranno visualizzate le seguenti informazioni:</p>
+<ul>
+<li><em>Valore minimo</em></li>
+<li><em>Valore massimo</em></li>
+<li><em>Media</em></li>
+<li><em>Varianza</em></li>
+</ul>
+<p>Tali statistiche sono calcolate utilizzando i dati presenti sul database <code>Database_Previsioni.json</code>.<br>
+Se non avete eseguito chiamate alla rotta <code>/nuvole5giorni</code> il database ha già presente al suo interno i dati predefiniti sulle città Naples, Milan e Rome relativi alla nuvolosità del mese di marzo dal 8/03/2021 al 17/03/2021.</p>
+<p>Questa rotta è di tipo <code>GET</code>. Per funzionare correttamente ha bisogno di ricevere un <strong>parametro</strong> del tipo<br>
+<code>key:value</code><br>
+<strong>"data" : "dd/mm/yyyy"</strong><br>
+<em>NOTA:</em> bisogna rispettare necessariamente questo formato.</p>
+<p>Il risultato della chiamata è un <code>JSONObject</code> contenente le relative informazioni sulle statistiche.</p>
+<p>✅<strong>ESEMPIO</strong></p>
+<p><img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/Immagini/statsGiorn.png" alt="enter image description here"></p>
+<p>🔴 <strong>ECCEZIONI</strong></p>
+<ul>
+<li><strong>InserimentoException</strong>: se l’utente dimentica di inserire la data</li>
+<li><strong>DataMeteoException</strong>: se la data inserita non è presente nei dati contenuti dal database</li>
+<li><strong>java.text.ParseException</strong>: nel caso la data viene inserita in un formato errato</li>
+<li><strong>ParseException</strong>: nel caso in cui si verifichino errori durante il parsing dei dati</li>
+<li><strong>IOException</strong>: nel caso si verifichino errori durante la lettura del file contenente il database<br>
+<br></li>
+</ul>
+<h2 id="rotta-statssettimanali">Rotta “/statsSettimanali”</h2>
+<p>Il suo fine è quello di calcolare e restituire le statistiche sulla nuvolosità percentuale nella settimana (del mese) della data inserita. Verranno visualizzate le seguenti informazioni:</p>
+<ul>
+<li><em>Valore minimo</em></li>
+<li><em>Valore massimo</em></li>
+<li><em>Media</em></li>
+<li><em>Varianza</em></li>
+</ul>
+<p>Tali statistiche sono calcolate utilizzando i dati presenti sul database <code>Database_Previsioni.json</code>.<br>
+Se non avete eseguito chiamate alla rotta <code>/nuvole5giorni</code> il database ha già presente al suo interno i dati predefiniti sulle città Naples, Milan e Rome relativi alla nuvolosità del mese di marzo dal 8/03/2021 al 17/03/2021</p>
+<p>Questa rotta è di tipo <code>GET</code>. Per funzionare correttamente ha bisogno di ricevere un <strong>parametro</strong> del tipo<br>
+<code>key:value</code><br>
+<strong>"data" : "dd/mm/yyyy"</strong><br>
+<em>NOTA:</em> bisogna rispettare necessariamente questo formato.</p>
+<p>Il risultato della chiamata è un <code>JSONObject</code> contenente le relative informazioni sulle statistiche.</p>
+<p>✅<strong>ESEMPIO</strong></p>
+<p><img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/Immagini/statsSett.png" alt="enter image description here"></p>
+<p>🔴 <strong>ECCEZIONI</strong></p>
+<ul>
+<li><strong>InserimentoException</strong>: se l’utente dimentica di inserire la data</li>
+<li><strong>DataMeteoException</strong>: se la data inserita non è presente nei dati contenuti dal database</li>
+<li><strong>java.text.ParseException</strong>: nel caso la data viene inserita in un formato errato</li>
+<li><strong>ParseException</strong>: nel caso in cui si verifichino errori durante il parsing dei dati</li>
+<li><strong>IOException</strong>: nel caso si verifichino errori durante la lettura del file contenente il database<br>
+<br></li>
+</ul>
+<h2 id="rotta-statsmensili">Rotta “/statsMensili”</h2>
+<p>Il suo fine è quello di calcolare e restituire le statistiche sulla nuvolosità percentuale nel mese dell’ anno inserito. Verranno visualizzate le seguenti informazioni:</p>
+<ul>
+<li><em>Valore minimo</em></li>
+<li><em>Valore massimo</em></li>
+<li><em>Media</em></li>
+<li><em>Varianza</em></li>
+</ul>
+<p>Tali statistiche sono calcolate utilizzando i dati presenti sul database <code>Database_Previsioni.json</code>.<br>
+Se non avete eseguito chiamate alla rotta <code>/nuvole5giorni</code> il database ha già presente al suo interno i dati predefiniti sulle città Naples, Milan e Rome relativi alla nuvolosità del mese di marzo dal 8/03/2021 al 17/03/2021</p>
+<p>Questa rotta è di tipo <code>GET</code>. Per funzionare correttamente ha bisogno di ricevere un <strong>parametro</strong> del tipo<br>
+<code>key:value</code><br>
+<strong>"data" : "mm/yyyy"</strong><br>
+<em>NOTA:</em> bisogna rispettare necessariamente questo formato.</p>
+<p>Il risultato della chiamata è un <code>JSONObject</code> contenente le relative informazioni sulle statistiche.</p>
+<p>✅<strong>ESEMPIO</strong></p>
+<p><img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/Immagini/statsMens.png" alt="enter image description here"></p>
+<p>🔴 <strong>ECCEZIONI</strong></p>
+<ul>
+<li><strong>InserimentoException</strong>: se l’utente dimentica di inserire la data</li>
+<li><strong>DataMeteoException</strong>: se la data inserita non è presente nei dati contenuti dal database</li>
+<li><strong>java.text.ParseException</strong>: nel caso la data viene inserita in un formato errato</li>
+<li><strong>ParseException</strong>: nel caso in cui si verifichino errori durante il parsing dei dati</li>
+<li><strong>IOException</strong>: nel caso si verifichino errori durante la lettura del file contenente il database<br>
+<br></li>
+</ul>
+<h2 id="rotta-statstotali">Rotta “/statsTotali”</h2>
+<p>Il suo fine è quello di calcolare e restituire le statistiche sulla nuvolosità percentuale su tutti i dati meteo presenti nel database <code>Database_Previsioni.json</code>. Verranno visualizzate le seguenti informazioni:</p>
+<ul>
+<li><em>Valore minimo</em></li>
+<li><em>Valore massimo</em></li>
+<li><em>Media</em></li>
+<li><em>Varianza</em></li>
+</ul>
+<p>Questa rotta è di tipo <code>GET</code>. Per funzionare correttamente <strong>non ha bisogno di ricevere alcun parametro</strong>.</p>
+<p>Il risultato della chiamata è un <code>JSONObject</code> contenente le relative informazioni sulle statistiche.</p>
+<p>✅<strong>ESEMPIO</strong></p>
+<p><img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/Immagini/statsTotali.png" alt="enter image description here"></p>
+<p>🔴 <strong>ECCEZIONI</strong></p>
+<ul>
+<li><strong>ParseException</strong>: nel caso in cui si verifichino errori durante il parsing dei dati</li>
+<li><strong>IOException</strong>: nel caso si verifichino errori durante la lettura del file contenente il database</li>
+</ul>
+
