@@ -5,6 +5,10 @@
 
 <h1 id="progetto-programmazione-ad-oggetti">PROGETTO PROGRAMMAZIONE AD OGGETTI</h1>
 <p>L’applicazione permette principalmente all’ utente di ottenere e salvare dati meteo sulla percentuale di nuvolosità di una o più città.  Sarà inoltre possibile calcolare statistiche in base ai dati raccolti e filtrarle per data e/o nomi delle città. Consente anche di verificare la qualità delle previsioni tramite una soglia di errore opportunamente specificata.</p>
+<p><strong>Indice:</strong></p>
+<ul>
+<li></li>
+</ul>
 <h2 id="api-di-riferimento">Api di riferimento</h2>
 <p>L’applicazione sviluppata riceve i dati meteo tramite le Api <a href="https://openweathermap.org/">OpenWeather</a>. Più precisamente fa uso di due Api specifiche:</p>
 <ul>
@@ -21,7 +25,7 @@
 <p>Per prima cosa è consigliabile creare un <a href="https://home.openweathermap.org/users/sign_up">account Openweather</a> per ottenere un<code>ApiKey</code> personale da inserire <a href="https://github.com/manuel-gizzarone/esame-OOP/blob/master/progettoDekGiz/config.json">qui</a>. Fare attenzione a non modificare il formato del file. Per motivi di praticità, abbiamo comunque messo a disposizione una <code>ApiKey</code> già attiva.</p>
 <p>Una volta installata, per avviare l’applicazione sarà necessario essere in possesso di un IDE specifico per linguaggio <code>java</code> come ad esempio <a href="https://www.eclipse.org/downloads/">Eclipse</a> (o simili). Se lo avete già installato sul vostro dispositivo dovrete semplicemente importare la cartella dell’applicazione ed avviarla come <code>SpringBoot App</code>.<br>
 L’interazione con l’utente viene gestita tramite protocollo <code>http</code> verso un server creato in maniera automatica sulla porta <code>8080</code> del vostro <code>localhost</code>. Perciò per utilizzare le funzionalità dell’applicazione ed effettuare richieste è necessario un browser, ma consigliamo l’installazione del software <strong>Postman</strong> specifico per effettuare richieste a server Web. Il download è disponibile al seguente <a href="https://www.postman.com/downloads/">link</a>.</p>
-<h1 id="diagrammi-uml-finali">DIAGRAMMI UML FINALI</h1>
+<h1 id="diagrammi-uml">DIAGRAMMI UML</h1>
 <p>Di seguito sono illustrati i diagrammi UML definitivi del progetto. I diagrammi prototipo costruiti prima dell’implementazione del codice sono invece visionabili <a href="https://github.com/manuel-gizzarone/esame-OOP/tree/master/progettoDekGiz/UML/UmlPrototype">qui</a>.</p>
 <ul>
 <li><strong>USE CASE DIAGRAM</strong><br>
