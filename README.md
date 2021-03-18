@@ -5,9 +5,12 @@
 
 <h1 id="progetto-programmazione-ad-oggetti">PROGETTO PROGRAMMAZIONE AD OGGETTI</h1>
 <p>L’applicazione permette principalmente all’ utente di ottenere e salvare dati meteo sulla percentuale di nuvolosità di una o più città.  Sarà inoltre possibile calcolare statistiche in base ai dati raccolti e filtrarle per data e/o nomi delle città. Consente anche di verificare la qualità delle previsioni tramite una soglia di errore opportunamente specificata.</p>
-<p><strong>Indice:</strong></p>
+<h3 id="indice"><em>Indice:</em></h3>
 <ul>
-<li></li>
+<li><a href="https://github.com/manuel-gizzarone/esame-OOP#diagrammi-uml">Diagrammi UML</a></li>
+<li><a href="https://github.com/manuel-gizzarone/esame-OOP#rotte-disponibili">Rotte disponibili</a></li>
+<li><a href="https://github.com/manuel-gizzarone/esame-OOP#test">Test</a></li>
+<li><a href="https://github.com/manuel-gizzarone/esame-OOP#documentazione">Documentazione</a></li>
 </ul>
 <h2 id="api-di-riferimento">Api di riferimento</h2>
 <p>L’applicazione sviluppata riceve i dati meteo tramite le Api <a href="https://openweathermap.org/">OpenWeather</a>. Più precisamente fa uso di due Api specifiche:</p>
