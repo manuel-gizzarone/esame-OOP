@@ -134,7 +134,7 @@ La rotta per la verifica della qualità delle previsioni con soglia di errore fa
         <span class="token string">"Data"</span><span class="token punctuation">:</span> <span class="token string">"Thu Mar 18 04:00:00 CET 2021"</span><span class="token punctuation">,</span>
         <span class="token string">"unixData"</span><span class="token punctuation">:</span> <span class="token number">1616036400</span><span class="token punctuation">,</span>
         <span class="token string">"citta"</span><span class="token punctuation">:</span> <span class="token string">"Ripalimosani"</span>
-    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span>
    
 <span class="token operator">...</span>
 
@@ -149,11 +149,11 @@ La rotta per la verifica della qualità delle previsioni con soglia di errore fa
         <span class="token string">"Data"</span><span class="token punctuation">:</span> <span class="token string">"Thu Mar 18 07:00:00 CET 2021"</span><span class="token punctuation">,</span>
         <span class="token string">"unixData"</span><span class="token punctuation">:</span> <span class="token number">1616047200</span><span class="token punctuation">,</span>
         <span class="token string">"citta"</span><span class="token punctuation">:</span> <span class="token string">"Mirabello"</span>
-    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span>
     
 <span class="token operator">...</span>
 
- <span class="token punctuation">{</span>
+	<span class="token punctuation">{</span>
         <span class="token string">"nuvolosita"</span><span class="token punctuation">:</span> <span class="token number">99</span><span class="token punctuation">,</span>
         <span class="token string">"Data"</span><span class="token punctuation">:</span> <span class="token string">"Thu Mar 18 01:00:00 CET 2021"</span><span class="token punctuation">,</span>
         <span class="token string">"unixData"</span><span class="token punctuation">:</span> <span class="token number">1616025600</span><span class="token punctuation">,</span>
@@ -164,7 +164,7 @@ La rotta per la verifica della qualità delle previsioni con soglia di errore fa
         <span class="token string">"Data"</span><span class="token punctuation">:</span> <span class="token string">"Thu Mar 18 04:00:00 CET 2021"</span><span class="token punctuation">,</span>
         <span class="token string">"unixData"</span><span class="token punctuation">:</span> <span class="token number">1616036400</span><span class="token punctuation">,</span>
         <span class="token string">"citta"</span><span class="token punctuation">:</span> <span class="token string">"Vinchiaturo"</span>
-    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span>
 <span class="token operator">...</span>
 <span class="token punctuation">]</span>
 </code></pre>
