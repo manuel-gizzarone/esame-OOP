@@ -306,7 +306,7 @@ Se non avete eseguito chiamate alla rotta <code>/nuvole5giorni</code>, il databa
 <li><em>Media</em></li>
 <li><em>Varianza</em></li>
 </ul>
-<p>Se non avete eseguito chiamate alla rotta <code>/nuvole5giorni</code>, il database da cui verranno filtrate le statistiche <code>Database_Previsioni</code> ha già presente al suo interno dei dati predefiniti dal 08/03/2021 al 18/03/2021 su alcune città come Naples, Milan, Rome, Miami, New York ecc. Controllare il file per visualizzare tutte le possibili scelte iniziali.</p>
+<p>Se non avete eseguito chiamate alla rotta <code>/nuvole5giorni</code>, il database da cui verranno filtrate le statistiche <code>Database_Previsioni</code> ha già presente al suo interno dei dati predefiniti dal 08/03/2021 al 18/03/2021 su alcune città come Naples, Milan, Rome, Miami, New York ecc. Controllare il <a href="https://github.com/manuel-gizzarone/esame-OOP/blob/master/progettoDekGiz/Database_Previsioni.json">file</a> per visualizzare tutte le possibili scelte iniziali.</p>
 <p>Questa rotta è di tipo <code>POST</code>. Per funzionare correttamente richiede l’inserimento di un <strong>body</strong> in formato <code>JSON</code> come indicato:</p>
 <pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">{</span>
 
@@ -339,7 +339,7 @@ Se non avete eseguito chiamate alla rotta <code>/nuvole5giorni</code>, il databa
 <li><em>Media</em></li>
 <li><em>Varianza</em></li>
 </ul>
-<p>Se non avete eseguito chiamate alla rotta <code>/nuvole5giorni</code>, il database da cui verranno filtrate le statistiche <code>Database_Previsioni</code> ha già presente al suo interno dei dati predefiniti dal 08/03/2021 al 18/03/2021 su alcune città come Naples, Milan, Rome, Miami, New York ecc. Controllare il file per visualizzare tutte le possibili scelte iniziali.</p>
+<p>Se non avete eseguito chiamate alla rotta <code>/nuvole5giorni</code>, il database da cui verranno filtrate le statistiche <code>Database_Previsioni</code> ha già presente al suo interno dei dati predefiniti dal 08/03/2021 al 18/03/2021 su alcune città come Naples, Milan, Rome, Miami, New York ecc. Controllare il <a href="https://github.com/manuel-gizzarone/esame-OOP/blob/master/progettoDekGiz/Database_Previsioni.json">file</a> per visualizzare tutte le possibili scelte iniziali.</p>
 <p>Questa rotta è di tipo <code>POST</code>. Per funzionare correttamente richiede l’inserimento di un <strong>body</strong> in formato <code>JSON</code> come indicato:</p>
 <pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">{</span>
 
@@ -372,7 +372,7 @@ Se non avete eseguito chiamate alla rotta <code>/nuvole5giorni</code>, il databa
 <li><em>Media</em></li>
 <li><em>Varianza</em></li>
 </ul>
-<p>Se non avete eseguito chiamate alla rotta <code>/nuvole5giorni</code>, il database da cui verranno filtrate le statistiche <code>Database_Previsioni</code> ha già presente al suo interno dei dati predefiniti dal 08/03/2021 al 18/03/2021 su alcune città come Naples, Milan, Rome, Miami, New York ecc. Controllare il file per visualizzare tutte le possibili scelte iniziali.</p>
+<p>Se non avete eseguito chiamate alla rotta <code>/nuvole5giorni</code>, il database da cui verranno filtrate le statistiche <code>Database_Previsioni</code> ha già presente al suo interno dei dati predefiniti dal 08/03/2021 al 18/03/2021 su alcune città come Naples, Milan, Rome, Miami, New York ecc. Controllare il <a href="https://github.com/manuel-gizzarone/esame-OOP/blob/master/progettoDekGiz/Database_Previsioni.json">file</a> per visualizzare tutte le possibili scelte iniziali.</p>
 <p>Questa rotta è di tipo <code>POST</code>. Per funzionare correttamente richiede l’inserimento di un <strong>body</strong> in formato <code>JSON</code> come indicato:</p>
 <pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">{</span>
 
@@ -405,7 +405,7 @@ Se non avete eseguito chiamate alla rotta <code>/nuvole5giorni</code>, il databa
 <li><em>Media</em></li>
 <li><em>Varianza</em></li>
 </ul>
-<p>Se non avete eseguito chiamate alla rotta <code>/nuvole5giorni</code>, il database da cui verranno filtrate le statistiche <code>Database_Previsioni</code> ha già presente al suo interno dei dati predefiniti su alcune città come Naples, Milan, Rome, Miami, New York ecc. Controllare il file per visualizzare tutte le possibili scelte iniziali.</p>
+<p>Se non avete eseguito chiamate alla rotta <code>/nuvole5giorni</code>, il database da cui verranno filtrate le statistiche <code>Database_Previsioni</code> ha già presente al suo interno dei dati predefiniti su alcune città come Naples, Milan, Rome, Miami, New York ecc. Controllare il <a href="https://github.com/manuel-gizzarone/esame-OOP/blob/master/progettoDekGiz/Database_Previsioni.json">file</a> per visualizzare tutte le possibili scelte iniziali.</p>
 <p>Questa rotta è di tipo <code>POST</code>. Per funzionare correttamente richiede l’inserimento di un <strong>body</strong> in formato <code>JSON</code> come indicato:</p>
 <pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">{</span>
 <span class="token string">"nomiCitta"</span><span class="token punctuation">:</span> <span class="token string">"listaNomiDelleCittaSeparateDallaVirgola"</span>
@@ -462,8 +462,8 @@ Se non avete eseguito chiamate alla rotta <code>/nuvole5giorni</code>, il databa
 <h2 id="rotta-previsionisoglia">Rotta “/previsioniSoglia”</h2>
 <p>Il suo fine è quello di generare statistiche sulla quantità di previsioni azzeccate riguardo una città, in un dato periodo tra una data iniziale e finale e data una soglia di errore massima. In particolare verranno messi a confronto due database:</p>
 <ul>
-<li><code>Database_Previsioni</code> contenente i dati previsti</li>
-<li><code>Database_Raccolta</code> contenente i dati reali</li>
+<li><code>Database_Previsioni</code> contenente i dati previsti (<a href="https://github.com/manuel-gizzarone/esame-OOP/blob/master/progettoDekGiz/Database_Previsioni.json">link</a>)</li>
+<li><code>Database_Raccolta</code> contenente i dati reali (<a href="https://github.com/manuel-gizzarone/esame-OOP/blob/master/progettoDekGiz/Database_Raccolta.json">link</a>)</li>
 </ul>
 <p>Le date inizialmente disponibili vanno dal 08/03/2021 al 18/03/2021 e riguardano dati meteo soltanto per le seguenti città:</p>
 <p>✔️ Rome</p>
