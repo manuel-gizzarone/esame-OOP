@@ -21,7 +21,7 @@
 <p>Per prima cosa è consigliabile creare un <a href="https://home.openweathermap.org/users/sign_up">account Openweather</a> per ottenere un<code>ApiKey</code> personale da inserire <a href="https://github.com/manuel-gizzarone/esame-OOP/blob/master/progettoDekGiz/config.json">qui</a>. Fare attenzione a non modificare il formato del file. Per motivi di praticità, abbiamo comunque messo a disposizione una <code>ApiKey</code> già attiva.</p>
 <p>Una volta installata, per avviare l’applicazione sarà necessario essere in possesso di un IDE specifico per linguaggio <code>java</code> come ad esempio <a href="https://www.eclipse.org/downloads/">Eclipse</a> (o simili). Se lo avete già installato sul vostro dispositivo dovrete semplicemente importare la cartella dell’applicazione ed avviarla come <code>SpringBoot App</code>.<br>
 L’interazione con l’utente viene gestita tramite protocollo <code>http</code> verso un server creato in maniera automatica sulla porta <code>8080</code> del vostro <code>localhost</code>. Perciò per utilizzare le funzionalità dell’applicazione ed effettuare richieste è necessario un browser, ma consigliamo l’installazione del software <strong>Postman</strong> specifico per effettuare richieste a server Web. Il download è disponibile al seguente <a href="https://www.postman.com/downloads/">link</a>.</p>
-<h2 id="diagrammi-uml-finali">DIAGRAMMI UML FINALI</h2>
+<h1 id="diagrammi-uml-finali">DIAGRAMMI UML FINALI</h1>
 <p>Di seguito sono illustrati i diagrammi UML definitivi del progetto. I diagrammi prototipo costruiti prima dell’implementazione del codice sono invece visionabili <a href="https://github.com/manuel-gizzarone/esame-OOP/tree/master/progettoDekGiz/UML/UmlPrototype">qui</a>.</p>
 <ul>
 <li><strong>USE CASE DIAGRAM</strong><br>
@@ -42,7 +42,7 @@ L’interazione con l’utente viene gestita tramite protocollo <code>http</code
 <br></li>
 </ul>
 <p><img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/UML/UmlFinal/SequenceStatsGiornaliere.png" alt="sequence diagram 2"></p>
-<h1 id="rotte-disponibili">Rotte disponibili</h1>
+<h1 id="rotte-disponibili">ROTTE DISPONIBILI</h1>
 <p>Le richieste devono essere effettuate al seguente indirizzo:</p>
 <pre><code>localhost:8080
 </code></pre>
@@ -487,6 +487,16 @@ Se non avete eseguito chiamate alla rotta <code>/nuvole5giorni</code>, il databa
 <li><strong>SogliaErroreNotValidException</strong>: se l’utente inserisce una soglia di errore non valida (cioè non compresa tra 1 e 99)</li>
 <li><strong>PeriodNotValidException</strong>: se l’utente inserisce un periodo non valido (in particolare se la data di fine risulta precedente alla data di inizio del periodo)</li>
 <li><strong>ParseException</strong>: nel caso in cui si verifichino errori durante il parsing dei dati</li>
-<li><strong>IOException</strong>: nel caso si verifichino errori durante la lettura dei file contenenti i database</li>
+<li><strong>IOException</strong>: nel caso si verifichino errori durante la lettura dei file contenenti i database<br>
+<br></li>
 </ul>
+<h1 id="test">TEST</h1>
+<p>Abbiamo implementato alcuni <code>test</code> per verificare il corretto funzionamento del codice. Per farlo abbiamo fatto uso della libreria <a href="https://junit.org/junit5/docs/current/user-guide/">JUNIT 5</a> specifica per eseguire test automatizzati in Java. Al seguente <a href="https://github.com/manuel-gizzarone/esame-OOP/tree/master/progettoDekGiz/src/test/java/com/OOPDekGiz/progettoDekGiz">link</a> è possibile visionare il codice implementato.<br>
+<br></p>
+<h1 id="documentazione">DOCUMENTAZIONE</h1>
+<p>L’applicazione sviluppata presenta un’ apposita <a href="https://github.com/manuel-gizzarone/esame-OOP/tree/master/progettoDekGiz/doc">documentazione</a> del codice implementato.<br>
+<br></p>
+<h2 id="autori"><em>Autori</em></h2>
+<p>😎 <em>Emanuele De Caro</em></p>
+<p>😎 <em>Manuel Gizzarone</em></p>
 
