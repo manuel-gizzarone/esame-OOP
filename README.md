@@ -407,4 +407,75 @@ Se non avete eseguito chiamate alla rotta <code>/nuvole5giorni</code> il databas
 <li><strong>IOException</strong>: nel caso si verifichino errori durante la lettura del file contenente il database<br>
 <br></li>
 </ul>
+<h2 id="rotta-getdatabase">Rotta “/getDatabase”</h2>
+<p>Il suo fine è quello di dare la possibilità all’utente di visualizzare i dati meteo presenti all’interno di un qualsiasi database.<br>
+Questa rotta è di tipo <code>GET</code>. Per funzionare correttamente ha bisogno di ricevere un <strong>parametro</strong> del tipo<br>
+<code>key:value</code><br>
+<strong>"nomeDatabase" : "nomeDelDatabaseDaVisualizzare"</strong></p>
+<p>Il risultato della chiamata sarà un <code>JSONArray</code> i cui singoli elementi di tipo <code>JSONObject</code> contengono i dati meteo presenti all’interno del database. Se quest’ultimo esiste ma non ha ancora nessun dato all’interno, verrà visualizzato un <code>JSONArray</code> vuoto.</p>
+<p>✅<strong>ESEMPIO</strong></p>
+<p><img src="https://github.com/manuel-gizzarone/esame-OOP/blob/master/progettoDekGiz/Immagini/getDatabase.png?raw=true" alt="enter image description here"></p>
+<p>🔴 <strong>ECCEZIONI</strong></p>
+<ul>
+<li><strong>InserimentoException</strong>: se l’utente dimentica di inserire le nome del database</li>
+<li><strong>DatabaseNotFoundException</strong>: se l’utente prova a visualizzare un database inesistente</li>
+<li><strong>ParseException</strong>: nel caso in cui si verifichino errori durante il parsing dei dati</li>
+<li><strong>IOException</strong>: nel caso si verifichino errori durante la lettura del file contenente il database<br>
+<br></li>
+</ul>
+<h2 id="rotta-deletedatabase">Rotta “/deleteDatabase”</h2>
+<p>Il suo fine è quello di dare la possibilità all’utente di eliminare i dati meteo presenti all’interno di un database indicato. In particolare una volta eseguita la richiesta, il database, se esiste, verrà formattato, ma non verrà eliminato definitivamente il file che lo contiene. Se infatti, una volta eseguita la formattazione, proviamo a visualizzare tramite la rotta /getDatabase il suo contenuto, sarà visualizzato un <code>JSONArray</code> vuoto.</p>
+<p>Questa rotta è di tipo <code>DELETE</code>. Per funzionare correttamente ha bisogno di ricevere un <strong>parametro</strong> del tipo<br>
+<code>key:value</code><br>
+<strong>"nomeDatabase" : "nomeDelDatabaseDaFormattare"</strong></p>
+<p>Il risultato della chiamata sarà una stringa contenente un messaggio di avvenuta eliminazione dei dati.</p>
+<p>✅<strong>ESEMPIO</strong></p>
+<p><img src="https://github.com/manuel-gizzarone/esame-OOP/blob/master/progettoDekGiz/Immagini/DeleteDatabase.png?raw=true" alt="enter image description here"></p>
+<p>Il messaggio ricevuto relativo all’esempio qui indicato è il seguente:</p>
+<pre><code>Il contenuto del database 'Ancona' è stato eliminato.
+</code></pre>
+<p>🔴 <strong>ECCEZIONI</strong></p>
+<ul>
+<li><strong>InserimentoException</strong>: se l’utente dimentica di inserire le nome del database</li>
+<li><strong>DatabaseNotFoundException</strong>: se l’utente prova a visualizzare un database inesistente</li>
+<li><strong>ParseException</strong>: nel caso in cui si verifichino errori durante il parsing dei dati</li>
+<li><strong>IOException</strong>: nel caso si verifichino errori durante la lettura del file contenente il database<br>
+<br></li>
+</ul>
+<h2 id="rotta-previsionisoglia">Rotta “/previsioniSoglia”</h2>
+<p>Il suo fine è quello di generare statistiche sulla quantità di previsioni azzeccate riguardo una città, in un dato periodo tra una data iniziale e finale e data una soglia di errore massima. In particolare verranno messi a confronto due database:</p>
+<ul>
+<li><code>Database_Previsioni</code> contenente i dati previsti</li>
+<li><code>Database_Raccolta</code> contenente i dati reali</li>
+</ul>
+<p>Le date inizialmente disponibili vanno dal 08/03/2021 al 17/03/2021 e riguardano dati meteo soltanto per le seguenti città:</p>
+<p>✔️ Rome</p>
+<p>✔️ Naples</p>
+<p>✔️ Milan</p>
+<p>Successivamente sarà possibile generare statistiche anche su altre città e date. In particolare per fare ciò è necessario raccogliere altri dati, tramite le apposite rotte /salvaOgniOra e /nuvoleCitta5giorni, su altre città a vostra scelta. Una volta raccolti dati a sufficienza dovrete prendere manualmente i dati meteo da ogni file <code>nomeCitta.json</code> ed incollarli nel <code>Database_Raccolta</code>, facendo attenzione a non modificare il formato del file (controllare sempre che sia presente un unico <code>JSONArray</code> con all’interno i relativi <code>JSONObject</code> contenenti i dati meteo). Riguardo invece il <code>Database_Previsioni</code> non è necessario apportare nessuna modifica.</p>
+<p>Questa rotta è di tipo <code>POST</code>. Per funzionare correttamente richiede l’inserimento di un <strong>body</strong> in formato <code>JSON</code> come indicato:</p>
+<pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">{</span>
+
+<span class="token string">"nomeCitta"</span><span class="token punctuation">:</span> <span class="token string">"NomeDellaCitta"</span><span class="token punctuation">,</span>
+
+<span class="token string">"dataInizio"</span><span class="token punctuation">:</span> <span class="token string">"dd/mm/yyyy"</span><span class="token punctuation">,</span>
+
+<span class="token string">"dataFine"</span><span class="token punctuation">:</span> <span class="token string">"dd/mm/yyyy"</span><span class="token punctuation">,</span>
+
+<span class="token string">"sogliaErrore"</span><span class="token punctuation">:</span> <span class="token string">"SogliaErroreMassimo"</span>
+
+<span class="token punctuation">}</span>
+</code></pre>
+<p><em>NOTA</em>: La soglia di errore deve essere necessariamente un numero compreso tra 1 e 99, estremi inclusi.</p>
+<p>Il risultato della chiamata è un <code>JSONObject</code> contenente le relative informazioni sulle statistiche.</p>
+<p>✅<strong>ESEMPIO</strong></p>
+<p><img src="https://github.com/manuel-gizzarone/esame-OOP/blob/master/progettoDekGiz/Immagini/PrevisioniSoglia.png?raw=true" alt="enter image description here"></p>
+<p>🔴 <strong>ECCEZIONI</strong></p>
+<ul>
+<li><strong>InserimentoException</strong>: se l’utente dimentica di inserire uno tra i 4 campi richiesti</li>
+<li><strong>SogliaErroreNotValidException</strong>: se l’utente inserisce una soglia di errore non valida (cioè non compresa tra 1 e 99)</li>
+<li><strong>PeriodNotValidException</strong>: se l’utente inserisce un periodo non valido (in particolare se la data di fine risulta precedente alla data di inizio del periodo)</li>
+<li><strong>ParseException</strong>: nel caso in cui si verifichino errori durante il parsing dei dati</li>
+<li><strong>IOException</strong>: nel caso si verifichino errori durante la lettura dei file contenenti i database</li>
+</ul>
 
