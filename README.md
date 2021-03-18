@@ -65,55 +65,55 @@ L’interazione con l’utente viene gestita tramite protocollo <code>http</code
 <tbody>
 <tr>
 <td><code>POST</code></td>
-<td>/nuvoleCitta5giorni</td>
+<td><a href="https://github.com/manuel-gizzarone/esame-OOP#rotta-nuvolecitta5giorni">1.</a> /nuvoleCitta5giorni</td>
 </tr>
 <tr>
 <td><code>GET</code></td>
-<td>/salvaOgniOra</td>
+<td><a href="https://github.com/manuel-gizzarone/esame-OOP#rotta-salvaogniora">2.</a> /salvaOgniOra</td>
 </tr>
 <tr>
 <td><code>GET</code></td>
-<td>/statsGiornaliere</td>
+<td><a href="https://github.com/manuel-gizzarone/esame-OOP#rotta-statsgiornaliere">3.</a> /statsGiornaliere</td>
 </tr>
 <tr>
 <td><code>GET</code></td>
-<td>/statsSettimanali</td>
+<td><a href="https://github.com/manuel-gizzarone/esame-OOP#rotta-statssettimanali">4.</a> /statsSettimanali</td>
 </tr>
 <tr>
 <td><code>GET</code></td>
-<td>/statsMensili</td>
+<td><a href="https://github.com/manuel-gizzarone/esame-OOP#rotta-statsmensili">5.</a> /statsMensili</td>
 </tr>
 <tr>
 <td><code>GET</code></td>
-<td>/statsTotali</td>
+<td><a href="https://github.com/manuel-gizzarone/esame-OOP#rotta-statstotali">6.</a> /statsTotali</td>
 </tr>
 <tr>
 <td><code>POST</code></td>
-<td>/filtraStatsGiornaliero</td>
+<td><a href="https://github.com/manuel-gizzarone/esame-OOP#rotta-filtrastatsgiornaliero">7.</a> /filtraStatsGiornaliero</td>
 </tr>
 <tr>
 <td><code>POST</code></td>
-<td>/filtraStatsSettimanale</td>
+<td><a href="https://github.com/manuel-gizzarone/esame-OOP#rotta-filtrastatssettimanale">8.</a> /filtraStatsSettimanale</td>
 </tr>
 <tr>
 <td><code>POST</code></td>
-<td>/filtraStatsMensile</td>
+<td><a href="https://github.com/manuel-gizzarone/esame-OOP#rotta-filtrastatsmensile">9.</a> /filtraStatsMensile</td>
 </tr>
 <tr>
 <td><code>POST</code></td>
-<td>/filtraStatsTotale</td>
+<td><a href="https://github.com/manuel-gizzarone/esame-OOP#rotta-filtrastatstotale">10.</a> /filtraStatsTotale</td>
 </tr>
 <tr>
 <td><code>GET</code></td>
-<td>/getDatabase</td>
+<td><a href="https://github.com/manuel-gizzarone/esame-OOP#rotta-getdatabase">11.</a> /getDatabase</td>
 </tr>
 <tr>
 <td><code>DELETE</code></td>
-<td>/deleteDatabase</td>
+<td><a href="https://github.com/manuel-gizzarone/esame-OOP#rotta-deletedatabase">12.</a> /deleteDatabase</td>
 </tr>
 <tr>
 <td><code>POST</code></td>
-<td>/previsioniSoglia</td>
+<td><a href="https://github.com/manuel-gizzarone/esame-OOP#rotta-previsionisoglia">13.</a> /previsioniSoglia</td>
 </tr>
 </tbody>
 </table><p><strong>La spiegazione dell’utilizzo delle varie rotte, con relativi esempi di esecuzione, è mostrata di seguito</strong>.<br>
