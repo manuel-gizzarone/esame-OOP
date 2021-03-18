@@ -104,12 +104,12 @@ L’interazione con l’utente viene gestita tramite protocollo <code>http</code
 <td>/filtraStatsTotale</td>
 </tr>
 <tr>
-<td><code>DELETE</code></td>
-<td>/deleteDatabase</td>
-</tr>
-<tr>
 <td><code>GET</code></td>
 <td>/getDatabase</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td>/deleteDatabase</td>
 </tr>
 <tr>
 <td><code>POST</code></td>
