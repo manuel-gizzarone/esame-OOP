@@ -18,7 +18,9 @@
 </code></pre>
 <p>Nel caso in cui il comando <code>git clone</code> non venga riconosciuto dal vostro sistema operativo, dovrete scaricare ed installare il software <a href="https://git-scm.com/downloads">Git</a>.</p>
 <h2 id="configurazioni-iniziali">Configurazioni iniziali</h2>
-<p>L’interazione con l’applicazione, una volta avviata, viene gestita tramite protocollo <code>http</code> verso un server creato in maniera automatica sulla porta <code>8080</code> del vostro <code>localhost</code>. Perciò per utilizzare le sue funzionalità ed effettuare richieste è necessario un browser, ma consigliamo l’installazione del software <strong>Postman</strong> specifico per effettuare richieste a server Web. Il download è disponibile al seguente <a href="https://www.postman.com/downloads/">link</a>.</p>
+<p>Per prima cosa è consigliabile creare un <a href="https://home.openweathermap.org/users/sign_up">account Openweather</a> per ottenere un<code>ApiKey</code> personale da inserire <a href="https://github.com/manuel-gizzarone/esame-OOP/blob/master/progettoDekGiz/config.json">qui</a>. Fare attenzione a non modificare il formato del file. Per motivi di praticità, abbiamo comunque messo a disposizione una <code>ApiKey</code> già attiva.</p>
+<p>Una volta installata, per avviare l’applicazione sarà necessario essere in possesso di un IDE specifico per linguaggio <code>java</code> come ad esempio <a href="https://www.eclipse.org/downloads/">Eclipse</a> (o simili). Se lo avete già installato sul vostro dispositivo dovrete semplicemente importare la cartella dell’applicazione ed avviarla come <code>SpringBoot App</code>.<br>
+L’interazione con l’utente viene gestita tramite protocollo <code>http</code> verso un server creato in maniera automatica sulla porta <code>8080</code> del vostro <code>localhost</code>. Perciò per utilizzare le funzionalità dell’applicazione ed effettuare richieste è necessario un browser, ma consigliamo l’installazione del software <strong>Postman</strong> specifico per effettuare richieste a server Web. Il download è disponibile al seguente <a href="https://www.postman.com/downloads/">link</a>.</p>
 <h2 id="diagrammi-uml-finali">DIAGRAMMI UML FINALI</h2>
 <p>Di seguito sono illustrati i diagrammi UML definitivi del progetto. I diagrammi prototipo costruiti prima dell’implementazione del codice sono invece visionabili <a href="https://github.com/manuel-gizzarone/esame-OOP/tree/master/progettoDekGiz/UML/UmlPrototype">qui</a>.</p>
 <ul>
@@ -109,14 +111,12 @@
 </tbody>
 </table><p><strong>La spiegazione dell’utilizzo delle varie rotte, con relativi esempi di esecuzione, è mostrata di seguito</strong>.<br>
 <br></p>
-<p><em>NOTA:<br>
-Le statistiche sia filtrate che non fanno tutte riferimento ai dati presenti sul database <code>Database_Previsioni.json</code>.<br>
-La rotta per la verifica della qualità delle previsioni con soglia di errore fa utilizzo sia del <code>Database_Previsioni.json</code> che del <code>Database_Raccolta.json</code> . Entrambi i file sono già riempiti con dati da noi raccolti sulle città Rome, Milan, Naples per consentire il diretto uso di tutte le rotte già al primo avvio dell’applicazione.</em><br>
-<br></p>
 <h2 id="rotta-nuvolecitta5giorni">Rotta “/nuvoleCitta5giorni”</h2>
 <p>Il suo fine è quello di far visualizzare le previsioni meteo sulla nuvolosità percentuale di una o più città dall’istante in cui si esegue la chiamata fino 5 giorni successivi. I dati di previsione sono intervallati di un tempo pari a 3 ore l’uno all’altro ed inoltre sono automaticamente salvati su un database nella cartella del progetto denominata <code>Database_Previsioni.json</code>.</p>
 <p>Questa rotta è di tipo <code>POST</code>. Per funzionare correttamente ha bisogno di ricevere un <strong>body</strong> in formato <code>JSON</code> come indicato:</p>
-<pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">{</span><span class="token string">"nomiCitta"</span> <span class="token punctuation">:</span> <span class="token string">"listaNomiDelleCittaSeparateDallaVirgola"</span><span class="token punctuation">}</span>
+<pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">{</span>
+<span class="token string">"nomiCitta"</span> <span class="token punctuation">:</span> <span class="token string">"listaNomiDelleCittaSeparateDallaVirgola"</span>
+<span class="token punctuation">}</span>
 </code></pre>
 <p>Il risultato della chiamata sarà un <code>JSONArray</code> i cui singoli elementi di tipo <code>JSONObject</code> contengono le informazioni sulla nuvolosità delle città inserite.</p>
 <p>✅<strong>ESEMPIO</strong></p>
@@ -171,14 +171,14 @@ La rotta per la verifica della qualità delle previsioni con soglia di errore fa
 <li><strong>GestisciStringaException</strong>: se si commettono errori nell’inserimento delle città (in particolare se vengono lasciati spazi tra le virgole durante l’inserimento)</li>
 <li><strong>ConfigFileException</strong>: se sono presenti errori nel file di configurazione (viene lanciata se non rispetta il formato <code>JSON</code>)</li>
 <li><strong>ParseException</strong>: nel caso in cui si verifichino errori durante il parsing dei dati</li>
-<li><strong>IOException</strong>: nel caso si verifichino errori durante la lettura del file contenente il database<br>
+<li><strong>IOException</strong>: nel caso si verifichino errori durante la lettura dei dati forniti dalle Api<br>
 <br></li>
 </ul>
 <h2 id="rotta-salvaogniora">Rotta “/salvaOgniOra”</h2>
 <p>Il suo fine è quello di salvare ad intervalli regolari di un’ora i dati meteo sulla nuvolosità di una città a partire dall’istante della chiamata. Tali dati verranno salvati su un apposito database. Nel caso di chiamate multiple i dati di ogni città verranno salvati separatamente in un file apposito nella cartella del progetto col nome <code>"nomeCitta.json"</code>.</p>
-<p>Questa rotta è di tipo <code>GET</code>. Per funzionare correttamente ha bisogno di ricevere un <strong>parametro</strong> del tipo<br>
+<p>Questa rotta è di tipo <code>GET</code>. Per funzionare correttamente ha bisogno di ricevere un <strong>parametro</strong> del tipo:<br>
 <code>key:value</code><br>
-<strong>"nomeCitta" : "nomeDellaCittà"</strong></p>
+<strong>nomeCitta  :  nomeDellaCittà</strong></p>
 <p>Il risultato della chiamata sarà una stringa contenente il <code>path</code> del database creato per il salvataggio dei dati.</p>
 <p>✅<strong>ESEMPIO</strong></p>
 <p><img src="https://raw.githubusercontent.com/manuel-gizzarone/esame-OOP/master/progettoDekGiz/Immagini/salvaOgniOra.png" alt="salvaOgniOra"></p>
@@ -191,7 +191,7 @@ La rotta per la verifica della qualità delle previsioni con soglia di errore fa
 <li><strong>NomeCittaException</strong>: se l’utente inserisce il nome di una città non disponibile o commette errori di digitazione</li>
 <li><strong>ConfigFileException</strong>: se sono presenti errori nel file di configurazione (viene lanciata se non rispetta il formato <code>JSON</code>)</li>
 <li><strong>ParseException</strong>: nel caso in cui si verifichino errori durante il parsing dei dati</li>
-<li><strong>IOException</strong>: nel caso si verifichino errori durante la lettura del file contenente il database<br>
+<li><strong>IOException</strong>: nel caso si verifichino errori durante la lettura dei dati forniti dalle Api<br>
 <br></li>
 </ul>
 <h2 id="rotta-statsgiornaliere">Rotta “/statsGiornaliere”</h2>
@@ -202,11 +202,11 @@ La rotta per la verifica della qualità delle previsioni con soglia di errore fa
 <li><em>Media</em></li>
 <li><em>Varianza</em></li>
 </ul>
-<p>Tali statistiche sono calcolate utilizzando i dati presenti sul database <code>Database_Previsioni.json</code>.<br>
-Se non avete eseguito chiamate alla rotta <code>/nuvole5giorni</code> il database ha già presente al suo interno i dati predefiniti sulle città Naples, Milan e Rome relativi alla nuvolosità del mese di marzo dal 8/03/2021 al 17/03/2021.</p>
+<p>Tali statistiche sono calcolate utilizzando i dati presenti sul database <code>Database_Previsioni</code>.<br>
+Se non avete eseguito chiamate alla rotta <code>/nuvole5giorni</code>, il database ha già presente al suo interno dei dati predefiniti su alcune città dal 08/03/2021 al 18/03/2021.</p>
 <p>Questa rotta è di tipo <code>GET</code>. Per funzionare correttamente ha bisogno di ricevere un <strong>parametro</strong> del tipo<br>
 <code>key:value</code><br>
-<strong>"data" : "dd/mm/yyyy"</strong><br>
+<strong>data  :  dd/mm/yyyy</strong><br>
 <em>NOTA:</em> bisogna rispettare necessariamente questo formato.</p>
 <p>Il risultato della chiamata è un <code>JSONObject</code> contenente le relative informazioni sulle statistiche.</p>
 <p>✅<strong>ESEMPIO</strong></p>
@@ -228,11 +228,11 @@ Se non avete eseguito chiamate alla rotta <code>/nuvole5giorni</code> il databas
 <li><em>Media</em></li>
 <li><em>Varianza</em></li>
 </ul>
-<p>Tali statistiche sono calcolate utilizzando i dati presenti sul database <code>Database_Previsioni.json</code>.<br>
-Se non avete eseguito chiamate alla rotta <code>/nuvole5giorni</code> il database ha già presente al suo interno i dati predefiniti sulle città Naples, Milan e Rome relativi alla nuvolosità del mese di marzo dal 8/03/2021 al 17/03/2021</p>
+<p>Tali statistiche sono calcolate utilizzando i dati presenti sul database <code>Database_Previsioni</code>.<br>
+Se non avete eseguito chiamate alla rotta <code>/nuvole5giorni</code>, il database ha già presente al suo interno dei dati predefiniti su alcune città dal 08/03/2021 al 18/03/2021.</p>
 <p>Questa rotta è di tipo <code>GET</code>. Per funzionare correttamente ha bisogno di ricevere un <strong>parametro</strong> del tipo<br>
 <code>key:value</code><br>
-<strong>"data" : "dd/mm/yyyy"</strong><br>
+<strong>data  :  dd/mm/yyyy</strong><br>
 <em>NOTA:</em> bisogna rispettare necessariamente questo formato.</p>
 <p>Il risultato della chiamata è un <code>JSONObject</code> contenente le relative informazioni sulle statistiche.</p>
 <p>✅<strong>ESEMPIO</strong></p>
@@ -254,11 +254,11 @@ Se non avete eseguito chiamate alla rotta <code>/nuvole5giorni</code> il databas
 <li><em>Media</em></li>
 <li><em>Varianza</em></li>
 </ul>
-<p>Tali statistiche sono calcolate utilizzando i dati presenti sul database <code>Database_Previsioni.json</code>.<br>
-Se non avete eseguito chiamate alla rotta <code>/nuvole5giorni</code> il database ha già presente al suo interno i dati predefiniti sulle città Naples, Milan e Rome relativi alla nuvolosità del mese di marzo dal 8/03/2021 al 17/03/2021</p>
+<p>Tali statistiche sono calcolate utilizzando i dati presenti sul database <code>Database_Previsioni</code>.<br>
+Se non avete eseguito chiamate alla rotta <code>/nuvole5giorni</code>, il database ha già presente al suo interno dei dati predefiniti su alcune città dal 08/03/2021 al 18/03/2021.</p>
 <p>Questa rotta è di tipo <code>GET</code>. Per funzionare correttamente ha bisogno di ricevere un <strong>parametro</strong> del tipo<br>
 <code>key:value</code><br>
-<strong>"data" : "mm/yyyy"</strong><br>
+<strong>data  :  mm/yyyy</strong><br>
 <em>NOTA:</em> bisogna rispettare necessariamente questo formato.</p>
 <p>Il risultato della chiamata è un <code>JSONObject</code> contenente le relative informazioni sulle statistiche.</p>
 <p>✅<strong>ESEMPIO</strong></p>
@@ -273,7 +273,7 @@ Se non avete eseguito chiamate alla rotta <code>/nuvole5giorni</code> il databas
 <br></li>
 </ul>
 <h2 id="rotta-statstotali">Rotta “/statsTotali”</h2>
-<p>Il suo fine è quello di calcolare e restituire le statistiche sulla nuvolosità percentuale su tutti i dati meteo presenti nel database <code>Database_Previsioni.json</code>. Verranno visualizzate le seguenti informazioni:</p>
+<p>Il suo fine è quello di calcolare e restituire le statistiche sulla nuvolosità percentuale su tutti i dati meteo presenti nel database <code>Database_Previsioni</code>. Verranno visualizzate le seguenti informazioni:</p>
 <ul>
 <li><em>Valore minimo</em></li>
 <li><em>Valore massimo</em></li>
@@ -299,6 +299,7 @@ Se non avete eseguito chiamate alla rotta <code>/nuvole5giorni</code> il databas
 <li><em>Media</em></li>
 <li><em>Varianza</em></li>
 </ul>
+<p>Se non avete eseguito chiamate alla rotta <code>/nuvole5giorni</code>, il database da cui verranno filtrate le statistiche <code>Database_Previsioni</code> ha già presente al suo interno dei dati predefiniti dal 08/03/2021 al 18/03/2021 su alcune città come Naples, Milan, Rome, Miami, New York ecc. Controllare il file per visualizzare tutte le possibili scelte iniziali.</p>
 <p>Questa rotta è di tipo <code>POST</code>. Per funzionare correttamente richiede l’inserimento di un <strong>body</strong> in formato <code>JSON</code> come indicato:</p>
 <pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">{</span>
 
@@ -308,6 +309,7 @@ Se non avete eseguito chiamate alla rotta <code>/nuvole5giorni</code> il databas
 
 <span class="token punctuation">}</span>
 </code></pre>
+<p><em>NOTA:</em> bisogna rispettare necessariamente questo formato.</p>
 <p>Il risultato della chiamata sarà un <code>JSONArray</code> i cui singoli elementi di tipo <code>JSONObject</code> contengono le statistiche giornaliere sulla nuvolosità delle città inserite alla data indicata.</p>
 <p>✅<strong>ESEMPIO</strong></p>
 <p><img src="https://github.com/manuel-gizzarone/esame-OOP/blob/master/progettoDekGiz/Immagini/FiltersGiornaliero.png?raw=true" alt="enter image description here"></p>
@@ -330,6 +332,7 @@ Se non avete eseguito chiamate alla rotta <code>/nuvole5giorni</code> il databas
 <li><em>Media</em></li>
 <li><em>Varianza</em></li>
 </ul>
+<p>Se non avete eseguito chiamate alla rotta <code>/nuvole5giorni</code>, il database da cui verranno filtrate le statistiche <code>Database_Previsioni</code> ha già presente al suo interno dei dati predefiniti dal 08/03/2021 al 18/03/2021 su alcune città come Naples, Milan, Rome, Miami, New York ecc. Controllare il file per visualizzare tutte le possibili scelte iniziali.</p>
 <p>Questa rotta è di tipo <code>POST</code>. Per funzionare correttamente richiede l’inserimento di un <strong>body</strong> in formato <code>JSON</code> come indicato:</p>
 <pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">{</span>
 
@@ -339,6 +342,7 @@ Se non avete eseguito chiamate alla rotta <code>/nuvole5giorni</code> il databas
 
 <span class="token punctuation">}</span>
 </code></pre>
+<p><em>NOTA:</em> bisogna rispettare necessariamente questo formato.</p>
 <p>Il risultato della chiamata sarà un <code>JSONArray</code> i cui singoli elementi di tipo <code>JSONObject</code> contengono le statistiche settimanali sulla nuvolosità delle città inserite nella relativa settimana a cui appartiene la data inserita.</p>
 <p>✅<strong>ESEMPIO</strong></p>
 <p><img src="https://github.com/manuel-gizzarone/esame-OOP/blob/master/progettoDekGiz/Immagini/FiltersSettimanale.png?raw=true" alt="enter image description here"></p>
@@ -361,6 +365,7 @@ Se non avete eseguito chiamate alla rotta <code>/nuvole5giorni</code> il databas
 <li><em>Media</em></li>
 <li><em>Varianza</em></li>
 </ul>
+<p>Se non avete eseguito chiamate alla rotta <code>/nuvole5giorni</code>, il database da cui verranno filtrate le statistiche <code>Database_Previsioni</code> ha già presente al suo interno dei dati predefiniti dal 08/03/2021 al 18/03/2021 su alcune città come Naples, Milan, Rome, Miami, New York ecc. Controllare il file per visualizzare tutte le possibili scelte iniziali.</p>
 <p>Questa rotta è di tipo <code>POST</code>. Per funzionare correttamente richiede l’inserimento di un <strong>body</strong> in formato <code>JSON</code> come indicato:</p>
 <pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">{</span>
 
@@ -370,6 +375,7 @@ Se non avete eseguito chiamate alla rotta <code>/nuvole5giorni</code> il databas
 
 <span class="token punctuation">}</span>
 </code></pre>
+<p><em>NOTA:</em> bisogna rispettare necessariamente questo formato.</p>
 <p>Il risultato della chiamata sarà un <code>JSONArray</code> i cui singoli elementi di tipo <code>JSONObject</code> contengono le statistiche mensili sulla nuvolosità delle città inserite nel relativo mese indicato.</p>
 <p>✅<strong>ESEMPIO</strong></p>
 <p><img src="https://github.com/manuel-gizzarone/esame-OOP/blob/master/progettoDekGiz/Immagini/FiltersMensile.png?raw=true" alt="enter image description here"></p>
@@ -392,9 +398,13 @@ Se non avete eseguito chiamate alla rotta <code>/nuvole5giorni</code> il databas
 <li><em>Media</em></li>
 <li><em>Varianza</em></li>
 </ul>
+<p>Se non avete eseguito chiamate alla rotta <code>/nuvole5giorni</code>, il database da cui verranno filtrate le statistiche <code>Database_Previsioni</code> ha già presente al suo interno dei dati predefiniti su alcune città come Naples, Milan, Rome, Miami, New York ecc. Controllare il file per visualizzare tutte le possibili scelte iniziali.</p>
 <p>Questa rotta è di tipo <code>POST</code>. Per funzionare correttamente richiede l’inserimento di un <strong>body</strong> in formato <code>JSON</code> come indicato:</p>
-<pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">{</span><span class="token string">"nomiCitta"</span><span class="token punctuation">:</span> <span class="token string">"listaNomiDelleCittaSeparateDallaVirgola"</span><span class="token punctuation">}</span>
+<pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">{</span>
+<span class="token string">"nomiCitta"</span><span class="token punctuation">:</span> <span class="token string">"listaNomiDelleCittaSeparateDallaVirgola"</span>
+<span class="token punctuation">}</span>
 </code></pre>
+<p><em>NOTA:</em> bisogna rispettare necessariamente questo formato.</p>
 <p>Il risultato della chiamata sarà un <code>JSONArray</code> i cui singoli elementi di tipo <code>JSONObject</code> contengono le statistiche totali sulla nuvolosità delle città inserite.</p>
 <p>✅<strong>ESEMPIO</strong></p>
 <p><img src="https://github.com/manuel-gizzarone/esame-OOP/blob/master/progettoDekGiz/Immagini/FiltersTotali.png?raw=true" alt="enter image description here"></p>
@@ -408,11 +418,11 @@ Se non avete eseguito chiamate alla rotta <code>/nuvole5giorni</code> il databas
 <br></li>
 </ul>
 <h2 id="rotta-getdatabase">Rotta “/getDatabase”</h2>
-<p>Il suo fine è quello di dare la possibilità all’utente di visualizzare i dati meteo presenti all’interno di un qualsiasi database.<br>
-Questa rotta è di tipo <code>GET</code>. Per funzionare correttamente ha bisogno di ricevere un <strong>parametro</strong> del tipo<br>
+<p>Il suo fine è quello di dare la possibilità all’utente di visualizzare i dati meteo presenti all’interno di un qualsiasi database presente.</p>
+<p>Questa rotta è di tipo <code>GET</code>. Per funzionare correttamente ha bisogno di ricevere un <strong>parametro</strong> del tipo<br>
 <code>key:value</code><br>
-<strong>"nomeDatabase" : "nomeDelDatabaseDaVisualizzare"</strong></p>
-<p>Il risultato della chiamata sarà un <code>JSONArray</code> i cui singoli elementi di tipo <code>JSONObject</code> contengono i dati meteo presenti all’interno del database. Se quest’ultimo esiste ma non ha ancora nessun dato all’interno, verrà visualizzato un <code>JSONArray</code> vuoto.</p>
+<strong>nomeDatabase  :  nomeDelDatabaseDaVisualizzare</strong></p>
+<p>Il risultato della chiamata sarà un <code>JSONArray</code> i cui singoli elementi di tipo <code>JSONObject</code> contengono i dati meteo presenti all’interno del database. Se quest’ultimo esiste ma non ha ancora nessun dato al suo interno, verrà visualizzato un <code>JSONArray</code> vuoto.</p>
 <p>✅<strong>ESEMPIO</strong></p>
 <p><img src="https://github.com/manuel-gizzarone/esame-OOP/blob/master/progettoDekGiz/Immagini/getDatabase.png?raw=true" alt="enter image description here"></p>
 <p>🔴 <strong>ECCEZIONI</strong></p>
@@ -424,10 +434,10 @@ Questa rotta è di tipo <code>GET</code>. Per funzionare correttamente ha bisogn
 <br></li>
 </ul>
 <h2 id="rotta-deletedatabase">Rotta “/deleteDatabase”</h2>
-<p>Il suo fine è quello di dare la possibilità all’utente di eliminare i dati meteo presenti all’interno di un database indicato. In particolare una volta eseguita la richiesta, il database, se esiste, verrà formattato, ma non verrà eliminato definitivamente il file che lo contiene. Se infatti, una volta eseguita la formattazione, proviamo a visualizzare tramite la rotta /getDatabase il suo contenuto, sarà visualizzato un <code>JSONArray</code> vuoto.</p>
+<p>Il suo fine è quello di dare la possibilità all’utente di eliminare i dati meteo presenti all’interno di un database indicato. In particolare una volta eseguita la richiesta, il database, se esiste, verrà formattato, ma non verrà eliminato definitivamente il file che lo contiene. Se infatti, una volta eseguita la formattazione, proviamo a visualizzare tramite la rotta <code>/getDatabase</code> il suo contenuto, sarà visualizzato un <code>JSONArray</code> vuoto.</p>
 <p>Questa rotta è di tipo <code>DELETE</code>. Per funzionare correttamente ha bisogno di ricevere un <strong>parametro</strong> del tipo<br>
 <code>key:value</code><br>
-<strong>"nomeDatabase" : "nomeDelDatabaseDaFormattare"</strong></p>
+<strong>nomeDatabase  :  nomeDelDatabaseDaFormattare</strong></p>
 <p>Il risultato della chiamata sarà una stringa contenente un messaggio di avvenuta eliminazione dei dati.</p>
 <p>✅<strong>ESEMPIO</strong></p>
 <p><img src="https://github.com/manuel-gizzarone/esame-OOP/blob/master/progettoDekGiz/Immagini/DeleteDatabase.png?raw=true" alt="enter image description here"></p>
@@ -448,11 +458,11 @@ Questa rotta è di tipo <code>GET</code>. Per funzionare correttamente ha bisogn
 <li><code>Database_Previsioni</code> contenente i dati previsti</li>
 <li><code>Database_Raccolta</code> contenente i dati reali</li>
 </ul>
-<p>Le date inizialmente disponibili vanno dal 08/03/2021 al 17/03/2021 e riguardano dati meteo soltanto per le seguenti città:</p>
+<p>Le date inizialmente disponibili vanno dal 08/03/2021 al 18/03/2021 e riguardano dati meteo soltanto per le seguenti città:</p>
 <p>✔️ Rome</p>
 <p>✔️ Naples</p>
 <p>✔️ Milan</p>
-<p>Successivamente sarà possibile generare statistiche anche su altre città e date. In particolare per fare ciò è necessario raccogliere altri dati, tramite le apposite rotte /salvaOgniOra e /nuvoleCitta5giorni, su altre città a vostra scelta. Una volta raccolti dati a sufficienza dovrete prendere manualmente i dati meteo da ogni file <code>nomeCitta.json</code> ed incollarli nel <code>Database_Raccolta</code>, facendo attenzione a non modificare il formato del file (controllare sempre che sia presente un unico <code>JSONArray</code> con all’interno i relativi <code>JSONObject</code> contenenti i dati meteo). Riguardo invece il <code>Database_Previsioni</code> non è necessario apportare nessuna modifica.</p>
+<p>Successivamente sarà possibile generare statistiche anche su altre città e date. In particolare per fare ciò è necessario raccogliere altri dati, tramite le apposite rotte <code>/salvaOgniOra</code> e <code>/nuvoleCitta5giorni</code>, su altre città a vostra scelta. Una volta raccolti dati a sufficienza dovrete prendere manualmente i dati meteo da ogni file <code>nomeCitta.json</code> ed incollarli nel <code>Database_Raccolta</code>, facendo attenzione a non modificare il formato del file (controllare sempre che sia presente un unico <code>JSONArray</code> con all’interno i relativi <code>JSONObject</code> contenenti i dati meteo). Riguardo invece il <code>Database_Previsioni</code> non è necessario apportare nessuna modifica.</p>
 <p>Questa rotta è di tipo <code>POST</code>. Per funzionare correttamente richiede l’inserimento di un <strong>body</strong> in formato <code>JSON</code> come indicato:</p>
 <pre class=" language-json"><code class="prism  language-json"><span class="token punctuation">{</span>
 
@@ -462,12 +472,13 @@ Questa rotta è di tipo <code>GET</code>. Per funzionare correttamente ha bisogn
 
 <span class="token string">"dataFine"</span><span class="token punctuation">:</span> <span class="token string">"dd/mm/yyyy"</span><span class="token punctuation">,</span>
 
-<span class="token string">"sogliaErrore"</span><span class="token punctuation">:</span> <span class="token string">"SogliaErroreMassimo"</span>
+<span class="token string">"sogliaErrore"</span><span class="token punctuation">:</span> <span class="token string">"SogliaErroreMassima"</span>
 
 <span class="token punctuation">}</span>
 </code></pre>
-<p><em>NOTA</em>: La soglia di errore deve essere necessariamente un numero compreso tra 1 e 99, estremi inclusi.</p>
-<p>Il risultato della chiamata è un <code>JSONObject</code> contenente le relative informazioni sulle statistiche.</p>
+<p><em>NOTA:</em> bisogna rispettare necessariamente questo formato.<br>
+<em>NOTA</em>: La soglia di errore deve essere un numero compreso tra 1 e 99, estremi inclusi.</p>
+<p>Il risultato della chiamata è un <code>JSONObject</code> contenente le relative informazioni sulle statistiche riguardo la qualità delle previsioni.</p>
 <p>✅<strong>ESEMPIO</strong></p>
 <p><img src="https://github.com/manuel-gizzarone/esame-OOP/blob/master/progettoDekGiz/Immagini/PrevisioniSoglia.png?raw=true" alt="enter image description here"></p>
 <p>🔴 <strong>ECCEZIONI</strong></p>
